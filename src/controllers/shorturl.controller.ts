@@ -36,12 +36,11 @@ const getShortUrl = async (req: Request, res: Response) => {
   }
 
   res.redirect(shortUrl.originalUrl);
-
-  await shortUrl.increment({ 'visits': 1 });
+  await shortUrl.increment({ visits: 1 });
 };
 
 const createShortUrl = async (req: Request, res: Response) => {
-  const payload: CreateShortUrlRequest = req.body;
+  const payload: CreateShortUrlRequest = !!req.body?.url ? req.body : req.query;
   if (!isValidUrl(payload.url)) {
     return res.json({
       status: 'error',
@@ -121,48 +120,10 @@ const deleteShortUrl = async (req: Request, res: Response) => {
   res.json({ status: 'ok' });
 };
 
-//const test = async (req: Request, res: Response) => {
-//  const payload: CreateShortUrlRequest | any = req.query;
-//  if (!payload.url) {
-//    return res.json({
-//      status: 'error',
-//      error: 'The given URL must not be null.',
-//    });
-//  }
-//
-//  if (!isValidUrl(payload.url)) {
-//    return res.json({
-//      status: 'error',
-//      error: 'The given URL is not valid.',
-//    });
-//  }
-//
-//  const existing = await ShortUrlService.isRegisteredByUser(payload.userId, payload.url);
-//  if (!!existing) {
-//    return res.json({
-//      status: 'ok',
-//      shortUrl: existing,
-//    });
-//  }
-//
-//  const result = await ShortUrlService.createShortUrl(payload);
-//  res.json({
-//    status: !result ? 'error' : 'ok',
-//    error: !result ? 'Slug already exists!' : undefined,
-//    shortUrl: !result ? undefined : {
-//      url: `${config.domain}/${result.slug}`,
-//      slug: result.slug,
-//      userId: result.userId,
-//    },
-//    originalUrl: result.originalUrl,
-//  } as CreateShortUrlResponse);
-//};
-
 export const ShortUrlController = {
   createShortUrl,
   getShortUrl,
   getShortUrls,
   updateShortUrl,
   deleteShortUrl,
-  //test,
 };

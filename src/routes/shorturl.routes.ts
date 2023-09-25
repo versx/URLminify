@@ -7,12 +7,12 @@ import { ValidateMiddleware } from '../middleware';
 export const ShortUrlRouter = (app: Application) => {
   app.get('/:slug', ShortUrlController.getShortUrl);
 
-  // TODO: app.get(ShortUrlsApiRoute + '/test', ShortUrlController.test);
-  
   app.use(ValidateMiddleware)
     .route(ShortUrlsApiRoute)
       .get(ShortUrlController.getShortUrls)
       .post(ShortUrlController.createShortUrl)
       .put(ShortUrlController.updateShortUrl)
       .delete(ShortUrlController.deleteShortUrl);
+
+  app.get(ShortUrlsApiRoute + '/create', ShortUrlController.createShortUrl);
 };
