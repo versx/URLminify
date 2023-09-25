@@ -10,10 +10,7 @@ import { UserService, color, log } from './services';
   await testConnection();
 
   // Synchronize database tables
-  await db.connection.sync({
-    force: false,
-    alter: true,
-  });
+  await db.connection.sync({ alter: true, force: false });
 
   // Seed admin account if fresh install
   if (await UserService.isFreshInstall()) {
