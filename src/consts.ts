@@ -34,3 +34,5 @@ export const UserAttributes = [
   //'updatedAt',
   //'deletedAt',
 ];
+
+export const DefaultUserPasswordIterations = 8;

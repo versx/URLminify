@@ -1,5 +1,11 @@
+import { compareSync, hashSync } from 'bcryptjs';
+
 import { AuthService, btoa } from '.';
-import { ShortUrlAttributes, UserAttributes } from '../consts';
+import {
+  DefaultUserPasswordIterations,
+  ShortUrlAttributes,
+  UserAttributes,
+} from '../consts';
 import { db } from '../models';
 import { UserModel } from '../types';
 
@@ -53,11 +59,12 @@ const createUser = async (user: UserModel, isAdmin: boolean = false): Promise<Us
 
   const accessToken = AuthService.generateAccessToken(user.username);
   const apiKey = btoa(accessToken);
+  const password = hashSync(user.password, DefaultUserPasswordIterations);
 
   // Create new user account
   const result = await db.user.create({
     username: user.username,
-    password: user.password,
+    password,
     enabled: true,
     apiKey,
     admin: isAdmin,
@@ -75,6 +82,11 @@ const resetApiKey = async (id: number) => {
   return true;
 };
 
+const isValidPassword = (password: string, hashedPassword: string) => {
+  const passwordIsValid = compareSync(password, hashedPassword);
+  return passwordIsValid;
+};
+
 export const UserService = {
   isFreshInstall,
   getUsers,
@@ -82,4 +94,5 @@ export const UserService = {
   getUserBy,
   createUser,
   resetApiKey,
+  isValidPassword,
 };

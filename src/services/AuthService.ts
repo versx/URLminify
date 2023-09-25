@@ -1,12 +1,13 @@
 import { createHash, randomBytes } from 'crypto';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
 
-import config from '../config.json';
 import { logError } from '.';
 import { DefaultExpiresIn } from '../consts';
+import config from '../config.json';
 
 const generateAccessToken = (username: string): string => {
-  const accessToken = sign({ username }, config.auth.secret, { expiresIn: DefaultExpiresIn });
+  const signOptions = { expiresIn: DefaultExpiresIn };
+  const accessToken = sign({ username }, config.auth.secret, signOptions);
   return accessToken;
 };
 
