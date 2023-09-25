@@ -56,7 +56,6 @@ export type UpdateShortUrlRequest = {
 
 export type UpdateShortUrlResponse = {
   status: Status;
-  error?: string;
   shortUrl?: {
     slug: string;
     url: string;
@@ -83,6 +82,8 @@ export type UserModel = {
   apiKey?: string;
   enabled?: boolean;
   admin?: boolean;
+
+  shortUrls?: ShortUrlModel[];
 
   accessToken?: string;
   refreshToken?: string;

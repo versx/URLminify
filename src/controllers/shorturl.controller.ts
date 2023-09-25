@@ -52,7 +52,12 @@ const createShortUrl = async (req: Request, res: Response) => {
   if (!!existing) {
     return res.json({
       status: 'ok',
-      shortUrl: existing,
+      shortUrl: {
+        url: `${config.domain}/${existing.slug}`,
+        slug: existing.slug,
+        userId: existing.userId,
+      },
+      originalUrl: existing.originalUrl,
     });
   }
 
