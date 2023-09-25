@@ -117,3 +117,5 @@ NodeJS backend to create short URL addresses from longer URL addresses.
 `DELETE: /api/v1/users`  
 - Deletes an existing user account.  
 
+`POST: /api/v1/users/:id/key/reset`  
+- Resets the specified user account's API key.  
