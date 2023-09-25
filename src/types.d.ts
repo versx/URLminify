@@ -42,7 +42,6 @@ export type CreateShortUrlRequest = {
 
 export type CreateShortUrlResponse = {
   status: Status;
-  error?: string;
   shortUrl?: {
     slug: string;
     url: string;
@@ -53,7 +52,6 @@ export type CreateShortUrlResponse = {
 
 export type UpdateShortUrlRequest = {
   url: string;
-  //userId: number;
 };
 
 export type UpdateShortUrlResponse = {

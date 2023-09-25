@@ -23,7 +23,7 @@ const getShortUrl = async (req: Request, res: Response) => {
   if (!slug) {
     return res.json({
       status: 'error',
-      error: `Slug not specified!`,
+      error: `Slug is not defined!`,
     });
   }
 
@@ -31,7 +31,7 @@ const getShortUrl = async (req: Request, res: Response) => {
   if (!shortUrl) {
     return res.json({
       status: 'error',
-      message: 'Slug not found',
+      message: 'Slug does not exist.',
     });
   }
 
@@ -57,10 +57,16 @@ const createShortUrl = async (req: Request, res: Response) => {
   }
 
   const result = await ShortUrlService.createShortUrl(payload);
+  if (!result) {
+    return res.json({
+      status: 'error',
+      error: 'Slug already exists!',
+    });
+  }
+
   res.json({
-    status: !result ? 'error' : 'ok',
-    error: !result ? 'Slug already exists!' : undefined,
-    shortUrl: !result ? undefined : {
+    status: 'ok',
+    shortUrl: {
       url: `${config.domain}/${result.slug}`,
       slug: result.slug,
       userId: result.userId,
@@ -74,7 +80,7 @@ const updateShortUrl = async (req: Request, res: Response) => {
   if (!slug) {
     return res.json({
       status: 'error',
-      error: `Slug not specified!`,
+      error: `Slug is not defined!`,
     });
   }
 
@@ -105,7 +111,7 @@ const deleteShortUrl = async (req: Request, res: Response) => {
   if (!slugName) {
     return res.json({
       status: 'error',
-      error: 'No slug provided!',
+      error: `Slug is not defined!`,
     });
   }
 
@@ -113,7 +119,7 @@ const deleteShortUrl = async (req: Request, res: Response) => {
   if (!result) {
     return res.json({
       status: 'error',
-      error: 'Failed to delete slug',
+      error: 'Failed to delete short url.',
     });
   }
 
