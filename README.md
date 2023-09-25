@@ -79,3 +79,41 @@ NodeJS backend to create short URL addresses from longer URL addresses.
   }
 }
 ```
+
+## API Documentation
+
+### <u>Slug Routes</u>  
+
+`GET: /:slug`  
+- Uses short link slug to redirect to long URL address.  
+
+`GET: /api/v1/shorturls`  
+- Returns all shorturls.  
+
+`POST: /api/v1/shorturls`  
+- Creates a new shorturl.  
+
+`PUT: /api/v1/shorturls`  
+- Updates an existing shorturl.  
+
+`DELETE: /api/v1/shorturls`  
+- Deletes an existing shorturl.  
+
+
+### <u>User Routes</u>  
+
+`GET: /api/v1/users/:id`  
+- Returns the specified user account by ID.  
+
+`GET: /api/v1/users`  
+- Returns all user accounts.  
+
+`POST: /api/v1/users`  
+- Creates a new user account.  
+
+`PUT: /api/v1/users`  
+- Updates an existing user account.  
+
+`DELETE: /api/v1/users`  
+- Deletes an existing user account.  
+
