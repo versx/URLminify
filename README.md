@@ -10,7 +10,7 @@ NodeJS backend to create short URL addresses from longer URL addresses.
 - [Node.js v16 or higher](https://nodejs.org/en/download)  
 
 ## Installation
-1. Clone repository: `git clone https://github.com/versx/DiscordGuildStats`  
+1. Clone repository: `git clone https://github.com/versx/URLminify`  
 1. Install packages: `npm install`  
 1. Copy example config: `cp src/config.example.json src/config.json`  
 1. Fill out config options.  
