@@ -1,6 +1,6 @@
 import express from 'express';
 
-import config from './config.json';
+import { auth, host, port } from './config.json';
 import { db, testConnection } from './models';
 import { ApiRouter } from './routes';
 import { UserService, color, log } from './services';
@@ -17,7 +17,7 @@ import { UserService, color, log } from './services';
 
   // Seed admin account if fresh install
   if (await UserService.isFreshInstall()) {
-    await UserService.createUser(config.auth.admin, true);
+    await UserService.createUser(auth.admin, true);
   }
 
   // Initialize HTTP server
@@ -27,7 +27,7 @@ import { UserService, color, log } from './services';
   ApiRouter(app);
 
   // Start listening
-  app.listen(config.port, config.host, () => {
-    log(`Listening at ${color('variable', `http://${config.host}:${config.port}`)}`);
+  app.listen(port, host, () => {
+    log(`Listening at ${color('variable', `http://${host}:${port}`)}`);
   });
 })();

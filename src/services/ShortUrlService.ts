@@ -27,7 +27,7 @@ const createShortUrl = async (payload: CreateShortUrlRequest): Promise<ShortUrlM
   let slug = '';
   if (!!name && name !== '') {
     const model = await getShortUrl(name);
-    if (model) {
+    if (model && userId === model.userId) {
       // Slug name already exists, return model
       return model;
     }
