@@ -35,8 +35,8 @@ export type SequelizeDatabaseConnection = {
 };
 
 export type CreateShortUrlRequest = {
-  url: string;
   name?: string;
+  url: string;
   userId: number;
 };
 

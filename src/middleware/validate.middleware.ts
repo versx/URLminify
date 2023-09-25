@@ -13,6 +13,7 @@ export const ValidateMiddleware = async (req: Request, res: Response, next: Next
 
   const apiKey = atob(token);
   const decoded = await AuthService.verifyAccessToken(apiKey);
+  //console.log('decoded:', decoded);
   if (!decoded) {
     return res.json({
       status: 'error',
@@ -20,7 +21,7 @@ export const ValidateMiddleware = async (req: Request, res: Response, next: Next
     });
   }
 
-  const user = await UserService.getUserBy({ username: decoded.username });
+  const user = await UserService.getUserBy({ username: decoded?.username ?? decoded?.id });
   if (user?.apiKey !== token) {
     return res.json({
       status: 'error',
