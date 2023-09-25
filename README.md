@@ -99,6 +99,9 @@ NodeJS backend to create short URL addresses from longer URL addresses.
 `DELETE: /api/v1/shorturls`  
 - Deletes an existing shorturl.  
 
+`GET: /api/v1/shorturls/create`  
+- Creates a new shorturl.  
+
 
 ### <u>User Routes</u>  
 
