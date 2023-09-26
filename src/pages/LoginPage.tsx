@@ -21,7 +21,7 @@ export const LoginPage = () => {
     const response = await AuthService.login(username, password);
     console.log('login response:', response);
     if (response.status !== 'ok') {
-      console.error('failed to login')
+      console.error('failed to login');
       return;
     }
 
@@ -31,7 +31,15 @@ export const LoginPage = () => {
 
   return (
     <Container style={{ height: '35vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Paper style={{ padding: '20px', width: '300px' }}>
+      <Paper
+        style={{ padding: '20px', width: '300px' }}
+        onKeyUp={(e) => {
+          if (e.key === 'Enter') {
+            handleLogin();
+            return;
+          }            
+        }}
+      >
         <Typography variant="h4" align="center" gutterBottom>
           Login
         </Typography>
