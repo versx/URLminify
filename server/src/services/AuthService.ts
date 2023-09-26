@@ -1,23 +1,45 @@
+import { compareSync } from 'bcryptjs';
 import { createHash, randomBytes } from 'crypto';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
 
-import { logError } from '.';
-import { DefaultExpiresIn } from '../consts';
 import config from '../config.json';
+import { UserService, logError } from '.';
+import { DefaultExpiresIn } from '../consts';
 import { db } from '../models';
 
 const login = async (username: string, password: string) => {
-  const user = await db.user.findOne({ username });
-  console.log('login:', user);
-  // TODO: Properly check password
-  if (user.password === password) {
+  try {
+    const user = await db.user.findOne({ username });
+    console.log('login:', user);
+    if (!user) {
+      return false;
+    }
+
+    if (!user.enabled) {
+      return false;
+    }
+
+    const passwordIsValid = compareSync(password, user.password);
+    console.log('')
+    if (!passwordIsValid) {
+      return false;
+    }
+
     return true;
+  } catch (err) {
+    console.error('login:', err);
+    return false;
   }
-  return false;
 };
 
-const register = () => {
-
+const register = async (username: string, password: string) => {
+  try {
+    const user = await UserService.createUser({ username, password }, false);
+    return !!user;
+  } catch (err) {
+    console.error('register:', err);
+    return false;
+  }
 };
 
 const generateAccessToken = (username: string): string => {

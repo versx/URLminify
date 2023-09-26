@@ -18,10 +18,10 @@ export const RegisterPage = () => {
   const from = location.state?.from || '/';
 
   const handleRegister = async () => {
-    const response = await AuthService.login(username, password);
-    console.log('login response:', response);
+    const response = await AuthService.register(username, password);
+    console.log('register response:', response);
     if (response.status !== 'ok') {
-      console.error('failed to login')
+      console.error('failed to register');
       return;
     }
 

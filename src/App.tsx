@@ -17,7 +17,6 @@ const App = () => {
         <Route path="/" element={<ProtectedRoute />}>
           <Route index element={<HomePage />} />
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/logout" element={<></>} />
         </Route>
       </Switch>
       </DrawerAppBar>

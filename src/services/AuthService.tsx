@@ -1,11 +1,12 @@
 import { http } from '../modules';
 
-const register = (username: string, email: string, password: string) => {
-  return http.post('auth/register', {
-    username,
-    email,
-    password,
-  });
+const register = async (username: string, password: string) => {
+  const response = await http
+    .post('auth/register', {
+      username,
+      password,
+    });
+  return response.data;
 };
 
 const login = async (username: string, password: string) => {
