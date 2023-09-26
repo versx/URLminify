@@ -16,7 +16,22 @@ export const AccountPage = () => {
         <Typography variant="h4" align="center" gutterBottom>
           My Account
         </Typography>
+
+        <Typography variant="h6" align="center" gutterBottom>
+          API Key
+        </Typography>
         <ApiKeyTextField initialValue={currentUser?.apiKey} />
+        <br />
+
+        <Typography variant="h6" align="center" gutterBottom>
+          Change Password
+        </Typography>
+        <br />
+
+        <Typography variant="h6" align="center" gutterBottom>
+          Delete Account
+        </Typography>
+        <br />
       </Paper>
     </Container>
   );
