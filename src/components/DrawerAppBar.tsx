@@ -14,14 +14,14 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import {
-  Menu as MenuIcon,
-} from '@mui/icons-material';
-import { AccountMenu } from './AccountMenu';
+import { Menu as MenuIcon } from '@mui/icons-material';
+
+import { AccountMenu } from '.';
 
 const Title = 'URLminify';
 const DrawerWidth = 240;
-const navItems = ['Home', 'Short URLs', 'About'];
+//const navItems = ['Home', 'Short URLs', 'About'];
+const navItems: string[] = [];
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;

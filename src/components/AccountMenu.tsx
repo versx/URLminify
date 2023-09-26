@@ -8,11 +8,7 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material';
-import {
-  Logout as LogoutIcon,
-  PersonAdd as PersonAddIcon,  
-  Settings as SettingsIcon,
-} from '@mui/icons-material';
+import { Logout as LogoutIcon } from '@mui/icons-material';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -73,24 +69,9 @@ export const AccountMenu = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
+          <Avatar /> My Account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonAddIcon fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <SettingsIcon fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
