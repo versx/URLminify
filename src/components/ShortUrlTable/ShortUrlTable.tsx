@@ -2,32 +2,26 @@ import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useSta
 import {
   AlertColor,
   Box,
-  ButtonGroup,
   Checkbox,
   Fab,
-  IconButton,
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TablePagination,
-  TableRow,
   Tooltip,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import {
-  Add as AddIcon,
-  Delete as DeleteIcon,
-  Edit as EditIcon,
-} from '@mui/icons-material'
+import { Add as AddIcon } from '@mui/icons-material'
 import moment from 'moment';
 
 import {
+  ActionsButtonGroup,
   Order,
   ShortUrlTableHead,
   ShortUrlTableToolbar,
   SnackbarAlert,
+  StyledTableCell,
+  StyledTableRow,
 } from '..';
 import { CreateShortUrlDialog } from '../../dialogs';
 import { substr } from '../../modules';
@@ -41,19 +35,8 @@ interface ShortUrlTableState {
   editModel: ShortUrl | undefined;
 };
 
-const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
 export const ShortUrlTable = (props: any) => {
   //console.log('ShortUrlTable props:', props);
-
   const [rows, setRows] = useState<ShortUrl[]>([]);
   const [state, setState] = useState<ShortUrlTableState>({
     open: false,
@@ -301,7 +284,7 @@ export const ShortUrlTable = (props: any) => {
                     sx={{ cursor: 'pointer' }}
                     onClick={(event: any) => handleRowClick(event, row.slug)}
                   >
-                    <TableCell padding="checkbox">
+                    <StyledTableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
@@ -309,16 +292,16 @@ export const ShortUrlTable = (props: any) => {
                           'aria-labelledby': labelId,
                         }}
                       />
-                    </TableCell>
-                    <TableCell
+                    </StyledTableCell>
+                    <StyledTableCell
                       id={labelId}
                       component="th"
                       scope="row"
                       padding="none"
                     >
                       <strong>{row.slug}</strong>
-                    </TableCell>
-                    <TableCell align="left">
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
                       <Tooltip title={row.originalUrl}>
                         <a
                           href={row.originalUrl}
@@ -333,23 +316,23 @@ export const ShortUrlTable = (props: any) => {
                           {substr(row.originalUrl)}
                         </a>
                       </Tooltip>
-                    </TableCell>
-                    <TableCell align="right">
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
                       {row.visits.toLocaleString()}
-                    </TableCell>
-                    <TableCell
+                    </StyledTableCell>
+                    <StyledTableCell
                       align="right"
                       title={moment(row.createdAt!).format('MMMM Do YYYY, h:mm:ss a')}
                     >
                       {moment(row.createdAt!).calendar()}
-                    </TableCell>
-                    <TableCell align="right">
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
                       <ActionsButtonGroup
                         data={row}
                         onEdit={handleEditShortUrl}
                         onDelete={handleDeleteShortUrl}
                       />
-                    </TableCell>
+                    </StyledTableCell>
                   </StyledTableRow>
                 );
               })}
@@ -359,7 +342,7 @@ export const ShortUrlTable = (props: any) => {
                     height: 53 * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <StyledTableCell colSpan={6} />
                 </StyledTableRow>
               )}
             </TableBody>
@@ -391,35 +374,6 @@ export const ShortUrlTable = (props: any) => {
         onClose={handleCloseAlert}
       />
     </Box>
-  );
-};
-
-interface ActionsButtonGroupProps {
-  data: ShortUrl;
-  onEdit: (shortUrl: ShortUrl) => void;
-  onDelete: (slug: string) => void;
-}
-
-const ActionsButtonGroup = (props: ActionsButtonGroupProps) => {
-  const { data, onEdit, onDelete } = props;
-
-  return (
-    <ButtonGroup variant="outlined">
-      <IconButton
-        title="Edit short URL"
-        size="small"
-        onClick={() => onEdit(data)}
-      >
-        <EditIcon />
-      </IconButton>
-      <IconButton
-        title="Delete short URL"
-        size="small"
-        onClick={() => onDelete(data.slug)}
-      >
-        <DeleteIcon />
-      </IconButton>
-    </ButtonGroup>
   );
 };
 

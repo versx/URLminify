@@ -11,6 +11,11 @@ import {
 import { styled } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
 
+import {
+  ArrowDownward as ArrowDownwardIcon,
+  //ArrowUpward as ArrowUpwardIcon,
+} from '@mui/icons-material';
+
 import { HeadCell, ShortUrlTableProps } from '.';
 import { ShortUrl } from '../../types';
 
@@ -18,30 +23,30 @@ const headCells: readonly HeadCell[] = [
   {
     id: 'slug',
     disablePadding: true,
-    numeric: false,
+    align: 'left',
     label: 'Slug',
   },
   {
     id: 'originalUrl',
     disablePadding: false,
-    numeric: false,
+    align: 'left',
     label: 'Original Url',
   },
   {
     id: 'visits',
     disablePadding: false,
-    numeric: true,
+    align: 'right',
     label: 'Visits',
   },
   {
     id: 'createdAt',
     disablePadding: false,
-    numeric: true,
+    align: 'right',
     label: 'Created',
   },
 ];
 
-const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
+export const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
@@ -51,7 +56,7 @@ const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
   },
 }));
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#303030', //theme.palette.common.black,
     color: 'white', //theme.palette.common.white,
@@ -87,14 +92,16 @@ export const ShortUrlTableHead = (props: ShortUrlTableProps) => {
         {headCells.map((headCell) => (
           <StyledTableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align={headCell.align ?? 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
+            style={{ minWidth: headCell.minWidth, color: 'white' }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               style={{color: 'white'}}
+              IconComponent={ArrowDownwardIcon}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}

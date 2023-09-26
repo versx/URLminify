@@ -6,9 +6,11 @@ export type Order = 'asc' | 'desc';
 
 export interface HeadCell {
   id: keyof ShortUrl;
-  disablePadding: boolean;
-  numeric: boolean;
   label: string;
+  disablePadding: boolean;
+  minWidth?: number;
+  align?: 'left' | 'right' | 'center' | 'justify' | 'inherit' | undefined;
+  //format?: (value: number) => string;
 };
 
 export interface ShortUrlTableProps {
