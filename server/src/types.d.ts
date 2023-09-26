@@ -71,7 +71,6 @@ export type ShortUrlModel = {
   visits: number;
 
   createdAt?: Date;
-  deletedAt?: Date;
   updatedAt?: Date;
 };
 
@@ -84,7 +83,6 @@ export type UserModel = {
   admin?: boolean;
 
   createdAt?: Date;
-  deletedAt?: Date;
   updatedAt?: Date;
 
   shortUrls?: ShortUrlModel[];

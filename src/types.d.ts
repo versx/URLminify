@@ -5,7 +5,6 @@ export type ShortUrl = {
   visits: number;
 
   createdAt?: string;
-  deletedAt?: string;
   updatedAt?: string;
 };
 
@@ -18,7 +17,6 @@ export type User = {
   admin?: boolean;
 
   createdAt?: string;
-  deletedAt?: string;
   updatedAt?: string;
 
   shortUrls?: ShortUrl[];

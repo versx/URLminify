@@ -9,9 +9,7 @@ export const DefaultExpiresIn = 365 * 86400; // 1 year
 // Database table options
 export const SequelizeOptions = {
   createdAt: true,
-  deletedAt: true,
   updatedAt: true,
-  paranoid: true,
   underscored: true,
   timestamps: true,
 };
@@ -24,7 +22,6 @@ export const ShortUrlAttributes = [
   'visits',
   'createdAt',
   'updatedAt',
-  'deletedAt',
 ];
 export const UserAttributes = [
   'id',
@@ -34,7 +31,6 @@ export const UserAttributes = [
   'admin',
   //'createdAt',
   //'updatedAt',
-  //'deletedAt',
 ];
 
 export const DefaultUserPasswordIterations = 8;

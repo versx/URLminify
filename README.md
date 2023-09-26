@@ -57,8 +57,7 @@ NodeJS backend to create short URL addresses from longer URL addresses.
     "password": "password",
     // Database name.
     "database": "urlminifydb",
-    // Timezone used for `createdAt`, `deletedAt`,
-    // and `updatedAt` column values.
+    // Timezone used for `createdAt` and `updatedAt` column values.
     "timezone": "America/Denver",
     // Whether to enable or disable Sequelize database
     // query logging.

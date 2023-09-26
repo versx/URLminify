@@ -1,5 +1,6 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import {
+  AlertColor,
   Box,
   ButtonGroup,
   Checkbox,
@@ -26,7 +27,8 @@ import {
   Order,
   ShortUrlTableHead,
   ShortUrlTableToolbar,
-} from '.';
+  SnackbarAlert,
+} from '..';
 import { CreateShortUrlDialog } from '../../dialogs';
 import { substr } from '../../modules';
 import { ShortUrlService } from '../../services';
@@ -65,12 +67,25 @@ export const ShortUrlTable = (props: any) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const [alertState, setAlertState] = useState({
+    open: false,
+    title: '',
+    severity: 'success' as AlertColor,
+  });
+
   const currentUser = getUserToken();
+
+  const handleCloseAlert = () => setAlertState({open: false, title: '', severity: 'info'});
 
   const handleReloadShortUrls = useCallback(() => {
     ShortUrlService.getShortUrls(currentUser?.id).then((response) => {
       if (response.status !== 'ok') {
         console.error(response);
+        setAlertState({
+          open: true,
+          title: 'Error occurred reloading short URLs.',
+          severity: 'error',
+        });
         return;
       }
       setRows(response.shortUrls);
@@ -80,6 +95,12 @@ export const ShortUrlTable = (props: any) => {
   const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
   const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});
   const handleSubmit = () => {
+    setAlertState({
+      open: true,
+      title: `Short URL ${state.editMode ? 'updated' : 'created'} successfully!`,
+      severity: 'success',
+    });
+
     setState({
       ...state,
       open: false,
@@ -108,16 +129,27 @@ export const ShortUrlTable = (props: any) => {
       return;
     }
 
+    let error = false;
     for (const slug of selected) {
       const response = await ShortUrlService.deleteShortUrl(slug);
       if (response.status !== 'ok') {
-        // TODO: Error
         console.error('handleDelete response:', response);
+        error = true;
       }
     }
 
     setSelected([]);
     handleReloadShortUrls();
+
+    setAlertState({
+      open: true,
+      title: error
+        ? 'Error occurred deleting short URLs.'
+        : 'Short URL deleted successfully!',
+      severity: error
+        ? 'error'
+        : 'success',
+    });
   };
 
   const handleDeleteShortUrl = async (slug: string) => {
@@ -132,9 +164,20 @@ export const ShortUrlTable = (props: any) => {
 
     const response = await ShortUrlService.deleteShortUrl(slug);
     if (response.status !== 'ok') {
-      // TODO: Error
       console.error('handleDeleteShortUrl response:', response);
+      setAlertState({
+        open: true,
+        title:'Error occurred deleting short URLs.',
+        severity: 'error',
+      });
+      return;
     }
+
+    setAlertState({
+      open: true,
+      title: 'Short URL deleted successfully!',
+      severity: 'success',
+    });
 
     setSelected([]);
     handleReloadShortUrls();
@@ -339,6 +382,13 @@ export const ShortUrlTable = (props: any) => {
         model={state.editModel}
         onClose={handleClose}
         onSubmit={handleSubmit}
+      />
+
+      <SnackbarAlert
+        open={alertState.open}
+        title={alertState.title}
+        severity={alertState.severity}
+        onClose={handleCloseAlert}
       />
     </Box>
   );

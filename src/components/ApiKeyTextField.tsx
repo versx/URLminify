@@ -31,7 +31,7 @@ export const ApiKeyTextField = (props: any) => {
     }
 
     const response = await UserService.resetApiKey(currentUser?.id);
-    console.log('resetApiKey response:', response);
+    //console.log('resetApiKey response:', response);
     if (response.status !== 'ok') {
       setAlertState({
         open: true,
@@ -68,33 +68,33 @@ export const ApiKeyTextField = (props: any) => {
 
   return (
     <>
-    <SnackbarAlert
-      open={alertState.open}
-      title={alertState.title}
-      severity={alertState.severity}
-      onClose={handleCloseAlert}
-    />
-    <TextField
-      disabled
-      fullWidth
-      multiline
-      label="API Key"
-      value={apiKey}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton onClick={resetApiKey} title="Reset API Key">
-              <RefreshIcon />
-            </IconButton>
-            <IconButton onClick={copyToClipboard} title="Copy to Clipboard">
-              <FileCopyIcon />
-            </IconButton>
-          </InputAdornment>
-        ),
-      }}
-      variant="outlined"
-      style={{ marginBottom: '15px' }}
-    />
+      <SnackbarAlert
+        open={alertState.open}
+        title={alertState.title}
+        severity={alertState.severity}
+        onClose={handleCloseAlert}
+      />
+      <TextField
+        disabled
+        fullWidth
+        multiline
+        label="API Key"
+        value={apiKey}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={resetApiKey} title="Reset API Key">
+                <RefreshIcon />
+              </IconButton>
+              <IconButton onClick={copyToClipboard} title="Copy to Clipboard">
+                <FileCopyIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        variant="outlined"
+        style={{ marginBottom: '15px' }}
+      />
     </>
   );
 };

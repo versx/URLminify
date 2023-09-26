@@ -38,7 +38,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
 
   const handleSubmit = async () => {
     if (!state.url) {
-      // TODO: Show error
+      // TODO: Error
       return;
     }
 

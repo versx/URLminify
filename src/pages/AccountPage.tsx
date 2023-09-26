@@ -16,9 +16,7 @@ export const AccountPage = () => {
         <Typography variant="h4" align="center" gutterBottom>
           My Account
         </Typography>
-        <ApiKeyTextField
-          initialValue={currentUser?.apiKey}
-        />
+        <ApiKeyTextField initialValue={currentUser?.apiKey} />
       </Paper>
     </Container>
   );
