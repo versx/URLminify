@@ -9,6 +9,7 @@ import {
   TableBody,
   TableContainer,
   TablePagination,
+  TextField,
   Tooltip,
 } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material'
@@ -43,6 +44,7 @@ export const ShortUrlTable = (props: any) => {
     editMode: false,
     editModel: undefined,
   });
+  const [search, setSearch] = useState('');
 
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof ShortUrl>('slug');
@@ -254,6 +256,20 @@ export const ShortUrlTable = (props: any) => {
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}
         />
+        <TextField
+          color="primary"
+          variant="outlined"
+          placeholder="Search..."
+          value={search}
+          size="small"
+          type="search"
+          style={{
+            display: 'flex',
+            alignItems: 'end',
+            marginBottom: 3,
+          }}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <TableContainer>
           <Table
             stickyHeader
@@ -272,6 +288,10 @@ export const ShortUrlTable = (props: any) => {
               {visibleRows.map((row: ShortUrl, index: number) => {
                 const isItemSelected = isSelected(row.slug);
                 const labelId = `enhanced-table-checkbox-${index}`;
+
+                if (search !== '' && !(row.slug.includes(search) || row.originalUrl.includes(search))) {
+                  return '';
+                }
 
                 return (
                   <StyledTableRow

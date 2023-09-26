@@ -104,7 +104,7 @@ export const ShortUrlTableHead = (props: ShortUrlTableProps) => {
               IconComponent={ArrowDownwardIcon}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <strong>{headCell.label}</strong>
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -114,7 +114,7 @@ export const ShortUrlTableHead = (props: ShortUrlTableProps) => {
           </StyledTableCell>
         ))}
         <StyledTableCell align="right">
-          Actions
+          <strong>Actions</strong>
         </StyledTableCell>
       </StyledTableRow>
     </TableHead>

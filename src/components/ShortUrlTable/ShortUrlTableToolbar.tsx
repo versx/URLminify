@@ -4,11 +4,8 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import {
-  Delete as DeleteIcon,
-  FilterList as FilterListIcon,
-} from '@mui/icons-material';
 import { alpha } from '@mui/material/styles';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 
 import { ShortUrlTableToolbarProps } from '.';
 
@@ -42,10 +39,10 @@ export const ShortUrlTableToolbar = (props: ShortUrlTableToolbarProps) => {
           component="div"
           sx={{ display: 'flex', flex: '1 1 100%', justifyContent: 'center' }}
         >
-          Short Urls
+          Short URLs
         </Typography>
       )}
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
         <Tooltip
           title={`Delete ${numSelected.toLocaleString()} selected short URLs`}
         >
@@ -53,16 +50,6 @@ export const ShortUrlTableToolbar = (props: ShortUrlTableToolbarProps) => {
             onClick={onDelete}
           >
             <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip
-          title="Filter list of items"
-        >
-          <IconButton
-            onClick={() => console.log('filter:', numSelected)}
-          >
-            <FilterListIcon />
           </IconButton>
         </Tooltip>
       )}
