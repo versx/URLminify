@@ -20,14 +20,36 @@ import { AccountMenu } from '.';
 
 const Title = 'URLminify';
 const DrawerWidth = 240;
-//const navItems = ['Home', 'Short URLs', 'About'];
-const navItems: string[] = [];
+
+const navItems = [{ text: 'Login', path: '/login' }, { text: 'Register', path: '/register' }];
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const isAuthenticated = Boolean(localStorage.getItem('isAuthenticated'));
+  
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
+
+  const LoginRegisterLinks = () => isAuthenticated ? (
+    <AccountMenu key="account" />
+  ) : (
+    <List>
+      {navItems.map((item) => (
+        <ListItem key={item.path} disablePadding>
+          <ListItemButton
+            href={item.path}
+            style={{
+              textDecoration: 'none',
+              color: 'inherit',
+            }}
+            sx={{ textAlign: 'center' }}
+          >
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
+  );
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -37,15 +59,7 @@ export const DrawerAppBar = (props: any) => {
         </a>
       </Typography>
       <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <LoginRegisterLinks />
     </Box>
   );
 
@@ -74,12 +88,17 @@ export const DrawerAppBar = (props: any) => {
             </a>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
-            ))}
-            <AccountMenu key="account" />
+            {isAuthenticated ? (
+              <AccountMenu />
+            ) : (
+              navItems.map((item) => (
+                <a key={item.path} href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
+                  <Button key={item.path} sx={{ color: '#fff' }}>
+                    {item.text}
+                  </Button>
+                </a>
+              ))
+            )}
           </Box>
         </Toolbar>
       </AppBar>

@@ -1,6 +1,7 @@
 import { Application, json, urlencoded } from 'express';
 import helmet from 'helmet';
 
+import { AuthRouter } from './auth.routes';
 import { ShortUrlRouter } from './shorturl.routes';
 import { UserRouter } from './user.routes';
 import { LoggingMiddleware } from '../middleware';
@@ -15,6 +16,9 @@ export const ApiRouter = (app: Application) => {
 
   // Middlewares
   app.use(LoggingMiddleware);
+
+  // Initialize auth routes
+  AuthRouter(app);
 
   // Initialize short url routes
   ShortUrlRouter(app);

@@ -1,10 +1,27 @@
-import { HomePage } from './pages';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes as Switch,
+} from 'react-router-dom';
+
+import { DrawerAppBar, ProtectedRoute } from './components';
+import { AccountPage, HomePage, LoginPage, RegisterPage } from './pages';
 
 const App = () => {
   return (
-    <div className="App">
-      <HomePage />
-    </div>
+    <Router>
+      <DrawerAppBar>
+      <Switch>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route index element={<HomePage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/logout" element={<></>} />
+        </Route>
+      </Switch>
+      </DrawerAppBar>
+    </Router>
   );
 };
 

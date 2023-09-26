@@ -4,6 +4,21 @@ import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { logError } from '.';
 import { DefaultExpiresIn } from '../consts';
 import config from '../config.json';
+import { db } from '../models';
+
+const login = async (username: string, password: string) => {
+  const user = await db.user.findOne({ username });
+  console.log('login:', user);
+  // TODO: Properly check password
+  if (user.password === password) {
+    return true;
+  }
+  return false;
+};
+
+const register = () => {
+
+};
 
 const generateAccessToken = (username: string): string => {
   const signOptions = { expiresIn: DefaultExpiresIn };
@@ -33,6 +48,8 @@ const createVerificationCode = () => {
 };
 
 export const AuthService = {
+  login,
+  register,
   generateAccessToken,
   verifyAccessToken,
   createVerificationCode,

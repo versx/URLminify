@@ -1,4 +1,5 @@
 import React, { MouseEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Divider,
@@ -10,9 +11,12 @@ import {
 } from '@mui/material';
 import { Logout as LogoutIcon } from '@mui/icons-material';
 
+import { AuthService } from '../services';
+
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -68,11 +72,17 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => {
+          handleClose();
+          navigate('/account');
+        }}>
           <Avatar /> My Account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => {
+          handleClose();
+          AuthService.logout();
+        }}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
