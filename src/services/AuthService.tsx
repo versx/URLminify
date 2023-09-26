@@ -1,4 +1,5 @@
 import { http } from '../modules';
+import { setUserToken } from '../stores';
 
 const register = async (username: string, password: string) => {
   const response = await http
@@ -17,10 +18,10 @@ const login = async (username: string, password: string) => {
     });
   //console.log('login response:', response);
   const data = response.data;
-  //const user = data?.data?.user;
-  //if (user) {
-  //  setUserToken(user);
-  //}
+  const user = data?.user;
+  if (user) {
+    setUserToken(user);
+  }
   return data;
 };
 

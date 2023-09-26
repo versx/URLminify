@@ -30,6 +30,7 @@ import {
 import { CreateShortUrlDialog } from '../../dialogs';
 import { substr } from '../../modules';
 import { ShortUrlService } from '../../services';
+import { getUserToken } from '../../stores';
 import { ShortUrl } from '../../types';
 
 interface ShortUrlTableState {
@@ -64,16 +65,17 @@ export const ShortUrlTable = (props: any) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const currentUser = getUserToken();
+
   const handleReloadShortUrls = useCallback(() => {
-    ShortUrlService.getShortUrls().then((response) => {
-      //console.log('getShortUrls response:', response);
+    ShortUrlService.getShortUrls(currentUser?.id).then((response) => {
       if (response.status !== 'ok') {
-        console.error('getShortUrls response:', response);
+        console.error(response);
         return;
       }
       setRows(response.shortUrls);
     });
-  }, []);
+  }, [currentUser?.id]);
 
   const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
   const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});

@@ -10,9 +10,8 @@ import {
 } from '@mui/material';
 
 import { ShortUrlService } from '../services';
+import { getUserToken } from '../stores';
 import { ShortUrl } from '../types';
-
-const userId = 1; // TODO: userId
 
 interface CreateShortUrlDialogProps {
   open: boolean;
@@ -35,6 +34,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
     name: editMode ? model?.slug : '',
     url: editMode ? model?.originalUrl ?? '' : '',
   });
+  const currentUser = getUserToken();
 
   const handleSubmit = async () => {
     if (!state.url) {
@@ -44,7 +44,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
 
     const response = editMode
       ? await ShortUrlService.updateShortUrl(state.name!, { url: state.url })
-      : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, userId });
+      : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, userId: currentUser?.id });
     if (response.status !== 'ok') {
       console.error(response);
       // TODO: Error

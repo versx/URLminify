@@ -8,10 +8,10 @@ import {
 } from '../types';
 
 const getShortUrls = async (req: Request, res: Response) => {
-  const { pretty = false } = req.query;
+  const { pretty = false, userId } = req.query;
   req.app.set('json spaces', pretty === 'true' ? 2 : 0);
 
-  const results = await ShortUrlService.getShortUrls();
+  const results = await ShortUrlService.getShortUrls(userId?.toString());
   res.json({
     status: 'ok',
     shortUrls: results,

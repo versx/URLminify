@@ -9,8 +9,7 @@ import { db } from '../models';
 
 const login = async (username: string, password: string) => {
   try {
-    const user = await db.user.findOne({ username });
-    console.log('login:', user);
+    const user = await db.user.findOne({ where: { username } });
     if (!user) {
       return false;
     }
@@ -20,12 +19,17 @@ const login = async (username: string, password: string) => {
     }
 
     const passwordIsValid = compareSync(password, user.password);
-    console.log('')
     if (!passwordIsValid) {
       return false;
     }
 
-    return true;
+    return {
+      id: user.id,
+      username: user.username,
+      apiKey: user.apiKey,
+      enabled: user.enabled,
+      admin: user.admin,
+    };
   } catch (err) {
     console.error('login:', err);
     return false;

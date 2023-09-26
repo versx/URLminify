@@ -7,8 +7,9 @@ import {
   UpdateShortUrlRequest,
 } from '../types';
 
-const getShortUrls = async (): Promise<ShortUrlModel[]> => {
+const getShortUrls = async (userId?: number | string): Promise<ShortUrlModel[]> => {
   const models = await db.shortUrl.findAll({
+    where: !!userId ? { userId } : {},
     attributes: ShortUrlAttributes,
   });
   return models;

@@ -12,11 +12,13 @@ import {
 import { Logout as LogoutIcon } from '@mui/icons-material';
 
 import { AuthService } from '../services';
+import { getUserToken } from '../stores';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const currentUser = getUserToken();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -24,18 +26,21 @@ export const AccountMenu = () => {
   return (
     <>
       <Tooltip title="Account Settings">
-        <IconButton
-          onClick={handleClick}
-          size="small"
-          sx={{ ml: 2 }}
-          aria-controls={open ? 'account-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-        >
-          <Avatar sx={{ width: 32, height: 32 }}>
-            M
-          </Avatar>
-        </IconButton>
+        <>
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2, color: 'inherit' }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 32, height: 32 }}>
+              {currentUser?.username[0]}
+            </Avatar>
+          </IconButton>
+          &nbsp;{currentUser?.username}
+        </>
       </Tooltip>
       <Menu
         anchorEl={anchorEl}

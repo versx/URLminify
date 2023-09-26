@@ -1,10 +1,10 @@
 import { http } from '../modules';
 import { CreateShortUrlRequest, UpdateShortUrlRequest } from '../types';
 
-const getShortUrls = async () => {
+const getShortUrls = async (userId: number) => {
   try {
     const response = await http
-      .get(`shorturls`);
+      .get(`shorturls?userId=${userId}`);
     return response.data;
   } catch (err) {
     console.error(err);

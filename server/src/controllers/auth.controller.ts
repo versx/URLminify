@@ -15,6 +15,7 @@ const login = async (req: Request, res: Response) => {
 
   res.json({
     status: 'ok',
+    user: result,
   });
 };
 
