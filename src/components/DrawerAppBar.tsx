@@ -14,11 +14,14 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+} from '@mui/icons-material';
+import { AccountMenu } from './AccountMenu';
 
 const Title = 'URLminify';
 const DrawerWidth = 240;
-const navItems = ['Home', 'Short URLs', 'About', 'Profile'];
+const navItems = ['Home', 'Short URLs', 'About'];
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
@@ -76,6 +79,7 @@ export const DrawerAppBar = (props: any) => {
                 {item}
               </Button>
             ))}
+            <AccountMenu key="account" />
           </Box>
         </Toolbar>
       </AppBar>
