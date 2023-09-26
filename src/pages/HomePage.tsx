@@ -1,12 +1,7 @@
-import {
-  DrawerAppBar,
-  ShortUrlTable,
-} from '../components';
+import { ShortUrlTable } from '../components';
 
 export const HomePage = () => {
   return (
-    <DrawerAppBar>
-      <ShortUrlTable />
-    </DrawerAppBar>
+    <ShortUrlTable />
   );
 };
