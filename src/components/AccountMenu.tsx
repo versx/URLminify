@@ -23,6 +23,16 @@ export const AccountMenu = () => {
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
+  const handleMyAccount = () => {
+    handleClose();
+    navigate('/account');
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    AuthService.logout();
+  };
+
   return (
     <>
       <Tooltip title="Account Settings">
@@ -77,17 +87,11 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={() => {
-          handleClose();
-          navigate('/account');
-        }}>
+        <MenuItem onClick={handleMyAccount}>
           <Avatar /> My Account
         </MenuItem>
         <Divider />
-        <MenuItem onClick={() => {
-          handleClose();
-          AuthService.logout();
-        }}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
