@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 
 import { auth, host, port } from './config.json';
 import { db, testConnection } from './models';
@@ -19,6 +20,10 @@ import { UserService, color, log } from './services';
 
   // Initialize HTTP server
   const app = express();
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
 
   // Initialize routes
   ApiRouter(app);

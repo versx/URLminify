@@ -83,14 +83,11 @@ export type UserModel = {
   enabled?: boolean;
   admin?: boolean;
 
-  shortUrls?: ShortUrlModel[];
-
-  accessToken?: string;
-  refreshToken?: string;
-
   createdAt?: Date;
   deletedAt?: Date;
   updatedAt?: Date;
+
+  shortUrls?: ShortUrlModel[];
 };
 
 export type Status = 'ok' | 'error';

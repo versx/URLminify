@@ -20,9 +20,10 @@ export const ShortUrlAttributes = [
   'slug',
   'originalUrl',
   'userId',
-  //'createdAt',
-  //'updatedAt',
-  //'deletedAt',
+  'visits',
+  'createdAt',
+  'updatedAt',
+  'deletedAt',
 ];
 export const UserAttributes = [
   'id',
