@@ -82,7 +82,7 @@ const resetApiKey = async (req: Request, res: Response) => {
     });
   }
 
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', apiKey: result });
 };
 
 export const UserController = {

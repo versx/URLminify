@@ -73,13 +73,18 @@ const createUser = async (user: UserModel, isAdmin: boolean = false): Promise<Us
 };
 
 const resetApiKey = async (id: number) => {
-  const user = await getUser(id);
-  const accessToken = AuthService.generateAccessToken(user.username);
-  const apiKey = btoa(accessToken);
+  try {
+    const user = await getUser(id);
+    const accessToken = AuthService.generateAccessToken(user.username);
+    const apiKey = btoa(accessToken);
 
-  user.set({ apiKey });
-  await user.save();
-  return true;
+    user.set({ apiKey });
+    await user.save();
+    return apiKey;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 };
 
 const isValidPassword = (password: string, hashedPassword: string) => {
