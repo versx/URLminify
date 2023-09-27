@@ -2,7 +2,7 @@ import { http } from '../modules';
 import { setUserToken } from '../stores';
 
 const register = async (username: string, password: string) => {
-  const response = await http
+  const response = await http()
     .post('auth/register', {
       username,
       password,
@@ -11,7 +11,7 @@ const register = async (username: string, password: string) => {
 };
 
 const login = async (username: string, password: string) => {
-  const response = await http
+  const response = await http()
     .post('auth/login', {
       username,
       password,
