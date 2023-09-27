@@ -17,11 +17,17 @@ import {
 import { Menu as MenuIcon } from '@mui/icons-material';
 
 import { AccountMenu } from '.';
+import { Routes } from '../consts';
 
 const Title = 'URLminify';
 const DrawerWidth = 240;
 
-const navItems = [{ text: 'Login', path: '/login' }, { text: 'Register', path: '/register' }];
+const navItems = [
+  { text: 'Dashboard', path: Routes.dashboard, requiresAuth: true},
+  { text: 'URLs', path: Routes.shortUrls, requiresAuth: true},
+  { text: 'Login', path: Routes.login, requiresAuth: false },
+  { text: 'Register', path: Routes.register, requiresAuth: false },
+];
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
@@ -30,11 +36,10 @@ export const DrawerAppBar = (props: any) => {
   
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
 
-  const LoginRegisterLinks = () => isAuthenticated ? (
-    <AccountMenu key="account" />
-  ) : (
+  const LoginRegisterLinks = () => (
+    <>
     <List>
-      {navItems.map((item) => (
+      {navItems.map((item) => ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
         <ListItem key={item.path} disablePadding>
           <ListItemButton
             href={item.path}
@@ -49,12 +54,14 @@ export const DrawerAppBar = (props: any) => {
         </ListItem>
       ))}
     </List>
+    {isAuthenticated && (<AccountMenu key="account" />)}
+    </>
   );
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        <a href='/' style={{textDecoration: 'none', color: 'inherit'}}>
+        <a href={Routes.dashboard} style={{textDecoration: 'none', color: 'inherit'}}>
           {Title}
         </a>
       </Typography>
@@ -83,22 +90,23 @@ export const DrawerAppBar = (props: any) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'block' } }}
           >
-            <a href='/' style={{textDecoration: 'none', color: 'inherit'}}>
+            <a href={Routes.dashboard} style={{textDecoration: 'none', color: 'inherit'}}>
               {Title}
             </a>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {isAuthenticated ? (
-              <AccountMenu />
-            ) : (
-              navItems.map((item) => (
-                <a key={item.path} href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
-                  <Button key={item.path} sx={{ color: '#fff' }}>
-                    {item.text}
-                  </Button>
-                </a>
-              ))
-            )}
+              <>
+                {navItems.map((item) => (
+                  ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
+                  <a key={item.path} href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
+                    <Button key={item.path} sx={{ color: '#fff' }}>
+                      {item.text}
+                    </Button>
+                  </a>
+                  )
+                ))}
+                {isAuthenticated && (<AccountMenu />)}
+              </>
           </Box>
         </Toolbar>
       </AppBar>

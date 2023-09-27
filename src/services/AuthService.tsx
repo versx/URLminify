@@ -1,3 +1,4 @@
+import { Routes } from '../consts';
 import { http } from '../modules';
 import { setUserToken } from '../stores';
 
@@ -27,7 +28,7 @@ const login = async (username: string, password: string) => {
 
 const logout = () => {
   localStorage.clear();
-  window.location.href = '/login';
+  window.location.href = Routes.login;
 };
 
 export const AuthService = {

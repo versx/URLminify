@@ -131,10 +131,31 @@ const deleteShortUrl = async (req: Request, res: Response) => {
   res.json({ status: 'ok' });
 };
 
+const getShortUrlsStats = async (req: Request, res: Response) => {
+  const { userId } = req.query;
+  if (!userId) {
+    return res.json({
+      status: 'error',
+      error: `User ID is not defined!`,
+    });
+  }
+
+  const stats = await ShortUrlService.getShortUrlsStats(parseInt(userId.toString()));
+  if (!stats) {
+    return res.json({
+      status: 'error',
+      error: 'Failed to get short url stats.',
+    });
+  }
+
+  res.json({ status: 'ok', stats });
+};
+
 export const ShortUrlController = {
   createShortUrl,
   getShortUrl,
   getShortUrls,
   updateShortUrl,
   deleteShortUrl,
+  getShortUrlsStats,
 };

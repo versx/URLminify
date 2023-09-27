@@ -23,7 +23,7 @@ export const ShortUrlTableToolbar = (props: ShortUrlTableToolbarProps) => {
         }),
       }}
     >
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
         <Typography
           sx={{ flex: '1 1 100%' }}
           color="inherit"
@@ -31,15 +31,6 @@ export const ShortUrlTableToolbar = (props: ShortUrlTableToolbarProps) => {
           component="div"
         >
           {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          id="tableTitle"
-          variant="h3"
-          component="div"
-          sx={{ display: 'flex', flex: '1 1 100%', justifyContent: 'center' }}
-        >
-          Short URLs
         </Typography>
       )}
       {numSelected > 0 && (

@@ -1,4 +1,5 @@
 export * from './AccountPage';
-export * from './HomePage';
+export * from './DashboardPage';
+export * from './ShortUrlsPage';
 export * from './LoginPage';
 export * from './RegisterPage';

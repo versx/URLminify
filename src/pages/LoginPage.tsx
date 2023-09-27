@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 
+import { Routes } from '../consts';
 import { AuthService } from '../services';
 
 export const LoginPage = () => {
@@ -15,7 +16,7 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || '/';
+  const from = location.state?.from || Routes.dashboard;
 
   const handleLogin = async () => {
     const response = await AuthService.login(username, password);

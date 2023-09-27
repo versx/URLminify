@@ -5,18 +5,26 @@ import {
 } from 'react-router-dom';
 
 import { DrawerAppBar, ProtectedRoute } from './components';
-import { AccountPage, HomePage, LoginPage, RegisterPage } from './pages';
+import { Routes } from './consts';
+import {
+  AccountPage,
+  DashboardPage,
+  LoginPage,
+  RegisterPage,
+  ShortUrlsPage,
+} from './pages';
 
 const App = () => {
   return (
     <Router>
       <DrawerAppBar>
       <Switch>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<ProtectedRoute />}>
-          <Route index element={<HomePage />} />
-          <Route path="/account" element={<AccountPage />} />
+        <Route path={Routes.login} element={<LoginPage />} />
+        <Route path={Routes.register} element={<RegisterPage />} />
+        <Route path={Routes.dashboard} element={<ProtectedRoute />}>
+          <Route index element={<DashboardPage />} />
+          <Route path={Routes.shortUrls} element={<ShortUrlsPage />} />
+          <Route path={Routes.settings} element={<AccountPage />} />
         </Route>
       </Switch>
       </DrawerAppBar>

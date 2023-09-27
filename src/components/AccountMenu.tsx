@@ -9,8 +9,12 @@ import {
   MenuItem,
   Tooltip,
 } from '@mui/material';
-import { Logout as LogoutIcon } from '@mui/icons-material';
+import {
+  Settings as SettingsIcon,
+  Logout as LogoutIcon,
+} from '@mui/icons-material';
 
+import { Routes } from '../consts';
 import { AuthService } from '../services';
 import { getUserToken } from '../stores';
 
@@ -25,7 +29,7 @@ export const AccountMenu = () => {
 
   const handleMyAccount = () => {
     handleClose();
-    navigate('/account');
+    navigate(Routes.settings);
   };
 
   const handleLogout = () => {
@@ -88,7 +92,10 @@ export const AccountMenu = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={handleMyAccount}>
-          <Avatar /> My Account
+          <ListItemIcon>
+            <SettingsIcon fontSize="small" />
+          </ListItemIcon>
+          Settings
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>

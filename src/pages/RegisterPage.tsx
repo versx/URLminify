@@ -7,6 +7,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+
+import { Routes } from '../consts';
 import { AuthService } from '../services';
 
 export const RegisterPage = () => {
@@ -15,7 +17,7 @@ export const RegisterPage = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || '/';
+  const from = location.state?.from || Routes.dashboard;
 
   const handleRegister = async () => {
     const response = await AuthService.register(username, password);

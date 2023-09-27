@@ -41,9 +41,20 @@ const deleteShortUrl = async (slug: string) => {
   }
 };
 
+const getTopShortUrlStats = async (userId: number) => {
+  try {
+    const response = await http()
+      .get(`shorturls/stats?userId=${userId}`);
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const ShortUrlService = {
   getShortUrls,
   createShortUrl,
   updateShortUrl,
   deleteShortUrl,
+  getTopShortUrlStats,
 };

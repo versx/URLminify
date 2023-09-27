@@ -15,4 +15,5 @@ export const ShortUrlRouter = (app: Application) => {
       .delete(ShortUrlController.deleteShortUrl);
 
   app.get(ShortUrlsApiRoute + '/create', ShortUrlController.createShortUrl);
+  app.get(ShortUrlsApiRoute + '/stats', ShortUrlController.getShortUrlsStats);
 };

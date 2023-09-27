@@ -71,6 +71,21 @@ const isRegisteredByUser = async (userId: number, url: string): Promise<ShortUrl
   return model;
 };
 
+const getShortUrlsStats = async (userId: number, top: number = 5) => {
+  const stats = await db.shortUrl.findAll({
+    where: { userId },
+    attributes: [
+      'slug',
+      'visits',
+    ],
+    order: [
+      ['visits', 'DESC'],
+    ],
+    limit: top,
+  });
+  return stats;
+};
+
 export const ShortUrlService = {
   getShortUrl,
   getShortUrls,
@@ -78,4 +93,5 @@ export const ShortUrlService = {
   updateShortUrl,
   deleteShortUrl,
   isRegisteredByUser,
+  getShortUrlsStats,
 };

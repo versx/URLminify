@@ -72,6 +72,20 @@ const createUser = async (user: UserModel, isAdmin: boolean = false): Promise<Us
   return result;
 };
 
+const deleteUser = async (userId: number) => {
+  try {
+    const user = await getUser(userId);
+    if (user) {
+      await user?.destroy();
+    }
+    // TODO: Delete user's short urls
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
 const resetApiKey = async (id: number) => {
   try {
     const user = await getUser(id);
@@ -98,6 +112,7 @@ export const UserService = {
   getUser,
   getUserBy,
   createUser,
+  deleteUser,
   resetApiKey,
   isValidPassword,
 };
