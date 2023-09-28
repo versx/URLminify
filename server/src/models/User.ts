@@ -9,7 +9,7 @@ export const User = (sequelize: Sequelize) =>
       allowNull: false,
       //unique: true,
     },
-    password: { // TODO: Change to accessToken and refreshToken
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },

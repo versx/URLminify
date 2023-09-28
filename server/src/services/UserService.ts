@@ -88,7 +88,21 @@ const deleteUser = async (userId: number) => {
 
 const changePassword = async (userId: number, oldPassword: string, newPassword: string) => {
   try {
-    // TODO: Change password
+    const user = await db.user.findByPk(userId);
+    if (!user) {
+      return false;
+    }
+
+    if (!compareSync(oldPassword, user.password)) {
+      console.warn('old password does not match');
+      return false;
+    }
+
+    const newPasswordHash = hashSync(newPassword, DefaultUserPasswordIterations);
+    user.set({
+      password: newPasswordHash,
+    });
+    await user.save();
     return true;
   } catch (err) {
     console.error(err);
