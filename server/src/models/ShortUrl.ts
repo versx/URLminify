@@ -22,4 +22,13 @@ export const ShortUrl = (sequelize: Sequelize) =>
       allowNull: false,
       defaultValue: 0,
     },
+    expiry: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+    },
+    enabled: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   }, SequelizeOptions);

@@ -254,7 +254,7 @@ export const ShortUrlTable = (props: any) => {
               rowCount={rows.length}
             />
             <TableBody>
-              {visibleRows.map((row: ShortUrl, index: number) => {
+              {visibleRows.map((row: any, index: number) => { //ShortUrl
                 const isItemSelected = isSelected(row.slug);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -309,6 +309,12 @@ export const ShortUrlTable = (props: any) => {
                     <StyledTableCell align="right">
                       {row.visits.toLocaleString()}
                     </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.expiry ? moment(row.expiry).calendar() : ''}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.enabled ? 'Yes' : 'No'}
+                    </StyledTableCell>
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt!).format('MMMM Do YYYY, h:mm:ss a')}
@@ -317,7 +323,7 @@ export const ShortUrlTable = (props: any) => {
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       <ActionsButtonGroup
-                        data={row}
+                        model={row}
                         onEdit={handleEditShortUrl}
                         onDelete={handleDeleteShortUrl}
                       />

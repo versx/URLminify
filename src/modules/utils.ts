@@ -1,4 +1,5 @@
 import { Order } from '../components';
+import { ShortUrl } from '../types';
 
 export const substr = (text: string, maxChars: number = 30, addEllipsis: boolean = true) => {
   if (text.length <= maxChars) {
@@ -18,12 +19,12 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 };
 
-export function getComparator<Key extends keyof any>(
+export function getComparator<Key extends keyof ShortUrl>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]?: number | string },
-  b: { [key in Key]?: number | string },
+  a: { [key in Key]?: boolean | number | string | Date | null },
+  b: { [key in Key]?: boolean | number | string | Date | null },
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)

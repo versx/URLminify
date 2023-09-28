@@ -3,6 +3,8 @@ export type ShortUrl = {
   originalUrl: string;
   userId: number;
   visits: number;
+  expiry: Date | null;
+  enabled: boolean;
 
   createdAt?: string;
   updatedAt?: string;
@@ -25,6 +27,8 @@ export type User = {
 export type CreateShortUrlRequest = {
   name?: string;
   url: string;
+  expiry?: Date | null;
+  enabled: boolean;
   userId: number;
 };
 
@@ -33,6 +37,8 @@ export type CreateShortUrlResponse = {
   shortUrl?: {
     slug: string;
     url: string;
+    expiry?: Date | null;
+    enabled: boolean;
     userId: number;
   };
   originalUrl: string;
@@ -40,6 +46,8 @@ export type CreateShortUrlResponse = {
 
 export type UpdateShortUrlRequest = {
   url: string;
+  expiry: Date | null;
+  enabled: boolean;
 };
 
 export type UpdateShortUrlResponse = {
@@ -47,6 +55,8 @@ export type UpdateShortUrlResponse = {
   shortUrl?: {
     slug: string;
     url: string;
+    expiry?: Date | null;
+    enabled: boolean;
     userId: number;
   };
   originalUrl: string;

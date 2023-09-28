@@ -39,6 +39,18 @@ const headCells: readonly HeadCell[] = [
     label: 'Visits',
   },
   {
+    id: 'expiry',
+    disablePadding: false,
+    align: 'right',
+    label: 'Expires',
+  },
+  {
+    id: 'enabled',
+    disablePadding: false,
+    align: 'right',
+    label: 'Enabled',
+  },
+  {
     id: 'createdAt',
     disablePadding: false,
     align: 'right',

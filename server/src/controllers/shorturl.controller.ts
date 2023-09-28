@@ -23,7 +23,7 @@ const getShortUrl = async (req: Request, res: Response) => {
   if (!slug) {
     return res.json({
       status: 'error',
-      error: `Slug is not defined!`,
+      error: `Slug is not defined.`,
     });
   }
 
@@ -32,6 +32,20 @@ const getShortUrl = async (req: Request, res: Response) => {
     return res.json({
       status: 'error',
       message: 'Slug does not exist.',
+    });
+  }
+
+  if (!shortUrl.enabled) {
+    return res.json({
+      status: 'error',
+      message: 'Slug is disabled.',
+    });
+  }
+
+  if (shortUrl.expiry && shortUrl.expiry < new Date()) {
+    return res.json({
+      status: 'error',
+      message: 'Slug has expired.',
     });
   }
 
@@ -55,6 +69,8 @@ const createShortUrl = async (req: Request, res: Response) => {
       shortUrl: {
         url: `${config.domain}/${existing.slug}`,
         slug: existing.slug,
+        expiry: existing.expiry,
+        enabled: existing.enabled,
         userId: existing.userId,
       },
       originalUrl: existing.originalUrl,
@@ -74,6 +90,8 @@ const createShortUrl = async (req: Request, res: Response) => {
     shortUrl: {
       url: `${config.domain}/${result.slug}`,
       slug: result.slug,
+      expiry: result.expiry,
+      enabled: result.enabled,
       userId: result.userId,
     },
     originalUrl: result.originalUrl,
@@ -104,6 +122,8 @@ const updateShortUrl = async (req: Request, res: Response) => {
     shortUrl: {
       url: `${config.domain}/${result.slug}`,
       slug: result.slug,
+      expiry: result.expiry,
+      enabled: result.enabled,
       userId: result.userId,
     },
     originalUrl: result.originalUrl,

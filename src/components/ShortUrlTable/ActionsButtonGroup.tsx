@@ -10,13 +10,13 @@ import {
 import { ShortUrl } from '../../types';
 
 export interface ActionsButtonGroupProps {
-  data: ShortUrl;
+  model: ShortUrl;
   onEdit: (shortUrl: ShortUrl) => void;
   onDelete: (slug: string) => void;
 }
 
 export const ActionsButtonGroup = (props: ActionsButtonGroupProps) => {
-  const { data, onEdit, onDelete } = props;
+  const { model, onEdit, onDelete } = props;
 
   return (
     <ButtonGroup variant="outlined">
@@ -25,7 +25,7 @@ export const ActionsButtonGroup = (props: ActionsButtonGroupProps) => {
         size="small"
         onMouseOver={(event: any) => event.target.style.color = 'dodgerblue'}
         onMouseOut={(event: any) => event.target.style.color = 'rgba(0, 0, 0, 0.54)'}
-        onClick={() => onEdit(data)}
+        onClick={() => onEdit(model)}
       >
         <EditIcon />
       </IconButton>
@@ -34,7 +34,7 @@ export const ActionsButtonGroup = (props: ActionsButtonGroupProps) => {
         size="small"
         onMouseOver={(event: any) => event.target.style.color = 'red'}
         onMouseOut={(event: any) => event.target.style.color = 'rgba(0, 0, 0, 0.54)'}
-        onClick={() => onDelete(data.slug)}
+        onClick={() => onDelete(model.slug)}
       >
         <DeleteIcon />
       </IconButton>

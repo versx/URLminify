@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControlLabel,
   TextField,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
@@ -13,6 +14,7 @@ import { useSnackbar } from 'notistack';
 import { ShortUrlService } from '../services';
 import { getUserToken } from '../stores';
 import { ShortUrl } from '../types';
+import { IOSSwitch } from '../components';
 
 interface CreateShortUrlDialogProps {
   open: boolean;
@@ -25,6 +27,8 @@ interface CreateShortUrlDialogProps {
 interface CreateShortUrlDialogState {
   name?: string;
   url: string;
+  expiry: Date | null;
+  enabled: boolean;
 };
 
 export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
@@ -34,6 +38,8 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
   const [state, setState] = useState<CreateShortUrlDialogState>({
     name: editMode ? model?.slug : '',
     url: editMode ? model?.originalUrl ?? '' : '',
+    expiry: editMode ? model?.expiry ?? null : null,
+    enabled: editMode ? model?.enabled ?? true : true,
   });
   const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
@@ -45,20 +51,20 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
     }
 
     const response = editMode
-      ? await ShortUrlService.updateShortUrl(state.name!, { url: state.url })
-      : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, userId: currentUser?.id });
+      ? await ShortUrlService.updateShortUrl(state.name!, { url: state.url, expiry: state.expiry, enabled: state.enabled })
+      : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, expiry: state.expiry, enabled: state.enabled, userId: currentUser?.id });
     if (response.status !== 'ok') {
       //console.error(response);
       enqueueSnackbar(`Failed to ${editMode ? 'update' : 'create'} short URL.`, { variant: 'error' });
       return;
     }
 
-    setState({ name: '', url: '' });
+    setState({ name: '', url: '', expiry: null, enabled: true });
     onSubmit && onSubmit();
   };
 
   const handleClose = () => {
-    setState({ name: '', url: '' });
+    setState({ name: '', url: '', expiry: null, enabled: true });
     onClose && onClose();
   };
 
@@ -68,6 +74,8 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       setState({
         name: model?.slug ?? '',
         url: model?.originalUrl ?? '',
+        expiry: model?.expiry ?? null,
+        enabled: model?.enabled ?? true,
       });
     }
   }, [editMode, model]);
@@ -108,6 +116,26 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
           variant="outlined"
           value={state.url}
           onChange={e => setState({...state, url: e.target.value})}
+          style={{
+            marginBottom: 10,
+          }}
+        />
+        <TextField
+          fullWidth
+          label="Expiry Date (optional)"
+          type="datetime-local"
+          value={state.expiry ? formatDateForDateTimeInput(new Date(state.expiry)) : null}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={e => setState({...state, expiry: e.target.value ? new Date(e.target.value) : null})}
+          style={{
+            marginBottom: 10,
+          }}
+        />        
+        <FormControlLabel
+          control={<IOSSwitch sx={{ m: 1 }} checked={state.enabled} onChange={(e => setState({...state, enabled: e.target.checked }))} />}
+          label="Enabled"
         />
       </DialogContent>
       <DialogActions style={{ padding: '20px', paddingTop: '0px' }}>
@@ -135,4 +163,13 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       </DialogActions>
     </Dialog>
   );
+};
+
+const formatDateForDateTimeInput = (date: Date): string => {
+  const YYYY = date.getFullYear();
+  const MM = String(date.getMonth() + 1).padStart(2, '0');  // January is 0!
+  const DD = String(date.getDate()).padStart(2, '0');
+  const HH = String(date.getHours()).padStart(2, '0');
+  const MI = String(date.getMinutes()).padStart(2, '0');
+  return `${YYYY}-${MM}-${DD}T${HH}:${MI}`;
 };

@@ -60,8 +60,9 @@ export const DrawerAppBar = (props: any) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2, justifyContent: 'center' }}>
         <a href={Routes.dashboard} style={{textDecoration: 'none', color: 'inherit'}}>
+        <img src="/logo192.png" alt="URLminify Logo" width={28} height={28} style={{ marginRight: '5px' }} />
           {Title}
         </a>
       </Typography>
@@ -85,6 +86,7 @@ export const DrawerAppBar = (props: any) => {
             <MenuIcon />
           </IconButton>
 
+          <img src="/logo192.png" alt="URLminify Logo" width={28} height={28} style={{ marginRight: '5px' }} />
           <Typography
             variant="h6"
             component="div"

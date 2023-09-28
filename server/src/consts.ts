@@ -20,6 +20,8 @@ export const ShortUrlAttributes = [
   'originalUrl',
   'userId',
   'visits',
+  'expiry',
+  'enabled',
   'createdAt',
   'updatedAt',
 ];

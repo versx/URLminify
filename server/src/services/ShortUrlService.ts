@@ -23,7 +23,7 @@ const getShortUrl = async (slug: string) => {
 };
 
 const createShortUrl = async (payload: CreateShortUrlRequest): Promise<ShortUrlModel> => {
-  const { name, url, userId } = payload;
+  const { name, url, expiry, enabled, userId } = payload;
 
   let slug = '';
   if (!!name && name !== '') {
@@ -41,19 +41,25 @@ const createShortUrl = async (payload: CreateShortUrlRequest): Promise<ShortUrlM
   const result = await db.shortUrl.create({
     originalUrl: url,
     slug,
+    expiry: expiry ?? null,
+    enabled,
     userId,
   });
   return result;
 };
 
 const updateShortUrl = async (slug: string, payload: UpdateShortUrlRequest): Promise<ShortUrlModel | false> => {
-  const { url } = payload;
+  const { url, expiry, enabled } = payload;
   const model = await getShortUrl(slug);
   if (!model) {
     return false;
   }
 
-  model.set({ originalUrl: url });
+  model.set({
+    originalUrl: url,
+    expiry: expiry ?? null,
+    enabled,
+  });
   await model.save();
   return model;
 };
