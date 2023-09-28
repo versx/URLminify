@@ -78,7 +78,6 @@ const deleteUser = async (userId: number) => {
     if (user) {
       await user?.destroy();
     }
-    // TODO: Delete user's short urls
     return true;
   } catch (err) {
     console.error(err);
