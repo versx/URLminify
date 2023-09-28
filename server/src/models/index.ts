@@ -16,6 +16,8 @@ db.shortUrl.belongsTo(db.user);
 db.user.hasMany(db.shortUrl, {
   as: 'shortUrls',
   foreignKey: 'userId',
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
 });
 
 export const testConnection = async () => {
