@@ -65,6 +65,27 @@ const deleteUser = async (req: Request, res: Response) => {
   res.json({ status: 'ok' });
 };
 
+const changePassword = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.json({
+      status: 'error',
+      error: 'No user ID specified.',
+    });
+  }
+
+  const { oldPassword, newPassword } = req.body;
+  const result = await UserService.changePassword(parseInt(id), oldPassword, newPassword);
+  if (!result) {
+    return res.json({
+      status: 'error',
+      error: 'Failed to change user account password',
+    });
+  }
+
+  res.json({ status: 'ok' });
+};
+
 const resetApiKey = async (req: Request, res: Response) => {
   const { id } = req.params;
   if (!id) {
@@ -91,5 +112,6 @@ export const UserController = {
   getUsers,
   updateUser,
   deleteUser,
+  changePassword,
   resetApiKey,
 };

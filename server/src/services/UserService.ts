@@ -86,6 +86,16 @@ const deleteUser = async (userId: number) => {
   }
 };
 
+const changePassword = async (userId: number, oldPassword: string, newPassword: string) => {
+  try {
+    // TODO: Change password
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
 const resetApiKey = async (id: number) => {
   try {
     const user = await getUser(id);
@@ -113,6 +123,7 @@ export const UserService = {
   getUserBy,
   createUser,
   deleteUser,
+  changePassword,
   resetApiKey,
   isValidPassword,
 };
