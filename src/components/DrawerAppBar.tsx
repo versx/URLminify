@@ -38,23 +38,23 @@ export const DrawerAppBar = (props: any) => {
 
   const LoginRegisterLinks = () => (
     <>
-    <List>
-      {navItems.map((item) => ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
-        <ListItem key={item.path} disablePadding>
-          <ListItemButton
-            href={item.path}
-            style={{
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
-            sx={{ textAlign: 'center' }}
-          >
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-    {isAuthenticated && (<AccountMenu key="account" />)}
+      <List>
+        {navItems.map((item) => ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
+          <ListItem key={item.path} disablePadding>
+            <ListItemButton
+              href={item.path}
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+              sx={{ textAlign: 'center' }}
+            >
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      {isAuthenticated && (<AccountMenu key="account" />)}
     </>
   );
 
