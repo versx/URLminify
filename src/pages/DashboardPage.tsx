@@ -34,7 +34,12 @@ export const DashboardPage = () => {
 
   useEffect(() => {
     ShortUrlService.getTopShortUrlStats(currentUser?.id).then((response: any) => {
-      console.log('getTopShortUrlStats response:', response);
+      //console.log('getTopShortUrlStats response:', response);
+      if (response.status !== 'ok') {
+        // TODO: Error
+        return;
+      }
+
       setStats(response.stats);
     });
   }, [currentUser?.id]);

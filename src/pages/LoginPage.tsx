@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -14,9 +14,7 @@ import { AuthService } from '../services';
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from || Routes.dashboard;
 
   const handleLogin = async () => {
     const response = await AuthService.login(username, password);
@@ -27,7 +25,7 @@ export const LoginPage = () => {
     }
 
     localStorage.setItem('isAuthenticated', 'true');
-    navigate(from);
+    window.location.href = location.state?.from || Routes.dashboard;
   };
 
   return (
