@@ -44,14 +44,12 @@ export const ShortUrlTable = (props: any) => {
     editModel: undefined,
   });
   const [search, setSearch] = useState('');
-
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof ShortUrl>('slug');
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { enqueueSnackbar } = useSnackbar();
-
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
