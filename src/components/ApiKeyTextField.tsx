@@ -1,27 +1,22 @@
 import React, { useState } from 'react';
 import {
-  AlertColor,
   IconButton,
   InputAdornment,
   TextField,
 } from '@mui/material';
 import {
-  Refresh as RefreshIcon,
   FileCopy as FileCopyIcon,
+  Refresh as RefreshIcon,
 } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
-import { SnackbarAlert } from '.';
 import { UserService } from '../services';
 import { clearUserToken, getUserToken, setUserToken } from '../stores';
 
 export const ApiKeyTextField = (props: any) => {
   const { initialValue } = props;
   const [apiKey, setApiKey] = useState(initialValue);
-  const [alertState, setAlertState] = useState({
-    open: false,
-    title: '',
-    severity: 'success' as AlertColor,
-  });
+  const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const resetApiKey = async () => {
@@ -33,11 +28,7 @@ export const ApiKeyTextField = (props: any) => {
     const response = await UserService.resetApiKey(currentUser?.id);
     //console.log('resetApiKey response:', response);
     if (response.status !== 'ok') {
-      setAlertState({
-        open: true,
-        title: 'Error occurred resetting API key.',
-        severity: 'error',
-      });
+      enqueueSnackbar('Error occurred resetting API key!', { variant: 'error' });
       return;
     }
 
@@ -48,32 +39,16 @@ export const ApiKeyTextField = (props: any) => {
     });
 
     setApiKey(response.apiKey);
-    setAlertState({
-      open: true,
-      title: 'API key was successfully reset!',
-      severity: 'success',
-    });
+    enqueueSnackbar('API key was successfully reset!', { variant: 'success' });
   };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(apiKey);
-    setAlertState({
-      open: true,
-      title: 'API key was successfully copied to the clipboard!',
-      severity: 'success',
-    });
+    enqueueSnackbar('API key was successfully copied to the clipboard!', { variant: 'success' });
   };
-
-  const handleCloseAlert = () => setAlertState({open: false, title: '', severity: 'info'});
 
   return (
     <>
-      <SnackbarAlert
-        open={alertState.open}
-        title={alertState.title}
-        severity={alertState.severity}
-        onClose={handleCloseAlert}
-      />
       <TextField
         disabled
         fullWidth

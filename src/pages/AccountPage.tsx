@@ -4,12 +4,14 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import { ApiKeyTextField, ChangePassword } from '../components';
 import { AuthService, UserService } from '../services';
 import { getUserToken } from '../stores';
 
 export const AccountPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const handleDeleteAccount = async () => {
@@ -25,9 +27,11 @@ export const AccountPage = () => {
 
     const response = await UserService.deleteAccount(currentUser?.id);
     if (response.status !== 'ok') {
-      // TODO: Error
+      enqueueSnackbar('Failed to delete your account.', { variant: 'error' });
       return;
     }
+
+    enqueueSnackbar('Account has been deleted, logging you out.', { variant: 'success' });
     AuthService.logout();
   };
 

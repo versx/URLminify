@@ -1,5 +1,4 @@
 import React, { MouseEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Divider,
@@ -13,6 +12,7 @@ import {
   Settings as SettingsIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
 import { Routes } from '../consts';
 import { AuthService } from '../services';
@@ -20,8 +20,8 @@ import { getUserToken } from '../stores';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { enqueueSnackbar } = useSnackbar();
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
   const currentUser = getUserToken();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
@@ -29,10 +29,11 @@ export const AccountMenu = () => {
 
   const handleMyAccount = () => {
     handleClose();
-    navigate(Routes.settings);
+    window.location.href = Routes.settings;
   };
 
   const handleLogout = () => {
+    enqueueSnackbar('Successfully logged out!', { variant: 'success' });
     handleClose();
     AuthService.logout();
   };

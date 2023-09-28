@@ -3,6 +3,7 @@ import {
   Button,
   TextField,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import { AuthService, UserService } from '../services';
 import { getUserToken } from '../stores';
@@ -12,24 +13,23 @@ export const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-
+  const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const handleSubmit = async () => {
     if (newPassword !== confirmPassword) {
-      setError('New password and confirmation do not match');
+      setError('New password and confirmation password do not match');
       return;
     }
 
     const response = await UserService.changePassword(currentUser?.id, currentPassword, confirmPassword);
-    console.log('changePassword response:', response);
+    //console.log('changePassword response:', response);
     if (response.status !== 'ok') {
-      // TODO: Error
+      enqueueSnackbar('Failed to change the password to your user account.', { variant: 'error' });
       return;
     }
 
-    // TODO: Show success
-    console.log('Password changed successfully');
+    enqueueSnackbar('Password changed successfully! Logging your out now.', { variant: 'success' });
     AuthService.logout();
   };
 

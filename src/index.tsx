@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { SnackbarProvider } from 'notistack';
 
 import App from './App';
 
@@ -8,6 +9,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <SnackbarProvider maxSnack={8}>
+      <App />
+    </SnackbarProvider>
   </React.StrictMode>
 );

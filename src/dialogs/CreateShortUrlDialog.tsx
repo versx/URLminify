@@ -8,6 +8,7 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import { ShortUrlService } from '../services';
 import { getUserToken } from '../stores';
@@ -34,11 +35,12 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
     name: editMode ? model?.slug : '',
     url: editMode ? model?.originalUrl ?? '' : '',
   });
+  const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const handleSubmit = async () => {
     if (!state.url) {
-      // TODO: Error
+      enqueueSnackbar('URL field is required!', { variant: 'error' });
       return;
     }
 
@@ -46,8 +48,8 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       ? await ShortUrlService.updateShortUrl(state.name!, { url: state.url })
       : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, userId: currentUser?.id });
     if (response.status !== 'ok') {
-      console.error(response);
-      // TODO: Error
+      //console.error(response);
+      enqueueSnackbar(`Failed to ${editMode ? 'update' : 'create'} short URL.`, { variant: 'error' });
       return;
     }
 

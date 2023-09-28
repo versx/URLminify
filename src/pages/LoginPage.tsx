@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import { Routes } from '../consts';
 import { AuthService } from '../services';
@@ -15,15 +16,17 @@ export const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const location = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleLogin = async () => {
     const response = await AuthService.login(username, password);
     //console.log('login response:', response);
     if (response.status !== 'ok') {
-      console.error('failed to login');
+      enqueueSnackbar('Failed to login!', { variant: 'error' });
       return;
     }
 
+    enqueueSnackbar('Successfully logged in!', { variant: 'success' });
     localStorage.setItem('isAuthenticated', 'true');
     window.location.href = location.state?.from || Routes.dashboard;
   };

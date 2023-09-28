@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import { Routes } from '../consts';
 import { AuthService } from '../services';
@@ -15,20 +16,21 @@ export const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const navigate = useNavigate();
   const location = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
   const from = location.state?.from || Routes.dashboard;
 
   const handleRegister = async () => {
     const response = await AuthService.register(username, password);
     console.log('register response:', response);
     if (response.status !== 'ok') {
-      console.error('failed to register');
+      enqueueSnackbar('Failed to register your user account!', { variant: 'error' });
       return;
     }
 
+    enqueueSnackbar('Successfully registered your user account! Redirecting to login page.', { variant: 'success' });
     localStorage.setItem('isAuthenticated', 'true');
-    navigate(from);
+    window.location.href = from;
   };
 
   return (

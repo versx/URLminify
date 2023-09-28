@@ -16,6 +16,7 @@ import {
   PieChart,
   Tooltip,
 } from 'recharts';
+import { useSnackbar } from 'notistack';
 
 import { ShortUrlService } from '../services';
 import { getUserToken } from '../stores';
@@ -30,19 +31,20 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A3E4D7', '#D4E157'
 
 export const DashboardPage = () => {
   const [stats, setStats] = useState<ShortUrlData[]>([]);
+  const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   useEffect(() => {
     ShortUrlService.getTopShortUrlStats(currentUser?.id).then((response: any) => {
       //console.log('getTopShortUrlStats response:', response);
       if (response.status !== 'ok') {
-        // TODO: Error
+        enqueueSnackbar('Failed to get dashboard statistics for your account.', { variant: 'error' });
         return;
       }
 
       setStats(response.stats);
     });
-  }, [currentUser?.id]);
+  }, [currentUser?.id, enqueueSnackbar]);
 
   return (
     <Container>

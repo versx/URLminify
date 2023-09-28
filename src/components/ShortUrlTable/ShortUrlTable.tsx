@@ -1,6 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  AlertColor,
   Box,
   Checkbox,
   Fab,
@@ -14,13 +13,13 @@ import {
 } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material'
 import moment from 'moment';
+import { useSnackbar } from 'notistack';
 
 import {
   ActionsButtonGroup,
   Order,
   ShortUrlTableHead,
   ShortUrlTableToolbar,
-  SnackbarAlert,
   StyledTableCell,
   StyledTableRow,
 } from '..';
@@ -51,40 +50,25 @@ export const ShortUrlTable = (props: any) => {
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const [alertState, setAlertState] = useState({
-    open: false,
-    title: '',
-    severity: 'success' as AlertColor,
-  });
+  const { enqueueSnackbar } = useSnackbar();
 
   const currentUser = getUserToken();
-
-  const handleCloseAlert = () => setAlertState({open: false, title: '', severity: 'info'});
 
   const handleReloadShortUrls = useCallback(() => {
     ShortUrlService.getShortUrls(currentUser?.id).then((response) => {
       if (response.status !== 'ok') {
-        console.error(response);
-        setAlertState({
-          open: true,
-          title: 'Error occurred reloading short URLs.',
-          severity: 'error',
-        });
+        //console.error(response);
+        enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
       }
       setRows(response.shortUrls);
     });
-  }, [currentUser?.id]);
+  }, [currentUser?.id, enqueueSnackbar]);
 
   const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
   const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});
   const handleSubmit = () => {
-    setAlertState({
-      open: true,
-      title: `Short URL ${state.editMode ? 'updated' : 'created'} successfully!`,
-      severity: 'success',
-    });
+    enqueueSnackbar(`Short URL ${state.editMode ? 'updated' : 'created'} successfully!`, { variant: 'success' });
 
     setState({
       ...state,
@@ -118,7 +102,8 @@ export const ShortUrlTable = (props: any) => {
     for (const slug of selected) {
       const response = await ShortUrlService.deleteShortUrl(slug);
       if (response.status !== 'ok') {
-        console.error('handleDelete response:', response);
+        //console.error('handleDelete response:', response);
+        enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         error = true;
       }
     }
@@ -126,15 +111,9 @@ export const ShortUrlTable = (props: any) => {
     setSelected([]);
     handleReloadShortUrls();
 
-    setAlertState({
-      open: true,
-      title: error
-        ? 'Error occurred deleting short URLs.'
-        : 'Short URL deleted successfully!',
-      severity: error
-        ? 'error'
-        : 'success',
-    });
+    if (!error) {
+      enqueueSnackbar('Short URL deleted successfully!', { variant: 'success' });
+    }
   };
 
   const handleDeleteShortUrl = async (slug: string) => {
@@ -150,19 +129,11 @@ export const ShortUrlTable = (props: any) => {
     const response = await ShortUrlService.deleteShortUrl(slug);
     if (response.status !== 'ok') {
       console.error('handleDeleteShortUrl response:', response);
-      setAlertState({
-        open: true,
-        title:'Error occurred deleting short URLs.',
-        severity: 'error',
-      });
+      enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
       return;
     }
 
-    setAlertState({
-      open: true,
-      title: 'Short URL deleted successfully!',
-      severity: 'success',
-    });
+    enqueueSnackbar('Short URL deleted successfully!', { variant: 'success' });
 
     setSelected([]);
     handleReloadShortUrls();
@@ -385,13 +356,6 @@ export const ShortUrlTable = (props: any) => {
         model={state.editModel}
         onClose={handleClose}
         onSubmit={handleSubmit}
-      />
-
-      <SnackbarAlert
-        open={alertState.open}
-        title={alertState.title}
-        severity={alertState.severity}
-        onClose={handleCloseAlert}
       />
     </Box>
   );
