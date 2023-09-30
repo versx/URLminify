@@ -1,5 +1,11 @@
 import { http } from '../modules';
 
+const getUsers = async () => {
+  const response = await http()
+    .get('users');
+  return response.data;
+};
+
 const resetApiKey = async (userId: number) => {
   const response = await http()
     .post(`users/${userId}/key/reset`);
@@ -19,6 +25,7 @@ const deleteAccount = async (userId: number) => {
 };
 
 export const UserService = {
+  getUsers,
   resetApiKey,
   changePassword,
   deleteAccount,

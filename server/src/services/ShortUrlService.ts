@@ -8,8 +8,9 @@ import {
 } from '../types';
 
 const getShortUrls = async (userId?: number | string): Promise<ShortUrlModel[]> => {
+  const where = parseInt(userId?.toString() ?? '0') > 0 ? { userId } : {};
   const models = await db.shortUrl.findAll({
-    where: !!userId ? { userId } : {},
+    where,
     attributes: ShortUrlAttributes,
   });
   return models;

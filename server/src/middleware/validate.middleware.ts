@@ -23,6 +23,8 @@ export const ValidateMiddleware = async (req: Request, res: Response, next: Next
     });
   }
 
+  //console.log('decoded:', decoded);
+
   const username = decoded?.username ?? decoded?.id;
   const user = await UserService.getUserBy({ username });
   if (user?.apiKey !== token) {

@@ -9,7 +9,6 @@ export interface HeadCell<T> {
   minWidth?: number;
   align?: 'left' | 'right' | 'center' | 'justify' | 'inherit' | undefined;
   //format?: (value: number) => string;
-  isAdmin?: boolean;
 };
 
 export interface TableProps<T> {
@@ -19,7 +18,6 @@ export interface TableProps<T> {
   order: Order;
   orderBy: string;
   rowCount: number;
-  isAdmin: boolean;
 };
 
 export interface TableToolbarProps {

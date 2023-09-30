@@ -6,8 +6,8 @@ export type ShortUrl = {
   expiry: Date | null;
   enabled: boolean;
 
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type User = {
@@ -18,8 +18,8 @@ export type User = {
   enabled?: boolean;
   admin?: boolean;
 
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   shortUrls?: ShortUrl[];
 };

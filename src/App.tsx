@@ -4,13 +4,16 @@ import {
   Routes as Switch,
 } from 'react-router-dom';
 
-import { DrawerAppBar, ProtectedRoute } from './components';
+import { AdminProtectedRoute, DrawerAppBar, ProtectedRoute } from './components';
 import { Routes } from './consts';
 import {
-  AccountPage,
+  AdminDashboardPage,
+  AdminShortUrlsPage,
+  AdminUsersPage,
   DashboardPage,
   LoginPage,
   RegisterPage,
+  SettingsPage,
   ShortUrlsPage,
 } from './pages';
 
@@ -24,7 +27,12 @@ const App = () => {
         <Route path={Routes.dashboard} element={<ProtectedRoute />}>
           <Route index element={<DashboardPage />} />
           <Route path={Routes.shortUrls} element={<ShortUrlsPage />} />
-          <Route path={Routes.settings} element={<AccountPage />} />
+          <Route path={Routes.settings} element={<SettingsPage />} />
+          <Route path={Routes.admin.dashboard} element={<AdminProtectedRoute />}>
+            <Route path={Routes.admin.dashboard} element={<AdminDashboardPage />}/>
+            <Route path={Routes.admin.shortUrls} element={<AdminShortUrlsPage />}/>
+            <Route path={Routes.admin.users} element={<AdminUsersPage />}/>
+          </Route>
         </Route>
       </Switch>
       </DrawerAppBar>

@@ -35,7 +35,7 @@ interface ShortUrlTableState {
   editModel: ShortUrl | undefined;
 };
 
-export const ShortUrlTable = (props: any) => {
+export const UserTable = (props: any) => {
   //console.log('ShortUrlTable props:', props);
   const [rows, setRows] = useState<ShortUrl[]>([]);
   const [state, setState] = useState<ShortUrlTableState>({

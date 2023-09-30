@@ -2,7 +2,6 @@ import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useSta
 import {
   Box,
   Checkbox,
-  Fab,
   Paper,
   Table,
   TableBody,
@@ -10,50 +9,30 @@ import {
   TablePagination,
   TextField,
   Tooltip,
+  Typography,
 } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material'
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
 
-import {
-  ActionsButtonGroup,
-  Order,
-  ShortUrlTableHead,
-  ShortUrlTableToolbar,
-  StyledTableCell,
-  StyledTableRow,
-} from '..';
-import { CreateShortUrlDialog } from '../../dialogs';
-import { getComparator, stableSort, substr } from '../../modules';
+import { ActionsButtonGroup, Order, ShortUrlTableHead, ShortUrlTableToolbar, StyledTableCell, StyledTableRow } from '../../components';
 import { ShortUrlService } from '../../services';
 import { getUserToken } from '../../stores';
 import { ShortUrl } from '../../types';
+import { getComparator, stableSort, substr } from '../../modules';
+import moment from 'moment';
 
-interface ShortUrlTableState {
-  open: boolean;
-  editMode: boolean;
-  editModel: ShortUrl | undefined;
-};
-
-export const ShortUrlTable = (props: any) => {
-  //console.log('ShortUrlTable props:', props);
+export const AdminShortUrlsPage = () => {
   const [rows, setRows] = useState<ShortUrl[]>([]);
-  const [state, setState] = useState<ShortUrlTableState>({
-    open: false,
-    editMode: false,
-    editModel: undefined,
-  });
   const [search, setSearch] = useState('');
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof ShortUrl>('slug');
   const [selected, setSelected] = useState<readonly string[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
-    ShortUrlService.getShortUrls(currentUser?.id).then((response) => {
+    ShortUrlService.getShortUrls().then((response) => {
       if (response.status !== 'ok') {
         //console.error(response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
@@ -61,30 +40,7 @@ export const ShortUrlTable = (props: any) => {
       }
       setRows(response.shortUrls);
     });
-  }, [currentUser?.id, enqueueSnackbar]);
-
-  const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
-  const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});
-  const handleSubmit = () => {
-    enqueueSnackbar(`Short URL ${state.editMode ? 'updated' : 'created'} successfully!`, { variant: 'success' });
-
-    setState({
-      ...state,
-      open: false,
-      editMode: false,
-      editModel: undefined,
-    });
-    handleReloadShortUrls();
-  };
-
-  const handleEditShortUrl = (shortUrl: ShortUrl) => {
-    setState({
-      ...state,
-      open: true,
-      editMode: true,
-      editModel: shortUrl,
-    });
-  };
+  }, [enqueueSnackbar]);
 
   const handleDeleteShortUrls = async () => {
     if (selected.length === 0) {
@@ -199,28 +155,26 @@ export const ShortUrlTable = (props: any) => {
     ),
   [order, orderBy, page, rows, rowsPerPage]);
 
-  useEffect(() => handleReloadShortUrls(), [handleReloadShortUrls]);
+  useEffect(() => {
+    if (!currentUser?.admin) {
+      return;
+    }
+    ShortUrlService.getShortUrls().then((response: any) => {
+      //console.log('getShortUrls response:', response);
+      if (response.status !== 'ok') {
+        enqueueSnackbar('Failed to get short urls.', { variant: 'error' });
+        return;
+      }
+      setRows(response.shortUrls);
+    });
+  }, [currentUser?.admin, enqueueSnackbar]);
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Typography variant="h3" gutterBottom>
+        Admin Dashboard
+      </Typography>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <Tooltip
-          title="Create short URL"
-        >
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={handleOpen}
-            style={{
-              position: 'absolute',
-              bottom: 32,
-              right: 32,
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
-
         <ShortUrlTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}
@@ -252,13 +206,12 @@ export const ShortUrlTable = (props: any) => {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
-              isAdmin={false}
+              isAdmin={true}
             />
             <TableBody>
               {visibleRows.map((row: any, index: number) => { //ShortUrl
                 const isItemSelected = isSelected(row.slug);
                 const labelId = `enhanced-table-checkbox-${index}`;
-
                 if (search !== '' && !(row.slug.includes(search) || row.originalUrl.includes(search))) {
                   return '';
                 }
@@ -316,6 +269,9 @@ export const ShortUrlTable = (props: any) => {
                     <StyledTableCell align="right">
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.userId}
+                    </StyledTableCell>
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt!).format('MMMM Do YYYY, h:mm:ss a')}
@@ -325,7 +281,7 @@ export const ShortUrlTable = (props: any) => {
                     <StyledTableCell align="right">
                       <ActionsButtonGroup
                         model={row}
-                        onEdit={handleEditShortUrl}
+                        onEdit={() => {}}
                         onDelete={handleDeleteShortUrl}
                       />
                     </StyledTableCell>
@@ -354,14 +310,6 @@ export const ShortUrlTable = (props: any) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
-      <CreateShortUrlDialog
-        open={state.open}
-        editMode={state.editMode}
-        model={state.editModel}
-        onClose={handleClose}
-        onSubmit={handleSubmit}
-      />
     </Box>
   );
 };

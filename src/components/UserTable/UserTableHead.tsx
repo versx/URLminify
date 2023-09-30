@@ -17,32 +17,20 @@ import {
 } from '@mui/icons-material';
 
 import { HeadCell, TableProps } from '.';
-import { ShortUrl } from '../../types';
+import { User } from '../../types';
 
-const headCells: readonly HeadCell<ShortUrl>[] = [
+const headCells: readonly HeadCell<User>[] = [
   {
-    id: 'slug',
+    id: 'id',
     disablePadding: true,
     align: 'left',
-    label: 'Slug',
+    label: 'ID',
   },
   {
-    id: 'originalUrl',
+    id: 'username',
     disablePadding: false,
     align: 'left',
-    label: 'Original Url',
-  },
-  {
-    id: 'visits',
-    disablePadding: false,
-    align: 'right',
-    label: 'Visits',
-  },
-  {
-    id: 'expiry',
-    disablePadding: false,
-    align: 'right',
-    label: 'Expires',
+    label: 'Username',
   },
   {
     id: 'enabled',
@@ -51,17 +39,28 @@ const headCells: readonly HeadCell<ShortUrl>[] = [
     label: 'Enabled',
   },
   {
-    id: 'userId',
+    id: 'admin',
     disablePadding: false,
     align: 'right',
-    label: 'User ID',
-    isAdmin: true,
+    label: 'Is Admin',
   },
   {
     id: 'createdAt',
     disablePadding: false,
     align: 'right',
     label: 'Created',
+  },
+  {
+    id: 'updatedAt',
+    disablePadding: false,
+    align: 'right',
+    label: 'Updated',
+  },
+  {
+    id: 'shortUrls',
+    disablePadding: false,
+    align: 'right',
+    label: 'URLs count',
   },
 ];
 
@@ -85,13 +84,13 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-export const ShortUrlTableHead = (props: TableProps<ShortUrl>) => {
+export const UserTableHead = (props: TableProps<User>) => {
   const {
-    order, orderBy, numSelected, rowCount, isAdmin,
+    order, orderBy, numSelected, rowCount,
     onRequestSort, onSelectAllClick,
   } = props;
 
-  const createSortHandler = (property: keyof ShortUrl) => (event: MouseEvent<unknown>) => onRequestSort(event, property);
+  const createSortHandler = (property: keyof User) => (event: MouseEvent<unknown>) => onRequestSort(event, property);
 
   return (
     <TableHead>
@@ -108,7 +107,7 @@ export const ShortUrlTableHead = (props: TableProps<ShortUrl>) => {
             style={{color: 'white'}}
           />
         </StyledTableCell>
-        {headCells.map((headCell) => ((isAdmin && (headCell.isAdmin || !headCell.isAdmin)) || (!isAdmin && !headCell.isAdmin)) && (
+        {headCells.map((headCell) => (
           <StyledTableCell
             key={headCell.id}
             align={headCell.align ?? 'left'}

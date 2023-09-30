@@ -10,7 +10,7 @@ import { ApiKeyTextField, ChangePassword } from '../components';
 import { AuthService, UserService } from '../services';
 import { getUserToken } from '../stores';
 
-export const AccountPage = () => {
+export const SettingsPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 

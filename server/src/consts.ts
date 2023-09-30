@@ -31,8 +31,8 @@ export const UserAttributes = [
   'apiKey',
   'enabled',
   'admin',
-  //'createdAt',
-  //'updatedAt',
+  'createdAt',
+  'updatedAt',
 ];
 
 export const DefaultUserPasswordIterations = 8;

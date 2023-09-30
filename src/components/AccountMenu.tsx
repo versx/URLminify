@@ -27,6 +27,11 @@ export const AccountMenu = () => {
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
+  const handleAdminDashboard = () => {
+    handleClose();
+    window.location.href = Routes.admin.dashboard;
+  };
+
   const handleMyAccount = () => {
     handleClose();
     window.location.href = Routes.settings;
@@ -92,6 +97,14 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        {currentUser?.admin && (
+          <MenuItem onClick={handleAdminDashboard}>
+            <ListItemIcon>
+              <SettingsIcon fontSize="small" />
+            </ListItemIcon>
+            Admin Panel
+          </MenuItem>
+        )}
         <MenuItem onClick={handleMyAccount}>
           <ListItemIcon>
             <SettingsIcon fontSize="small" />
