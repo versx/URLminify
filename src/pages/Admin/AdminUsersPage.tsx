@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  Box,
   Checkbox,
+  Container,
   Fab,
   Paper,
   Table,
@@ -197,7 +197,7 @@ export const AdminUsersPage = () => {
   }, [currentUser?.admin, handleReloadUsers]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Container sx={{ width: '100%' }}>
       <Typography variant="h4" gutterBottom>
         Admin - Users
       </Typography>
@@ -346,6 +346,6 @@ export const AdminUsersPage = () => {
         onClose={handleClose}
         onSubmit={handleSubmit}
       />
-    </Box>
+    </Container>
   );
 };

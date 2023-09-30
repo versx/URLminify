@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  Box,
   Checkbox,
+  Container,
   Paper,
   Table,
   TableBody,
@@ -89,7 +89,7 @@ export const AdminShortUrlsPage = () => {
 
     const response = await ShortUrlService.deleteShortUrl(slug);
     if (response.status !== 'ok') {
-      console.error('handleDeleteShortUrl response:', response);
+      //console.error('handleDeleteShortUrl response:', response);
       enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
       return;
     }
@@ -177,7 +177,7 @@ export const AdminShortUrlsPage = () => {
   }, [currentUser?.admin, enqueueSnackbar]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Container sx={{ width: '100%' }}>
       <Typography variant="h4" gutterBottom>
         Admin - Short URLs
       </Typography>
@@ -317,6 +317,6 @@ export const AdminShortUrlsPage = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </Box>
+    </Container>
   );
 };
