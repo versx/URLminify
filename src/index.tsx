@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { CssBaseline } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 
 import App from './App';
@@ -9,6 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <CssBaseline />
     <SnackbarProvider maxSnack={8}>
       <App />
     </SnackbarProvider>
