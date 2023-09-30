@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import { LoginPage } from '../pages';
+import { LoginPage, NotFoundPage } from '../pages';
 
 export const ProtectedRoute = () => {
   const isAuthenticated = Boolean(localStorage.getItem('isAuthenticated'));
@@ -19,7 +19,8 @@ export const AdminProtectedRoute = () => {
   if (!user?.admin) {
     // This will cause the router to navigate to the /login page
     // and skip rendering the children of this route.
-    return <LoginPage />;
+    //return <LoginPage />;
+    return <NotFoundPage />;
   }
   
   return <Outlet />;

@@ -55,6 +55,7 @@ const generateAccessToken = (username: string): string => {
 const verifyAccessToken = (accessToken: string): Promise<any | false> => new Promise((resolve, reject) => {
   verify(accessToken, config.auth.secret, (err: any, decoded: string | JwtPayload | undefined) => {
     //console.log('decoded:', decoded);
+
     if (err) {
       logError(err.message);
       return resolve(false);

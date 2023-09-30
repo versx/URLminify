@@ -12,6 +12,7 @@ import {
   AdminUsersPage,
   DashboardPage,
   LoginPage,
+  NotFoundPage,
   RegisterPage,
   SettingsPage,
   ShortUrlsPage,
@@ -34,6 +35,7 @@ const App = () => {
             <Route path={Routes.admin.users} element={<AdminUsersPage />}/>
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Switch>
       </DrawerAppBar>
     </Router>
