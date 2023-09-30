@@ -16,6 +16,7 @@ import {
   AdminSettingsPage,
   AdminShortUrlsPage,
   AdminUsersPage,
+  ApiDocumentationPage,
   DashboardPage,
   LoginPage,
   NotFoundPage,
@@ -43,6 +44,7 @@ const App = () => {
             <Route path={Routes.admin.settings} element={<AdminSettingsPage />}/>
           </Route>
         </Route>
+        <Route path={Routes.apiDocs} element={<ApiDocumentationPage />} />
         <Route path={Routes.slugs} element={<RedirectSlug />} />
       </Switch>
       </DrawerAppBar>

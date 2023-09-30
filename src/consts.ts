@@ -5,6 +5,7 @@ export const Routes = {
   settings: '/settings',
   login: '/login',
   register: '/register',
+  apiDocs: '/api-docs',
   admin: {
     dashboard: '/admin',
     shortUrls: '/admin/urls',

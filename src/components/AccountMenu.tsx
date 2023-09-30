@@ -9,8 +9,9 @@ import {
   Tooltip,
 } from '@mui/material';
 import {
-  Settings as SettingsIcon,
+  Article as ArticleIcon,
   Logout as LogoutIcon,
+  Settings as SettingsIcon,
 } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 
@@ -30,6 +31,11 @@ export const AccountMenu = () => {
   const handleMyAccount = () => {
     handleClose();
     window.location.href = Routes.settings;
+  };
+
+  const handleApiDocs = () => {
+    handleClose();
+    window.location.href = Routes.apiDocs;
   };
 
   const handleLogout = () => {
@@ -97,6 +103,12 @@ export const AccountMenu = () => {
             <SettingsIcon fontSize="small" />
           </ListItemIcon>
           Settings
+        </MenuItem>
+        <MenuItem onClick={handleApiDocs}>
+          <ListItemIcon>
+            <ArticleIcon fontSize="small" />
+          </ListItemIcon>
+          API Documentation
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>

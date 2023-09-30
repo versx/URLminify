@@ -59,6 +59,10 @@ export const SettingsPage = () => {
           <Typography variant="h6" align="center" gutterBottom>
             Delete Account
           </Typography>
+          <Typography paragraph align="center" gutterBottom>
+            This action is irreversible. All account data will be deleted from the
+            system including any short URLs that you've created if you continue.
+          </Typography>
           <Button
             variant="contained"
             color="error"
