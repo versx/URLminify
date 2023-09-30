@@ -5,20 +5,17 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
+import { SettingKeys } from '../../consts';
 import { SlugLimitSetter } from '../../components';
 import { SettingsService } from '../../services';
-
-type Setting = {
-  name: string;
-  value: string;
-};
+import { SettingModel } from '../../types';
 
 export const AdminSettingsPage = () => {
   const [slugLimit, setSlugLimit] = useState(500);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = async (newLimit: number) => {
-    const response = await SettingsService.setSetting('daily_slug_limit', newLimit);
+    const response = await SettingsService.setSetting(SettingKeys.MaxSlugLimit, newLimit);
     //console.log('setSetting response:', response);
     if (response.status !== 'ok') {
       enqueueSnackbar(`Failed to update setting.`, { variant: 'error' });
@@ -35,7 +32,7 @@ export const AdminSettingsPage = () => {
         enqueueSnackbar(`Failed to reload settings.`, { variant: 'error' });
         return;
       }
-      const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === 'daily_slug_limit');
+      const slugLimitSetting = response.settings.find((setting: SettingModel) => setting.name === 'daily_slug_limit');
       setSlugLimit(slugLimitSetting.value);
     });
   }, [enqueueSnackbar]);

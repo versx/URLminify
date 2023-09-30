@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
 import config from '../config.json';
-import { isValidUrl, ShortUrlService } from '../services';
+import { DefaultMaxSlugLimit, SettingKeys } from '../consts';
+import { isValidUrl, SettingsService, ShortUrlService } from '../services';
 import {
   CreateShortUrlRequest, CreateShortUrlResponse,
   UpdateShortUrlRequest, UpdateShortUrlResponse,
@@ -59,6 +60,15 @@ const createShortUrl = async (req: Request, res: Response) => {
     return res.json({
       status: 'error',
       error: 'The given URL is not valid.',
+    });
+  }
+
+  const count = await ShortUrlService.getCount(payload.userId);
+  const maxSlugLimit = await SettingsService.getSetting(SettingKeys.MaxSlugLimit);
+  if (count >= maxSlugLimit?.value ?? DefaultMaxSlugLimit) {
+    return res.json({
+      status: 'error',
+      error: `You have reached the maximum number of short URLs you can create for your account.`,
     });
   }
 

@@ -24,6 +24,14 @@ export type User = {
   shortUrls?: ShortUrl[];
 };
 
+export type SettingModel = {
+  name: string;
+  value: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
 export type CreateShortUrlRequest = {
   name?: string;
   url: string;

@@ -97,6 +97,13 @@ const getShortUrlsStats = async (userId: number, top: number = 5) => {
   return stats;
 };
 
+const getCount = async (userId: number) => {
+  const count = await db.shortUrl.count({
+    where: { userId },
+  });
+  return count;
+};
+
 export const ShortUrlService = {
   getShortUrl,
   getShortUrls,
@@ -105,4 +112,5 @@ export const ShortUrlService = {
   deleteShortUrl,
   isRegisteredByUser,
   getShortUrlsStats,
+  getCount,
 };

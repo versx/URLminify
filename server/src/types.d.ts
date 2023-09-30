@@ -99,6 +99,14 @@ export type UserModel = {
   shortUrls?: ShortUrlModel[];
 };
 
+export type SettingModel = {
+  name: string;
+  value: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
 export type Status = 'ok' | 'error';
 
 export type ColorType = 'text' | 'variable' | 'warn' | 'error' | 'date';

@@ -37,7 +37,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
   const { open, editMode = false, model, onSubmit, onClose } = props;
 
   const [state, setState] = useState<CreateShortUrlDialogState>({
-    name: editMode ? model?.slug : '',
+    name: editMode ? model?.slug ?? '' : '',
     url: editMode ? model?.originalUrl ?? '' : '',
     expiry: editMode ? model?.expiry ?? null : null,
     enabled: editMode ? model?.enabled ?? true : true,
@@ -56,7 +56,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, expiry: state.expiry, enabled: state.enabled, userId: currentUser?.id });
     if (response.status !== 'ok') {
       //console.error(response);
-      enqueueSnackbar(`Failed to ${editMode ? 'update' : 'create'} short URL.`, { variant: 'error' });
+      enqueueSnackbar(`Failed to ${editMode ? 'update' : 'create'} short URL with error: ${response.error}`, { variant: 'error' });
       return;
     }
 

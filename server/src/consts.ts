@@ -7,6 +7,8 @@ export const UsersApiRoute = BaseApiRoute + 'users';
 
 export const DefaultExpiresIn = 365 * 86400; // 1 year
 
+export const DefaultMaxSlugLimit = 1000;
+
 // Database table options
 export const SequelizeOptions = {
   createdAt: true,
@@ -37,3 +39,7 @@ export const UserAttributes = [
 ];
 
 export const DefaultUserPasswordIterations = 8;
+
+export const SettingKeys = {
+  MaxSlugLimit: 'max_slug_limit',
+};

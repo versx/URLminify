@@ -1,8 +1,14 @@
 import { db } from '../models';
+import { SettingModel } from '../types';
 
-const getSettings = async () => {
+const getSettings = async (): Promise<SettingModel[]> => {
   const models = await db.setting.findAll();
   return models;
+};
+
+const getSetting = async (name: string): Promise<SettingModel> => {
+  const model = await db.setting.findByPk(name);
+  return model;
 };
 
 const setSetting = async (name: string, value: string): Promise<boolean> => {
@@ -22,5 +28,6 @@ const setSetting = async (name: string, value: string): Promise<boolean> => {
 
 export const SettingsService = {
   getSettings,
+  getSetting,
   setSetting,
 };

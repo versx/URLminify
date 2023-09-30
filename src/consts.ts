@@ -12,3 +12,7 @@ export const Routes = {
     settings: '/admin/settings',
   },
 };
+
+export const SettingKeys = {
+  MaxSlugLimit: 'max_slug_limit',
+};

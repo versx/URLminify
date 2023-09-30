@@ -11,7 +11,6 @@ const getSettings = async (req: Request, res: Response) => {
 };
 
 const setSetting = async (req: Request, res: Response) => {
-  console.log('setSetting:', req.body);
   const { name, value } = req.body;
   const result = await SettingsService.setSetting(name, value);
   if (!result) {
