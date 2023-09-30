@@ -36,7 +36,6 @@ export const DashboardPage = () => {
 
   useEffect(() => {
     ShortUrlService.getTopShortUrlStats(currentUser?.id).then((response: any) => {
-      //console.log('getTopShortUrlStats response:', response);
       if (response.status !== 'ok') {
         enqueueSnackbar('Failed to get dashboard statistics for your account.', { variant: 'error' });
         return;

@@ -23,7 +23,6 @@ export const ChangePassword = () => {
     }
 
     const response = await UserService.changePassword(currentUser?.id, currentPassword, confirmPassword);
-    //console.log('changePassword response:', response);
     if (response.status !== 'ok') {
       enqueueSnackbar('Failed to change the password to your user account.', { variant: 'error' });
       return;

@@ -26,7 +26,6 @@ export const ApiKeyTextField = (props: any) => {
     }
 
     const response = await UserService.resetApiKey(currentUser?.id);
-    //console.log('resetApiKey response:', response);
     if (response.status !== 'ok') {
       enqueueSnackbar('Error occurred resetting API key!', { variant: 'error' });
       return;

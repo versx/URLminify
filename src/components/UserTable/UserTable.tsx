@@ -38,9 +38,8 @@ export const UserTable = (props: any) => {
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
-    UserService.getUsers().then((response) => {
+    UserService.getUsers().then((response: any) => {
       if (response.status !== 'ok') {
-        //console.error('getUsers response:', response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
       }
@@ -62,7 +61,6 @@ export const UserTable = (props: any) => {
     for (const userId of selected) {
       const response = await UserService.deleteAccount(userId);
       if (response.status !== 'ok') {
-        //console.error('handleDelete response:', response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         error = true;
       }
@@ -84,7 +82,6 @@ export const UserTable = (props: any) => {
 
     const response = await UserService.deleteAccount(userId);
     if (response.status !== 'ok') {
-      console.error('deleteAccount response:', response);
       enqueueSnackbar('Error occurred deleting user.', { variant: 'error' });
       return;
     }
@@ -154,7 +151,6 @@ export const UserTable = (props: any) => {
       return;
     }
     UserService.getUsers().then((response: any) => {
-      //console.log('getUsers response:', response);
       if (response.status !== 'ok') {
         enqueueSnackbar('Failed to get users.', { variant: 'error' });
         return;

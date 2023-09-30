@@ -39,9 +39,8 @@ export const AdminShortUrlsPage = () => {
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
-    ShortUrlService.getShortUrls().then((response) => {
+    ShortUrlService.getShortUrls().then((response: any) => {
       if (response.status !== 'ok') {
-        //console.error(response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
       }
@@ -63,7 +62,6 @@ export const AdminShortUrlsPage = () => {
     for (const slug of selected) {
       const response = await ShortUrlService.deleteShortUrl(slug);
       if (response.status !== 'ok') {
-        //console.error('handleDelete response:', response);
         enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
         error = true;
       }
@@ -89,7 +87,6 @@ export const AdminShortUrlsPage = () => {
 
     const response = await ShortUrlService.deleteShortUrl(slug);
     if (response.status !== 'ok') {
-      //console.error('handleDeleteShortUrl response:', response);
       enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
       return;
     }
@@ -167,7 +164,6 @@ export const AdminShortUrlsPage = () => {
       return;
     }
     ShortUrlService.getShortUrls().then((response: any) => {
-      //console.log('getShortUrls response:', response);
       if (response.status !== 'ok') {
         enqueueSnackbar('Failed to get short urls.', { variant: 'error' });
         return;

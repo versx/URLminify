@@ -16,7 +16,6 @@ export const AdminSettingsPage = () => {
 
   const handleSubmit = async (newLimit: number) => {
     const response = await SettingsService.setSetting(SettingKeys.MaxSlugLimit, newLimit);
-    //console.log('setSetting response:', response);
     if (response.status !== 'ok') {
       enqueueSnackbar(`Failed to update setting.`, { variant: 'error' });
       return;
@@ -27,7 +26,6 @@ export const AdminSettingsPage = () => {
 
   const handleReloadSettings = useCallback(() => {
     SettingsService.getSettings().then((response: any) => {
-      //console.log('getSettings response:', response);
       if (response.status !== 'ok') {
         enqueueSnackbar(`Failed to reload settings.`, { variant: 'error' });
         return;

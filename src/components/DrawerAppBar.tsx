@@ -49,7 +49,7 @@ export const DrawerAppBar = (props: any) => {
   
   const currentUser = getUserToken() as User;
   const isAuthenticated = Boolean(get('isAuthenticated'));
-  const isAdmin = Boolean(currentUser?.admin); //Boolean(JSON.parse(localStorage.getItem('user') ?? '{}')?.admin);
+  const isAdmin = Boolean(currentUser?.admin);
   
   const handleOpenAdminMenu = (event: any) => setAnchorEl(event.currentTarget);
   const handleCloseAdminMenu = () => setAnchorEl(null);
@@ -59,8 +59,25 @@ export const DrawerAppBar = (props: any) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2, justifyContent: 'center' }}>
-        <a href={Routes.dashboard} style={{textDecoration: 'none', color: 'inherit'}}>
-          <img src="/logo192.png" alt="URLminify Logo" width={28} height={28} style={{ marginRight: '5px' }} />
+        <a
+          href={Routes.dashboard}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
+          <img
+            src="/logo192.png"
+            alt="URLminify Logo"
+            style={{
+              height: 28,
+              width: 28,
+              marginRight: '10px',
+            }}
+          />
           {Title}
         </a>
       </Typography>
@@ -116,7 +133,15 @@ export const DrawerAppBar = (props: any) => {
             <MenuIcon />
           </IconButton>
 
-          <img src="/logo192.png" alt="URLminify Logo" width={28} height={28} style={{ marginRight: '5px' }} />
+          <img
+            src="/logo192.png"
+            alt="URLminify Logo"
+            style={{
+              height: 28,
+              width: 28,
+              marginRight: '10px',
+            }}
+          />
           <Typography
             variant="h6"
             component="div"

@@ -31,7 +31,6 @@ interface CreateUserDialogState {
 };
 
 export const CreateUserDialog = (props: CreateUserDialogProps) => {
-  //console.log('CreateUserDialog props:', props);
   const { open, editMode = false, model, onSubmit, onClose } = props;
 
   const [state, setState] = useState<CreateUserDialogState>({
@@ -47,7 +46,6 @@ export const CreateUserDialog = (props: CreateUserDialogProps) => {
       ? await UserService.updateAccount(model?.id!, state)
       : await UserService.createAccount(state);
     if (response.status !== 'ok') {
-      //console.error(response);
       enqueueSnackbar(`Failed to ${editMode ? 'update' : 'create'} user account.`, { variant: 'error' });
       return;
     }

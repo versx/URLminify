@@ -20,7 +20,6 @@ export const LoginPage = () => {
 
   const handleLogin = async () => {
     const response = await AuthService.login(username, password);
-    //console.log('login response:', response);
     if (response.status !== 'ok') {
       enqueueSnackbar('Failed to login!', { variant: 'error' });
       return;

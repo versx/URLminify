@@ -22,7 +22,6 @@ export const RegisterPage = () => {
 
   const handleRegister = async () => {
     const response = await AuthService.register(username, password);
-    console.log('register response:', response);
     if (response.status !== 'ok') {
       enqueueSnackbar('Failed to register your user account!', { variant: 'error' });
       return;

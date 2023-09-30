@@ -36,7 +36,6 @@ interface ShortUrlTableState {
 };
 
 export const ShortUrlTable = (props: any) => {
-  //console.log('ShortUrlTable props:', props);
   const [rows, setRows] = useState<ShortUrl[]>([]);
   const [state, setState] = useState<ShortUrlTableState>({
     open: false,
@@ -53,9 +52,8 @@ export const ShortUrlTable = (props: any) => {
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
-    ShortUrlService.getShortUrls(currentUser?.id).then((response) => {
+    ShortUrlService.getShortUrls(currentUser?.id).then((response: any) => {
       if (response.status !== 'ok') {
-        //console.error(response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
       }
@@ -100,7 +98,6 @@ export const ShortUrlTable = (props: any) => {
     for (const slug of selected) {
       const response = await ShortUrlService.deleteShortUrl(slug);
       if (response.status !== 'ok') {
-        //console.error('handleDelete response:', response);
         enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
         error = true;
       }
@@ -126,7 +123,6 @@ export const ShortUrlTable = (props: any) => {
 
     const response = await ShortUrlService.deleteShortUrl(slug);
     if (response.status !== 'ok') {
-      console.error('handleDeleteShortUrl response:', response);
       enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
       return;
     }

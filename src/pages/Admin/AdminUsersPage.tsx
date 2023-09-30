@@ -55,8 +55,7 @@ export const AdminUsersPage = () => {
   const currentUser = getUserToken();
 
   const handleReloadUsers = useCallback(() => {
-    UserService.getUsers().then((response) => {
-      //console.log('getUsers response:', response);
+    UserService.getUsers().then((response: any) => {
       if (response.status !== 'ok') {
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
@@ -102,7 +101,6 @@ export const AdminUsersPage = () => {
     for (const userId of selected) {
       const response = await UserService.deleteAccount(userId);
       if (response.status !== 'ok') {
-        //console.error('handleDelete response:', response);
         enqueueSnackbar('Error occurred deleting user account.', { variant: 'error' });
         error = true;
       }
@@ -124,7 +122,6 @@ export const AdminUsersPage = () => {
 
     const response = await UserService.deleteAccount(userId);
     if (response.status !== 'ok') {
-      console.error('deleteAccount response:', response);
       enqueueSnackbar('Error occurred deleting user.', { variant: 'error' });
       return;
     }

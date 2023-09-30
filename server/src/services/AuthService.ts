@@ -31,7 +31,7 @@ const login = async (username: string, password: string) => {
       admin: user.admin,
     };
   } catch (err) {
-    console.error('login:', err);
+    console.error(err);
     return false;
   }
 };
@@ -41,7 +41,7 @@ const register = async (username: string, password: string) => {
     const user = await UserService.createUser({ username, password }, false);
     return !!user;
   } catch (err) {
-    console.error('register:', err);
+    console.error(err);
     return false;
   }
 };
@@ -61,7 +61,6 @@ const verifyAccessToken = (accessToken: string): Promise<any | false> => new Pro
       return resolve(false);
     }
 
-    //req.userId = decoded?.id;
     return resolve(decoded);
   });
 });
