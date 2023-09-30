@@ -7,7 +7,7 @@ import {
 import { alpha } from '@mui/material/styles';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 
-import { TableToolbarProps } from '.';
+import { TableToolbarProps } from '..';
 
 export const UserTableToolbar = (props: TableToolbarProps) => {
   const { numSelected, onDelete } = props;

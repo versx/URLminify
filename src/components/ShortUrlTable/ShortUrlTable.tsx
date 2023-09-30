@@ -16,8 +16,8 @@ import moment from 'moment';
 import { useSnackbar } from 'notistack';
 
 import {
-  ActionsButtonGroup,
   Order,
+  ShortUrlActionsButtonGroup,
   ShortUrlTableHead,
   ShortUrlTableToolbar,
   StyledTableCell,
@@ -101,7 +101,7 @@ export const ShortUrlTable = (props: any) => {
       const response = await ShortUrlService.deleteShortUrl(slug);
       if (response.status !== 'ok') {
         //console.error('handleDelete response:', response);
-        enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
+        enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
         error = true;
       }
     }
@@ -322,7 +322,7 @@ export const ShortUrlTable = (props: any) => {
                       {moment(row.createdAt!).calendar()}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <ActionsButtonGroup
+                      <ShortUrlActionsButtonGroup
                         model={row}
                         onEdit={handleEditShortUrl}
                         onDelete={handleDeleteShortUrl}

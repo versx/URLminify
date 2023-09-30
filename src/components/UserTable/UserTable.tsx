@@ -2,89 +2,51 @@ import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useSta
 import {
   Box,
   Checkbox,
-  Fab,
   Paper,
   Table,
   TableBody,
   TableContainer,
   TablePagination,
   TextField,
-  Tooltip,
+  Typography,
 } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material'
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 
 import {
-  ActionsButtonGroup,
-  Order,
-  ShortUrlTableHead,
-  ShortUrlTableToolbar,
+  Order, 
   StyledTableCell,
   StyledTableRow,
-} from '..';
-import { CreateShortUrlDialog } from '../../dialogs';
-import { getComparator, stableSort, substr } from '../../modules';
-import { ShortUrlService } from '../../services';
+  UserActionsButtonGroup,
+  UserTableHead,
+  UserTableToolbar,
+} from '../../components';
+import { getComparator, stableSort } from '../../modules';
+import { UserService } from '../../services';
 import { getUserToken } from '../../stores';
-import { ShortUrl } from '../../types';
-
-interface ShortUrlTableState {
-  open: boolean;
-  editMode: boolean;
-  editModel: ShortUrl | undefined;
-};
+import { User } from '../../types';
 
 export const UserTable = (props: any) => {
-  //console.log('ShortUrlTable props:', props);
-  const [rows, setRows] = useState<ShortUrl[]>([]);
-  const [state, setState] = useState<ShortUrlTableState>({
-    open: false,
-    editMode: false,
-    editModel: undefined,
-  });
+  const [rows, setRows] = useState<User[]>([]);
   const [search, setSearch] = useState('');
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof ShortUrl>('slug');
-  const [selected, setSelected] = useState<readonly string[]>([]);
+  const [orderBy, setOrderBy] = useState<keyof User>('id');
+  const [selected, setSelected] = useState<readonly number[]>([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
-    ShortUrlService.getShortUrls(currentUser?.id).then((response) => {
+    UserService.getUsers().then((response) => {
       if (response.status !== 'ok') {
-        //console.error(response);
+        //console.error('getUsers response:', response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
       }
       setRows(response.shortUrls);
     });
-  }, [currentUser?.id, enqueueSnackbar]);
-
-  const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
-  const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});
-  const handleSubmit = () => {
-    enqueueSnackbar(`Short URL ${state.editMode ? 'updated' : 'created'} successfully!`, { variant: 'success' });
-
-    setState({
-      ...state,
-      open: false,
-      editMode: false,
-      editModel: undefined,
-    });
-    handleReloadShortUrls();
-  };
-
-  const handleEditShortUrl = (shortUrl: ShortUrl) => {
-    setState({
-      ...state,
-      open: true,
-      editMode: true,
-      editModel: shortUrl,
-    });
-  };
+  }, [enqueueSnackbar]);
 
   const handleDeleteShortUrls = async () => {
     if (selected.length === 0) {
@@ -97,8 +59,8 @@ export const UserTable = (props: any) => {
     }
 
     let error = false;
-    for (const slug of selected) {
-      const response = await ShortUrlService.deleteShortUrl(slug);
+    for (const userId of selected) {
+      const response = await UserService.deleteAccount(userId);
       if (response.status !== 'ok') {
         //console.error('handleDelete response:', response);
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
@@ -114,38 +76,26 @@ export const UserTable = (props: any) => {
     }
   };
 
-  const handleDeleteShortUrl = async (slug: string) => {
-    if (!slug) {
-      return;
-    }
-
-    const result = window.confirm(`Are you sure you want to delete short URL ${slug}?`);
+  const handleDeleteUser = async (userId: number) => {
+    const result = window.confirm(`Are you sure you want to delete user ${userId}?`);
     if (!result) {
       return;
     }
 
-    const response = await ShortUrlService.deleteShortUrl(slug);
+    const response = await UserService.deleteAccount(userId);
     if (response.status !== 'ok') {
-      console.error('handleDeleteShortUrl response:', response);
-      enqueueSnackbar('Error occurred deleting short URLs.', { variant: 'error' });
+      console.error('deleteAccount response:', response);
+      enqueueSnackbar('Error occurred deleting user.', { variant: 'error' });
       return;
     }
 
-    enqueueSnackbar('Short URL deleted successfully!', { variant: 'success' });
+    enqueueSnackbar('User account deleted successfully!', { variant: 'success' });
 
     setSelected([]);
     handleReloadShortUrls();
   };
 
-  const handleLinkClick = (event: any, shortUrl: ShortUrl) => {
-    const result = window.confirm(`Are you sure you want to visit ${shortUrl.originalUrl}?`);
-    if (!result) {
-      event.preventDefault();
-      return false;
-    }
-  };
-
-  const handleRequestSort = (event: MouseEvent<unknown>, property: keyof ShortUrl) => {
+  const handleRequestSort = (event: MouseEvent<unknown>, property: keyof User) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -160,12 +110,12 @@ export const UserTable = (props: any) => {
     setSelected([]);
   };
 
-  const handleRowClick = (event: MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
+  const handleRowClick = (event: MouseEvent<unknown>, userId: number) => {
+    const selectedIndex = selected.indexOf(userId);
+    let newSelected: readonly number[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, userId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -187,41 +137,39 @@ export const UserTable = (props: any) => {
     setPage(0);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (userId: number) => selected.indexOf(userId) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = useMemo(() =>
-    stableSort(rows, getComparator(order, orderBy)).slice(
+    stableSort(rows, getComparator<User, keyof User>(order, orderBy)).slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage,
     ),
   [order, orderBy, page, rows, rowsPerPage]);
 
-  useEffect(() => handleReloadShortUrls(), [handleReloadShortUrls]);
+  useEffect(() => {
+    if (!currentUser?.admin) {
+      return;
+    }
+    UserService.getUsers().then((response: any) => {
+      //console.log('getUsers response:', response);
+      if (response.status !== 'ok') {
+        enqueueSnackbar('Failed to get users.', { variant: 'error' });
+        return;
+      }
+      setRows(response.shortUrls);
+    });
+  }, [currentUser?.admin, enqueueSnackbar]);
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Typography variant="h4" gutterBottom>
+        Admin - Users
+      </Typography>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <Tooltip
-          title="Create short URL"
-        >
-          <Fab
-            color="primary"
-            aria-label="add"
-            onClick={handleOpen}
-            style={{
-              position: 'absolute',
-              bottom: 32,
-              right: 32,
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
-
-        <ShortUrlTableToolbar
+        <UserTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}
         />
@@ -245,34 +193,33 @@ export const UserTable = (props: any) => {
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
-            <ShortUrlTableHead
+            <UserTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
-              isAdmin={false}
+              isAdmin={true}
             />
             <TableBody>
-              {visibleRows.map((row: any, index: number) => { //ShortUrl
-                const isItemSelected = isSelected(row.slug);
+              {visibleRows.map((row: any, index: number) => { // User
+                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
-
-                if (search !== '' && !(row.slug.includes(search) || row.originalUrl.includes(search))) {
+                if (search !== '' && !(row.id.toString().includes(search) || row.username.includes(search))) {
                   return '';
                 }
 
                 return (
                   <StyledTableRow
                     hover
-                    key={row.slug}
+                    key={row.id}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
-                    onClick={(event: any) => handleRowClick(event, row.slug)}
+                    onClick={(event: any) => handleRowClick(event, row.id)}
                   >
                     <StyledTableCell padding="checkbox">
                       <Checkbox
@@ -289,32 +236,16 @@ export const UserTable = (props: any) => {
                       scope="row"
                       padding="none"
                     >
-                      <strong>{row.slug}</strong>
+                      <strong>{row.id}</strong>
                     </StyledTableCell>
                     <StyledTableCell align="left">
-                      <Tooltip title={row.originalUrl}>
-                        <a
-                          href={row.originalUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(event: any) => handleLinkClick(event, row)}
-                          style={{
-                            textDecoration: 'none',
-                            color: 'dodgerblue',
-                          }}
-                        >
-                          {substr(row.originalUrl)}
-                        </a>
-                      </Tooltip>
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.visits.toLocaleString()}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">
-                      {row.expiry ? moment(row.expiry).calendar() : ''}
+                      {row.username}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {row.enabled ? 'Yes' : 'No'}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row.admin ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"
@@ -323,10 +254,11 @@ export const UserTable = (props: any) => {
                       {moment(row.createdAt!).calendar()}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      <ActionsButtonGroup
+                      <UserActionsButtonGroup
                         model={row}
-                        onEdit={handleEditShortUrl}
-                        onDelete={handleDeleteShortUrl}
+                        onEdit={() => {}}
+                        // TODO: onDelete={handleDeleteUser}
+                        onDelete={() => console.log('onDelete')}
                       />
                     </StyledTableCell>
                   </StyledTableRow>
@@ -354,14 +286,6 @@ export const UserTable = (props: any) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-
-      <CreateShortUrlDialog
-        open={state.open}
-        editMode={state.editMode}
-        model={state.editModel}
-        onClose={handleClose}
-        onSubmit={handleSubmit}
-      />
     </Box>
   );
 };

@@ -9,3 +9,6 @@ export * from './IOSSwitch';
 export * from './ProtectedRoute';
 export * from './RedirectSlug';
 export * from './ShortUrlTable';
+export * from './StyledTableCell';
+export * from './StyledTableRow';
+export * from './UserTable';

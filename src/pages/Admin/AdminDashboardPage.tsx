@@ -3,6 +3,7 @@ import {
   Container,
   Grid,
   IconButton,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -43,17 +44,18 @@ export const AdminDashboardPage = () => {
 
   return (
     <Container>
-      <IconButton
-        size="large"
-        title="Admin Settings"
-        onClick={handleSettings}
-        style={{
-          display: 'flex',
-          float: 'right',
-        }}
-      >
-        <SettingsIcon sx={{fontSize: 36}} />
-      </IconButton>
+      <Tooltip title="Admin Settings">
+        <IconButton
+          size="large"
+          onClick={handleSettings}
+          style={{
+            display: 'flex',
+            float: 'right',
+          }}
+        >
+          <SettingsIcon sx={{fontSize: 36}} />
+        </IconButton>
+      </Tooltip>
       <Typography variant="h4" gutterBottom>
         Admin - Dashboard
       </Typography>

@@ -2,13 +2,9 @@ import React, { MouseEvent } from 'react';
 import {
   Box,
   Checkbox,
-  TableCell,
   TableHead,
-  TableRow,
   TableSortLabel,
-  tableCellClasses,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
 
 import {
@@ -16,7 +12,7 @@ import {
   //ArrowUpward as ArrowUpwardIcon,
 } from '@mui/icons-material';
 
-import { HeadCell, TableProps } from '.';
+import { HeadCell, StyledTableCell, StyledTableRow, TableProps } from '..';
 import { ShortUrl } from '../../types';
 
 const headCells: readonly HeadCell<ShortUrl>[] = [
@@ -64,26 +60,6 @@ const headCells: readonly HeadCell<ShortUrl>[] = [
     label: 'Created',
   },
 ];
-
-export const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-export const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#303030', //theme.palette.common.black,
-    color: 'white', //theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
 
 export const ShortUrlTableHead = (props: TableProps<ShortUrl>) => {
   const {

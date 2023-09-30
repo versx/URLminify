@@ -2,13 +2,9 @@ import React, { MouseEvent } from 'react';
 import {
   Box,
   Checkbox,
-  TableCell,
   TableHead,
-  TableRow,
   TableSortLabel,
-  tableCellClasses,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { visuallyHidden } from '@mui/utils';
 
 import {
@@ -16,7 +12,7 @@ import {
   //ArrowUpward as ArrowUpwardIcon,
 } from '@mui/icons-material';
 
-import { HeadCell, TableProps } from '.';
+import { HeadCell, TableProps, StyledTableCell, StyledTableRow } from '..';
 import { User } from '../../types';
 
 const headCells: readonly HeadCell<User>[] = [
@@ -33,6 +29,12 @@ const headCells: readonly HeadCell<User>[] = [
     label: 'Username',
   },
   {
+    id: 'shortUrls',
+    disablePadding: false,
+    align: 'right',
+    label: 'No. URLs',
+  },
+  {
     id: 'enabled',
     disablePadding: false,
     align: 'right',
@@ -42,7 +44,7 @@ const headCells: readonly HeadCell<User>[] = [
     id: 'admin',
     disablePadding: false,
     align: 'right',
-    label: 'Is Admin',
+    label: 'Admin',
   },
   {
     id: 'createdAt',
@@ -50,39 +52,7 @@ const headCells: readonly HeadCell<User>[] = [
     align: 'right',
     label: 'Created',
   },
-  {
-    id: 'updatedAt',
-    disablePadding: false,
-    align: 'right',
-    label: 'Updated',
-  },
-  {
-    id: 'shortUrls',
-    disablePadding: false,
-    align: 'right',
-    label: 'URLs count',
-  },
 ];
-
-export const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
-export const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#303030', //theme.palette.common.black,
-    color: 'white', //theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
 
 export const UserTableHead = (props: TableProps<User>) => {
   const {

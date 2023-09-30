@@ -40,21 +40,22 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const updateUser = async (req: Request, res: Response) => {
+  // TODO: Update user account
   res.json({
     status: 'ok',
   });
 };
 
 const deleteUser = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  if (!id) {
+  const { userId } = req.query;
+  if (!userId) {
     return res.json({
       status: 'error',
       error: 'No user ID specified.',
     });
   }
 
-  const user = await UserService.deleteUser(parseInt(id.toString()));
+  const user = await UserService.deleteUser(parseInt(userId.toString()));
   if (!user) {
     return res.json({
       status: 'error',

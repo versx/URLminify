@@ -1,5 +1,4 @@
 import { Order } from '../components';
-import { ShortUrl } from '../types';
 
 export const substr = (text: string, maxChars: number = 30, addEllipsis: boolean = true) => {
   if (text.length <= maxChars) {
@@ -19,12 +18,12 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 };
 
-export function getComparator<Key extends keyof ShortUrl>(
+export function getComparator<T, Key extends keyof T>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]?: boolean | number | string | Date | null },
-  b: { [key in Key]?: boolean | number | string | Date | null },
+  a: { [key in Key]?: any[] | boolean | number | string | Date | null },
+  b: { [key in Key]?: any[] | boolean | number | string | Date | null },
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -45,4 +44,13 @@ export function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => n
     return a[1] - b[1];
   });
   return stabilizedThis.map((el) => el[0]);
+};
+
+export const formatDateForDateTimeInput = (date: Date): string => {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');  // January is 0!
+  const dd = String(date.getDate()).padStart(2, '0');
+  const hh = String(date.getHours()).padStart(2, '0');
+  const mi = String(date.getMinutes()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
 };

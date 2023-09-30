@@ -12,6 +12,10 @@ const getShortUrls = async (userId?: number | string): Promise<ShortUrlModel[]> 
   const models = await db.shortUrl.findAll({
     where,
     attributes: ShortUrlAttributes,
+    include: [{
+      model: db.user,
+      as: 'user',
+    }],
   });
   return models;
 };

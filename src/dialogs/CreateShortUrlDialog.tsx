@@ -11,10 +11,11 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
+import { IOSSwitch } from '../components';
+import { formatDateForDateTimeInput } from '../modules';
 import { ShortUrlService } from '../services';
 import { getUserToken } from '../stores';
 import { ShortUrl } from '../types';
-import { IOSSwitch } from '../components';
 
 interface CreateShortUrlDialogProps {
   open: boolean;
@@ -163,13 +164,4 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-const formatDateForDateTimeInput = (date: Date): string => {
-  const YYYY = date.getFullYear();
-  const MM = String(date.getMonth() + 1).padStart(2, '0');  // January is 0!
-  const DD = String(date.getDate()).padStart(2, '0');
-  const HH = String(date.getHours()).padStart(2, '0');
-  const MI = String(date.getMinutes()).padStart(2, '0');
-  return `${YYYY}-${MM}-${DD}T${HH}:${MI}`;
 };
