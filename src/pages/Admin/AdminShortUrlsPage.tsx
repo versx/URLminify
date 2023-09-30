@@ -171,7 +171,7 @@ export const AdminShortUrlsPage = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         Admin - Short URLs
       </Typography>
       <Paper sx={{ width: '100%', mb: 2 }}>

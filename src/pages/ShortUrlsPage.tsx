@@ -5,7 +5,7 @@ export const ShortUrlsPage = () => (
   <Container>
     <Typography
       id="tableTitle"
-      variant="h3"
+      variant="h4"
       gutterBottom
       sx={{ flex: '1 1 100%' }}
     >

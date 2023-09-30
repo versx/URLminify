@@ -87,6 +87,7 @@ export const DrawerAppBar = (props: any) => {
                 textDecoration: 'none',
                 color: 'inherit',
                 textAlign: 'center',
+                justifyContent: 'center',
               }}
               onClick={handleOpenAdminMenu}
             >

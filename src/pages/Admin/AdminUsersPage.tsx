@@ -35,7 +35,7 @@ export const AdminUsersPage = () => {
 
   return (
     <Container>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         Admin - Users
       </Typography>
 

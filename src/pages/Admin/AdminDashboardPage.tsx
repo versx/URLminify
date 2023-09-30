@@ -39,7 +39,7 @@ export const AdminDashboardPage = () => {
 
   return (
     <Container>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         Admin - Dashboard
       </Typography>
       <Grid container spacing={2}>

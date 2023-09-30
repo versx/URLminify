@@ -48,7 +48,7 @@ export const DashboardPage = () => {
 
   return (
     <Container>
-      <Typography variant="h3" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         Dashboard
       </Typography>
 
