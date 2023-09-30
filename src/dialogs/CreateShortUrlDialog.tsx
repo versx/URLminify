@@ -28,7 +28,7 @@ interface CreateShortUrlDialogProps {
 interface CreateShortUrlDialogState {
   name?: string;
   url: string;
-  expiry: Date | null;
+  expiry: Date | string;
   enabled: boolean;
 };
 
@@ -39,7 +39,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
   const [state, setState] = useState<CreateShortUrlDialogState>({
     name: editMode ? model?.slug ?? '' : '',
     url: editMode ? model?.originalUrl ?? '' : '',
-    expiry: editMode ? model?.expiry ?? null : null,
+    expiry: editMode ? model?.expiry ?? '' : '',
     enabled: editMode ? model?.enabled ?? true : true,
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -51,21 +51,23 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       return;
     }
 
+    const expiry = state.expiry === '' ? null : new Date(state.expiry!);
+    const payload = { url: state.url, expiry, enabled: state.enabled };
     const response = editMode
-      ? await ShortUrlService.updateShortUrl(state.name!, { url: state.url, expiry: state.expiry, enabled: state.enabled })
-      : await ShortUrlService.createShortUrl({ name: state.name, url: state.url, expiry: state.expiry, enabled: state.enabled, userId: currentUser?.id });
+      ? await ShortUrlService.updateShortUrl(state.name!, payload)
+      : await ShortUrlService.createShortUrl({ ...payload, name: state.name, userId: currentUser?.id });
     if (response.status !== 'ok') {
       //console.error(response);
       enqueueSnackbar(`Failed to ${editMode ? 'update' : 'create'} short URL with error: ${response.error}`, { variant: 'error' });
       return;
     }
 
-    setState({ name: '', url: '', expiry: null, enabled: true });
+    setState({ name: '', url: '', expiry: '', enabled: true });
     onSubmit && onSubmit();
   };
 
   const handleClose = () => {
-    setState({ name: '', url: '', expiry: null, enabled: true });
+    setState({ name: '', url: '', expiry: '', enabled: true });
     onClose && onClose();
   };
 
@@ -75,7 +77,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       setState({
         name: model?.slug ?? '',
         url: model?.originalUrl ?? '',
-        expiry: model?.expiry ?? null,
+        expiry: model?.expiry ?? '',
         enabled: model?.enabled ?? true,
       });
     }
@@ -125,11 +127,11 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
           fullWidth
           label="Expiry Date (optional)"
           type="datetime-local"
-          value={state.expiry ? formatDateForDateTimeInput(new Date(state.expiry)) : null}
+          value={state.expiry ? formatDateForDateTimeInput(new Date(state.expiry)) : ''}
           InputLabelProps={{
             shrink: true,
           }}
-          onChange={e => setState({...state, expiry: e.target.value ? new Date(e.target.value) : null})}
+          onChange={e => setState({...state, expiry: e.target.value ? new Date(e.target.value) : ''})}
           style={{
             marginBottom: 10,
           }}
