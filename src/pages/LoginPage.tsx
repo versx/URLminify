@@ -46,6 +46,7 @@ export const LoginPage = () => {
           Login
         </Typography>
         <TextField
+          autoFocus
           fullWidth
           label="Username"
           variant="outlined"

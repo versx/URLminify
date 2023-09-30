@@ -40,6 +40,7 @@ export const RegisterPage = () => {
           Register
         </Typography>
         <TextField
+          autoFocus
           fullWidth
           label="Username"
           variant="outlined"
