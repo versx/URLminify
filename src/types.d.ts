@@ -69,3 +69,17 @@ export type UpdateShortUrlResponse = {
   };
   originalUrl: string;
 };
+
+export type RouteParamInfo = {
+  name: string;
+  type: string;
+  description: string;
+};
+
+export type RouteInfo = {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  path: string;
+  description: string;
+  parameters?: Array<RouteParamInfo>;
+  response?: string;
+};
