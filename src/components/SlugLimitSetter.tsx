@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -8,32 +8,33 @@ import {
 } from '@mui/material';
 
 interface SlugLimitProps {
-  initialLimit?: number;
+  limit?: number;
   onSubmit: (newLimit: number) => void;
+  onLimitChange: (newLimit: number) => void;
 };
 
 export const SlugLimitSetter = (props: SlugLimitProps) => {
-  const { initialLimit, onSubmit } = props;
-  const [limit, setLimit] = useState<number>(initialLimit!);
+  const { limit, onSubmit, onLimitChange } = props;
 
   const handleLimitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let newLimit = parseInt(event.target.value, 10);
-
     if (isNaN(newLimit) || newLimit < 0) {
       newLimit = 0;
     }
     
-    setLimit(newLimit);
+    onLimitChange(newLimit);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit(limit);
+    onSubmit(limit!);
   };
 
   return (
     <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
-      <Typography variant="h6">Daily URL Slug Limit</Typography>
+      <Typography variant="h6">
+        Daily URL Slug Limit
+      </Typography>
       <form onSubmit={handleSubmit} style={{ marginTop: 15, width: '100%' }}>
         <TextField
           fullWidth

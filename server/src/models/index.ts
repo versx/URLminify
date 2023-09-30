@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 
+import { Setting } from './Setting';
 import { ShortUrl } from './ShortUrl';
 import { User } from './User';
 import { log, logError } from '../services';
@@ -9,6 +10,7 @@ const config: Config = require('../config.json');
 const sequelize = new Sequelize(config.database);
 
 export const db: SequelizeDatabaseConnection = { connection: sequelize };
+db.setting = Setting(sequelize);
 db.shortUrl = ShortUrl(sequelize);
 db.user = User(sequelize);
 

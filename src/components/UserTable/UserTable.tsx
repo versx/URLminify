@@ -257,8 +257,7 @@ export const UserTable = (props: any) => {
                       <UserActionsButtonGroup
                         model={row}
                         onEdit={() => {}}
-                        // TODO: onDelete={handleDeleteUser}
-                        onDelete={() => console.log('onDelete')}
+                        onDelete={handleDeleteUser}
                       />
                     </StyledTableCell>
                   </StyledTableRow>

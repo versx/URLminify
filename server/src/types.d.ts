@@ -30,6 +30,7 @@ export type Config = {
 
 export type SequelizeDatabaseConnection = {
   connection: Sequelize;
+  setting?: Model;
   shortUrl?: Model;
   user?: Model;
 };

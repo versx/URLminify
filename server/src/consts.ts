@@ -1,6 +1,7 @@
 // API routes
 export const BaseApiRoute = '/api/v1/';
 export const AuthApiRoute = BaseApiRoute + 'auth';
+export const SettingsApiRoute = BaseApiRoute + 'settings';
 export const ShortUrlsApiRoute = BaseApiRoute + 'shorturls';
 export const UsersApiRoute = BaseApiRoute + 'users';
 
