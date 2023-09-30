@@ -255,10 +255,9 @@ export const ShortUrlTable = (props: any) => {
               isAdmin={false}
             />
             <TableBody>
-              {visibleRows.map((row: any, index: number) => { //ShortUrl
+              {visibleRows.map((row: ShortUrl, index: number) => {
                 const isItemSelected = isSelected(row.slug);
                 const labelId = `enhanced-table-checkbox-${index}`;
-
                 if (search !== '' && !(row.slug.includes(search) || row.originalUrl.includes(search))) {
                   return '';
                 }

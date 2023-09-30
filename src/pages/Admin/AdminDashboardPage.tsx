@@ -40,21 +40,25 @@ export const AdminDashboardPage = () => {
       <Typography variant="h3" gutterBottom>
         Admin - Dashboard
       </Typography>
-      <Grid container spacing={0}>
-        <Grid item xs={6}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
           <CardDisplay
             text="Short URLs"
-            icon={<LinkIcon sx={{fontSize: 32}} />}
+            icon={<LinkIcon sx={{fontSize: 48}} />}
             value={shortUrls.length.toLocaleString()}
             href={Routes.admin.shortUrls}
+            width="100%"
+            height="130px"
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <CardDisplay
             text="Users"
-            icon={<PersonIcon sx={{fontSize: 32}} />}
+            icon={<PersonIcon sx={{fontSize: 48}} />}
             value={users.length.toLocaleString()}
             href={Routes.admin.users}
+            width="100%"
+            height="130px"
           />
         </Grid>
       </Grid>

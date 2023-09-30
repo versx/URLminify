@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
 
-const useStyles: any = (theme: Theme, height: string = '120px', width: string = '220px') => ({
+const useStyles: any = (theme: Theme, height: string = '130px', width: string = '220px') => ({
   cardContainer: {
     border: '1px solid #e0e0e0',
     borderRadius: '8px',
@@ -14,7 +14,7 @@ const useStyles: any = (theme: Theme, height: string = '120px', width: string = 
     flexDirection: 'column',
     alignItems: 'stretch',
     width: width ?? '220px', // fixed width
-    height: height ?? '120px', // fixed height
+    height: height ?? '130px', // fixed height
   },
   iconAndTextContainer: {
     display: 'flex',
