@@ -37,6 +37,7 @@ export interface CardDisplayProps {
   text: string;
   icon: ReactElement;
   value: string | number;
+  href?: string;
   valueSize?: number;
   height?: string;
   width?: string;
@@ -44,15 +45,15 @@ export interface CardDisplayProps {
 
 export const CardDisplay = (props: CardDisplayProps) => {
   const {
-    text, icon, value,
+    text, icon, value, href,
     valueSize = 20,
     height = '120px', width = '220px',
   } = props;
   const theme = useTheme();
   const classes = useStyles(theme, height, width);
 
-  return (
-    <Box sx={classes.cardContainer}>
+  const Card = () => (
+    <>
       <div style={classes.iconAndTextContainer}>
         <span style={classes.icon}>{icon}</span>
         <Typography variant="body1">{text}</Typography>
@@ -60,6 +61,19 @@ export const CardDisplay = (props: CardDisplayProps) => {
       <Typography variant="h6" style={{...classes.value, fontSize: valueSize}}>
         <strong>{value}</strong>
       </Typography>
+    </>
+  );
+
+  return href ? (
+    <a
+      href={href}
+      style={{...classes.cardContainer, textDecoration: 'none', color: 'inherit'}}
+    >
+      <Card />
+    </a>
+  ) : (
+    <Box style={classes.cardContainer}>
+      <Card />
     </Box>
   );
 };

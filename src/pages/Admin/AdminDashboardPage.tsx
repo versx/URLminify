@@ -9,6 +9,7 @@ import {
   Person as PersonIcon,
 } from '@mui/icons-material';
 
+import { Routes } from '../../consts';
 import { CardDisplay } from '../../components';
 import { ShortUrlService, UserService } from '../../services';
 import { ShortUrl, User } from '../../types';
@@ -45,6 +46,7 @@ export const AdminDashboardPage = () => {
             text="Short URLs"
             icon={<LinkIcon sx={{fontSize: 32}} />}
             value={shortUrls.length.toLocaleString()}
+            href={Routes.admin.shortUrls}
           />
         </Grid>
         <Grid item xs={6}>
@@ -52,6 +54,7 @@ export const AdminDashboardPage = () => {
             text="Users"
             icon={<PersonIcon sx={{fontSize: 32}} />}
             value={users.length.toLocaleString()}
+            href={Routes.admin.users}
           />
         </Grid>
       </Grid>
