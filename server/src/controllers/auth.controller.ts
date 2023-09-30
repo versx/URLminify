@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { AuthService } from '../services';
 
 const login = async (req: Request, res: Response) => {
-  console.log('login:', req.body);
+  //console.log('login:', req.body);
   const { username, password } = req.body;
   const result = await AuthService.login(username, password);
   if (!result) {
@@ -20,7 +20,7 @@ const login = async (req: Request, res: Response) => {
 };
 
 const register = async (req: Request, res: Response) => {
-  console.log('register:', req.body);
+  //console.log('register:', req.body);
   const { username, password } = req.body;
   const result = await AuthService.register(username, password);
   if (!result) {

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import { atob, AuthService, UserService } from '../services';
 
-export const ValidateMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const AdminMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   let token = req.headers['x-access-token']?.toString();
   //const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
@@ -16,7 +16,7 @@ export const ValidateMiddleware = async (req: Request, res: Response, next: Next
     }
   }
 
-  const apiKey = atob(token);
+  const apiKey = atob(token); // TODO: Possibly use accessTokens
   const decoded = await AuthService.verifyAccessToken(apiKey);
   if (!decoded) {
     return res.json({
@@ -41,8 +41,22 @@ export const ValidateMiddleware = async (req: Request, res: Response, next: Next
     });
   }
 
-  (req as any).user = user;
+  try {
+    (req as any).user = user;
 
-  next();
+    if (!(req as any)?.user?.admin) {
+      return res.json({
+        status: 'error',
+        error: 'User is not authorized!',
+      });
+    }
+
+    next();
+  } catch (err) {
+    console.error(err);
+    return res.json({
+      status: 'error',
+      error: 'Not authorized!',
+    });
+  }
 };
-

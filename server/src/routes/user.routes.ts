@@ -2,15 +2,15 @@ import { Application } from 'express';
 
 import { UsersApiRoute } from '../consts';
 import { UserController } from '../controllers';
-import { ValidateMiddleware } from '../middleware';
+import { AdminMiddleware, ValidateMiddleware } from '../middleware';
 
 export const UserRouter = (app: Application) => {
   app.use(ValidateMiddleware)
     .route(UsersApiRoute)
-      .get(UserController.getUsers)
-      .post(UserController.createUser)
-      .put(UserController.updateUser)
-      .delete(UserController.deleteUser);
+      .get(AdminMiddleware, UserController.getUsers)
+      .post(AdminMiddleware, UserController.createUser)
+      .put(AdminMiddleware, UserController.updateUser)
+      .delete(AdminMiddleware, UserController.deleteUser);
 
   app.get(`${UsersApiRoute}/:id`, UserController.getUser);
   app.post(`${UsersApiRoute}/:id/password/reset`, UserController.changePassword);
