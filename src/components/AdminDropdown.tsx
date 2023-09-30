@@ -1,4 +1,5 @@
 import {
+  Divider,
   Menu,
   MenuItem,
 } from '@mui/material';
@@ -58,9 +59,11 @@ export const AdminDropdown = (props: any) => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      {items.map((item: DropdownItem) => (
+      {items.map((item: DropdownItem, index: number) => item.text === 'divider' ? (
+        <Divider key={index} />
+      ) : (
         <MenuItem
-          key={item.path}
+          key={index}
           component="a"
           href={item.path}
           onClick={onClose}

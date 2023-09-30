@@ -38,6 +38,8 @@ const adminItems: DropdownItem[] = [
   { text: 'Dashboard', path: Routes.admin.dashboard },
   { text: 'Short URLs', path: Routes.admin.shortUrls },
   { text: 'Users', path: Routes.admin.users },
+  { text: 'divider', path: 'divider' },
+  { text: 'Settings', path: Routes.admin.settings },
 ];
 
 export const DrawerAppBar = (props: any) => {

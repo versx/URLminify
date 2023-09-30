@@ -13,6 +13,7 @@ import {
 import { Routes } from './consts';
 import {
   AdminDashboardPage,
+  AdminSettingsPage,
   AdminShortUrlsPage,
   AdminUsersPage,
   DashboardPage,
@@ -39,6 +40,7 @@ const App = () => {
             <Route path={Routes.admin.dashboard} element={<AdminDashboardPage />}/>
             <Route path={Routes.admin.shortUrls} element={<AdminShortUrlsPage />}/>
             <Route path={Routes.admin.users} element={<AdminUsersPage />}/>
+            <Route path={Routes.admin.settings} element={<AdminSettingsPage />}/>
           </Route>
         </Route>
         <Route path={Routes.slugs} element={<RedirectSlug />} />

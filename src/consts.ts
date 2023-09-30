@@ -9,5 +9,6 @@ export const Routes = {
     dashboard: '/admin',
     shortUrls: '/admin/urls',
     users: '/admin/users',
+    settings: '/admin/settings',
   },
 };

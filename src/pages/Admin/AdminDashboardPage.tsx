@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   Container,
   Grid,
+  IconButton,
   Typography,
 } from '@mui/material';
 import {
   Link as LinkIcon,
   Person as PersonIcon,
+  Settings as SettingsIcon,
 } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 
@@ -19,6 +21,8 @@ export const AdminDashboardPage = () => {
   const [shortUrls, setShortUrls] = useState<ShortUrl[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const { enqueueSnackbar } = useSnackbar();
+
+  const handleSettings = () => window.location.href = Routes.admin.settings;
 
   useEffect(() => {
     ShortUrlService.getShortUrls().then((response: any) => {
@@ -39,6 +43,17 @@ export const AdminDashboardPage = () => {
 
   return (
     <Container>
+      <IconButton
+        size="large"
+        title="Admin Settings"
+        onClick={handleSettings}
+        style={{
+          display: 'flex',
+          float: 'right',
+        }}
+      >
+        <SettingsIcon sx={{fontSize: 36}} />
+      </IconButton>
       <Typography variant="h4" gutterBottom>
         Admin - Dashboard
       </Typography>
