@@ -8,6 +8,7 @@ import {
   Link as LinkIcon,
   Person as PersonIcon,
 } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 
 import { Routes } from '../../consts';
 import { CardDisplay } from '../../components';
@@ -17,23 +18,24 @@ import { ShortUrl, User } from '../../types';
 export const AdminDashboardPage = () => {
   const [shortUrls, setShortUrls] = useState<ShortUrl[]>([]);
   const [users, setUsers] = useState<User[]>([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     ShortUrlService.getShortUrls().then((response: any) => {
       if (response.status !== 'ok') {
-        // TODO: Error
+        enqueueSnackbar(`Failed to retrieve short urls with error: ${response.error}.`, { variant: 'error' });
         return;
       }
       setShortUrls(response.shortUrls);
     });
     UserService.getUsers().then((response: any) => {
       if (response.status !== 'ok') {
-        // TODO: Error
+        enqueueSnackbar(`Failed to retrieve users with error: ${response.error}`, { variant: 'error' });
         return;
       }
       setUsers(response.users);
     });
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <Container>
