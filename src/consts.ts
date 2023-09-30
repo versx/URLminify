@@ -1,5 +1,6 @@
 export const Routes = {
   dashboard: '/',
+  slugs: '/:slug',
   shortUrls: '/urls',
   settings: '/settings',
   login: '/login',

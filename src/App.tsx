@@ -4,7 +4,12 @@ import {
   Routes as Switch,
 } from 'react-router-dom';
 
-import { AdminProtectedRoute, DrawerAppBar, ProtectedRoute } from './components';
+import {
+  AdminProtectedRoute,
+  DrawerAppBar,
+  ProtectedRoute,
+  RedirectSlug,
+} from './components';
 import { Routes } from './consts';
 import {
   AdminDashboardPage,
@@ -23,6 +28,7 @@ const App = () => {
     <Router>
       <DrawerAppBar>
       <Switch>
+        <Route path="*" element={<NotFoundPage />} />
         <Route path={Routes.login} element={<LoginPage />} />
         <Route path={Routes.register} element={<RegisterPage />} />
         <Route path={Routes.dashboard} element={<ProtectedRoute />}>
@@ -35,7 +41,7 @@ const App = () => {
             <Route path={Routes.admin.users} element={<AdminUsersPage />}/>
           </Route>
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={Routes.slugs} element={<RedirectSlug />} />
       </Switch>
       </DrawerAppBar>
     </Router>
