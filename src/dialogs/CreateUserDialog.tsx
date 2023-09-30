@@ -86,6 +86,8 @@ export const CreateUserDialog = (props: CreateUserDialogProps) => {
       </DialogTitle>
       <DialogContent>
         <DialogContentText style={{ marginBottom: 10 }}>
+          Setting the password field will change the password to whatever
+          is specified. Leave it blank to keep the current password.
         </DialogContentText>
         <TextField
           error={!state.username}
@@ -101,10 +103,10 @@ export const CreateUserDialog = (props: CreateUserDialogProps) => {
           }}
         />
         <TextField
-          error={!state.password}
-          helperText={!state.password ? 'Password field is required.' : ''}
+          error={!editMode && !state.password}
+          helperText={!editMode && !state.password ? 'Password field is required.' : ''}
           fullWidth
-          required
+          required={!editMode}
           multiline
           label="Password"
           variant="outlined"
