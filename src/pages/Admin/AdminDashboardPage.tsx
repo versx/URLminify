@@ -7,7 +7,7 @@ export const AdminDashboardPage = () => {
   return (
     <Container>
       <Typography variant="h3" gutterBottom>
-        Admin Dashboard
+        Admin - Dashboard
       </Typography>
     </Container>
   );

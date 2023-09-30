@@ -36,7 +36,7 @@ export const AdminUsersPage = () => {
   return (
     <Container>
       <Typography variant="h3" gutterBottom>
-        Admin Dashboard
+        Admin - Users
       </Typography>
 
       <Paper style={{ padding: '20px', marginBottom: '20px' }}>

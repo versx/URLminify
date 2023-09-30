@@ -1,4 +1,5 @@
 export * from './AccountMenu';
+export * from './AdminDropdown';
 export * from './AdminProtectedRoute';
 export * from './ApiKeyTextField';
 export * from './ChangePassword';

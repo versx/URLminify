@@ -3,7 +3,6 @@ import {
   AppBar,
   Box,
   Button,
-  CssBaseline,
   Divider,
   Drawer,
   IconButton,
@@ -14,66 +13,94 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import {
+  ArrowDropDown as ArrowDropDownIcon,
+  Menu as MenuIcon,
+} from '@mui/icons-material';
 
-import { AccountMenu } from '.';
+import { AccountMenu, AdminDropdown, DropdownItem } from '.';
 import { Routes } from '../consts';
+import { get } from '../modules';
+import { getUserToken } from '../stores';
+import { User } from '../types';
 
 const Title = 'URLminify';
 const DrawerWidth = 240;
 
-const navItems = [
-  { text: 'Dashboard', path: Routes.dashboard, requiresAuth: true},
-  { text: 'URLs', path: Routes.shortUrls, requiresAuth: true},
+const navItems: DropdownItem[] = [
+  { text: 'Dashboard', path: Routes.dashboard, requiresAuth: true },
+  { text: 'URLs', path: Routes.shortUrls, requiresAuth: true },
   { text: 'Login', path: Routes.login, requiresAuth: false },
   { text: 'Register', path: Routes.register, requiresAuth: false },
+];
+
+const adminItems: DropdownItem[] = [
+  { text: 'Dashboard', path: Routes.admin.dashboard },
+  { text: 'Short URLs', path: Routes.admin.shortUrls },
+  { text: 'Users', path: Routes.admin.users },
 ];
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isAuthenticated = Boolean(localStorage.getItem('isAuthenticated'));
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   
+  const currentUser = getUserToken() as User;
+  const isAuthenticated = Boolean(get('isAuthenticated'));
+  const isAdmin = Boolean(currentUser?.admin); //Boolean(JSON.parse(localStorage.getItem('user') ?? '{}')?.admin);
+  
+  const handleOpenAdminMenu = (event: any) => setAnchorEl(event.currentTarget);
+  const handleCloseAdminMenu = () => setAnchorEl(null);
+
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
 
-  const LoginRegisterLinks = () => (
-    <>
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Typography variant="h6" sx={{ my: 2, justifyContent: 'center' }}>
+        <a href={Routes.dashboard} style={{textDecoration: 'none', color: 'inherit'}}>
+          <img src="/logo192.png" alt="URLminify Logo" width={28} height={28} style={{ marginRight: '5px' }} />
+          {Title}
+        </a>
+      </Typography>
+      <Divider />
       <List>
-        {navItems.map((item) => ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
+        {navItems.map((item) => isAuthenticated && item.requiresAuth && (
           <ListItem key={item.path} disablePadding>
             <ListItemButton
               href={item.path}
               style={{
                 textDecoration: 'none',
                 color: 'inherit',
+                textAlign: 'center',
               }}
-              sx={{ textAlign: 'center' }}
             >
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
+        {isAdmin && (
+          <ListItem key='admin' disablePadding>
+            <ListItemButton
+              aria-controls="admin-menu"
+              aria-haspopup="true"
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+                textAlign: 'center',
+              }}
+              onClick={handleOpenAdminMenu}
+            >
+              Admin
+              <ArrowDropDownIcon />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
-      {isAuthenticated && (<AccountMenu key="account" />)}
-    </>
-  );
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2, justifyContent: 'center' }}>
-        <a href={Routes.dashboard} style={{textDecoration: 'none', color: 'inherit'}}>
-        <img src="/logo192.png" alt="URLminify Logo" width={28} height={28} style={{ marginRight: '5px' }} />
-          {Title}
-        </a>
-      </Typography>
-      <Divider />
-      <LoginRegisterLinks />
     </Box>
   );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
           <IconButton
@@ -97,19 +124,30 @@ export const DrawerAppBar = (props: any) => {
             </a>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              <>
-                {navItems.map((item) => (
-                  ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
-                  <a key={item.path} href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
-                    <Button key={item.path} sx={{ color: '#fff' }}>
-                      {item.text}
-                    </Button>
-                  </a>
-                  )
-                ))}
-                {isAuthenticated && (<AccountMenu />)}
-              </>
+            <>
+              {navItems.map((item) => (
+                ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
+                <a key={item.path} href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
+                  <Button key={item.path} sx={{ color: '#fff' }}>
+                    {item.text}
+                  </Button>
+                </a>
+                )
+              ))}
+              {isAdmin && (
+                <Button
+                  aria-controls="admin-menu"
+                  aria-haspopup="true"
+                  sx={{ color: '#fff' }}
+                  onClick={handleOpenAdminMenu}
+                >
+                  Admin
+                  <ArrowDropDownIcon />
+                </Button>
+              )}
+            </>
           </Box>
+          {isAuthenticated && (<AccountMenu />)}
         </Toolbar>
       </AppBar>
       <nav>
@@ -132,6 +170,14 @@ export const DrawerAppBar = (props: any) => {
         <Toolbar />
         {children}
       </Box>
+      {isAdmin && (
+        <AdminDropdown
+          isAdmin={isAdmin}
+          open={anchorEl}
+          items={adminItems}
+          onClose={handleCloseAdminMenu}
+        />
+      )}
     </Box>
   );
 };
