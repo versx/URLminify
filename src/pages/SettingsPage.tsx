@@ -20,7 +20,7 @@ export const SettingsPage = () => {
       return;
     }
 
-    const result2 = window.confirm(`Are you 100% posititive?`);
+    const result2 = window.confirm(`Are you 100% positive?`);
     if (!result2) {
       return;
     }
