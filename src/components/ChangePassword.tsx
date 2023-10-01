@@ -63,7 +63,12 @@ export const ChangePassword = () => {
         helperText={error}
         style={{ marginBottom: '20px' }}
       />
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
+      <Button
+        fullWidth
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+      >
         Change Password
       </Button>
     </>

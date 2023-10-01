@@ -64,6 +64,7 @@ export const SettingsPage = () => {
             system including any short URLs that you've created if you continue.
           </Typography>
           <Button
+            fullWidth
             variant="contained"
             color="error"
             onClick={handleDeleteAccount}
