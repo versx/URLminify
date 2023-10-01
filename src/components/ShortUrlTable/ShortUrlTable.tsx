@@ -311,7 +311,7 @@ export const ShortUrlTable = (props: any) => {
                     <StyledTableCell align="left"  sx={{ display: { xs: 'none', sm: 'table-cell' }, whiteSpace: 'nowrap' }}>
                       {row.expiry ? moment(row.expiry).calendar() : ''}
                     </StyledTableCell>
-                    <StyledTableCell align="left" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell
