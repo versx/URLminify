@@ -7,16 +7,17 @@ import { StatTile } from '.';
 import { UrlStatsData } from '../types';
 
 interface UrlStatsProps {
+  title: string;
   data: UrlStatsData;
 };
 
 export const UrlStats = (props: UrlStatsProps) => {
-  const { data } = props;
+  const { title, data } = props;
 
   return (
     <div style={{ padding: '16px' }}>
       <Typography variant="h5" gutterBottom style={{textAlign: 'center'}}>
-        Statistics
+        {title}
       </Typography>
 
       <Grid container spacing={3} justifyContent="center">

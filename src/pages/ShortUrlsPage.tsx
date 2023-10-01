@@ -71,7 +71,10 @@ export const ShortUrlsPage = () => {
         total={slugLimitRef.current}
       />
 
-      <UrlStats data={stats} />
+      <UrlStats
+        title="Short URL Statistics"
+        data={stats}
+      />
       <ShortUrlTable />
     </Container>
   );

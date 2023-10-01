@@ -91,3 +91,11 @@ export type UrlStatsData = {
   enabled: number;
   disabled: number;
 };
+
+export type UserStatsData = {
+  total: number;
+  admins: number;
+  users: number;
+  enabled: number;
+  disabled: number;
+};
