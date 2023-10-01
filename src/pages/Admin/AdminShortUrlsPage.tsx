@@ -177,7 +177,7 @@ export const AdminShortUrlsPage = () => {
 
   return (
     <Container sx={{ width: '100%' }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Short URLs
       </Typography>
       <Paper sx={{ width: '100%', mb: 2 }}>

@@ -63,6 +63,7 @@ export const ShortUrlsPage = () => {
         variant="h4"
         gutterBottom
         sx={{ flex: '1 1 100%' }}
+        style={{textAlign: 'center'}}
       >
         Short URLs
       </Typography>

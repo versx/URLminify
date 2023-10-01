@@ -90,7 +90,7 @@ export const AdminDashboardPage = () => {
           <SettingsIcon sx={{fontSize: 36}} />
         </IconButton>
       </Tooltip>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Dashboard
       </Typography>
       <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px' }}>

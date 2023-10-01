@@ -15,7 +15,7 @@ import { RouteParamInfo } from '../types';
 export const ApiDocumentationPage = () => {
   return (
     <Container sx={{ width: '100%' }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         API Documentation
       </Typography>
       {ApiRoutes.map((route, index) => (

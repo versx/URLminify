@@ -64,7 +64,7 @@ export const AdminSettingsPage = () => {
 
   return (
     <Container style={{ height: '35vh' }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Settings
       </Typography>
       <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>

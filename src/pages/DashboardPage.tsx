@@ -47,7 +47,7 @@ export const DashboardPage = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Dashboard
       </Typography>
 

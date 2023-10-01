@@ -37,7 +37,7 @@ export const SettingsPage = () => {
 
   return (
     <Container style={{ height: '35vh' }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Settings
       </Typography>
       <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', justifyContent: 'center', alignItems: 'center' }}>
