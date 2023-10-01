@@ -115,18 +115,12 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 ## Screenshots  
 **Dashboard**  
 ![Dashboard](.github/images/dashboard.png)  
-**Short URLs**  
-![Short URLs](.github/images/urls.png)  
-**Settings**  
-![Settings](.github/images/settings.png)  
-**API Documentation**
-![API Documentation](.github/images/api-docs.png)  
+| Short URLs | Settings | API Documentation
+| ------------- | ------------- | ------------- |
+| <a href="https://raw.githubusercontent.com/versx/URLminify/master/.github/images/urls.png">![Short URLs](.github/images/urls.png)</a> | <a href="https://raw.githubusercontent.com/versx/URLminify/master/.github/images/settings.png">![Settings](.github/images/settings.png)</a> | <a href="https://raw.githubusercontent.com/versx/URLminify/master/.github/images/api-docs.png">![API Documentation](.github/images/api-docs.png)</a>
 
 **Admin Dashboard**  
 ![Admin Dashboard](.github/images/admin-dashboard.png)  
-**Admin Short URLs**  
-![Admin Short URLs](.github/images/admin-urls.png)  
-**Admin Users**  
-![Admin Users](.github/images/admin-users.png)  
-**Admin Settings**  
-![Admin Settings](.github/images/admin-settings.png)  
+| Short URLs  | Users | Settings |
+| ------------- | ------------- | ------------- |
+| <a href="https://raw.githubusercontent.com/versx/URLminify/master/.github/images/admin-urls.png">![Admin Short URLs](.github/images/admin-urls.png)</a> | <a href="https://raw.githubusercontent.com/versx/URLminify/master/.github/images/admin-users.png">![Users](.github/images/admin-users.png)</a> | <a href="https://raw.githubusercontent.com/versx/URLminify/master/.github/images/admin-settings.png">![Admin Settings](.github/images/admin-settings.png)</a> |
