@@ -266,7 +266,7 @@ export const AdminShortUrlsPage = () => {
                     <StyledTableCell align="right">
                       {row.visits.toLocaleString()}
                     </StyledTableCell>
-                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                    <StyledTableCell align="left" sx={{ display: { xs: 'none', sm: 'table-cell' }, whiteSpace: 'nowrap' }}>
                       {row.expiry ? moment(row.expiry).calendar() : ''}
                     </StyledTableCell>
                     <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
@@ -278,7 +278,7 @@ export const AdminShortUrlsPage = () => {
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
-                      sx={{ display: { xs: 'none', sm: 'table-cell' } }}
+                      sx={{ display: { xs: 'none', sm: 'table-cell' }, whiteSpace: 'nowrap' }}
                     >
                       {moment(row.createdAt).calendar()}
                     </StyledTableCell>

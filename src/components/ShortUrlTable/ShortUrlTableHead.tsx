@@ -4,12 +4,8 @@ import {
   TableHead,
   TableSortLabel,
 } from '@mui/material';
+import { ArrowDownward as ArrowDownwardIcon } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
-
-import {
-  ArrowDownward as ArrowDownwardIcon,
-  //ArrowUpward as ArrowUpwardIcon,
-} from '@mui/icons-material';
 
 import { HeadCell, StyledTableCell, StyledTableRow, TableProps } from '..';
 import { ShortUrl } from '../../types';
@@ -37,7 +33,7 @@ const headCells: readonly HeadCell<ShortUrl>[] = [
   {
     id: 'expiry',
     disablePadding: false,
-    align: 'right',
+    align: 'left',
     label: 'Expires',
     style: { display: { xs: 'none', sm: 'table-cell' } },
   },
@@ -52,7 +48,7 @@ const headCells: readonly HeadCell<ShortUrl>[] = [
     id: 'userId',
     disablePadding: false,
     align: 'right',
-    label: 'User ID',
+    label: 'User',
     isAdmin: true,
   },
   {

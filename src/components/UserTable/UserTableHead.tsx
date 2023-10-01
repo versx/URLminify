@@ -1,18 +1,13 @@
-import React, { MouseEvent } from 'react';
 import {
   Box,
   Checkbox,
   TableHead,
   TableSortLabel,
 } from '@mui/material';
+import { ArrowDownward as ArrowDownwardIcon } from '@mui/icons-material';
 import { visuallyHidden } from '@mui/utils';
 
-import {
-  ArrowDownward as ArrowDownwardIcon,
-  //ArrowUpward as ArrowUpwardIcon,
-} from '@mui/icons-material';
-
-import { HeadCell, TableProps, StyledTableCell, StyledTableRow } from '..';
+import { HeadCell, StyledTableCell, StyledTableRow, TableProps } from '..';
 import { User } from '../../types';
 
 const headCells: readonly HeadCell<User>[] = [
