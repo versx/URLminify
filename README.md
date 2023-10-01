@@ -6,16 +6,10 @@
 # URLminify
 NodeJS frontend and backend to create short URL addresses from longer URL addresses.  
 
-## Screenshots  
-**Dashboard**  
-[![Dashboard](.github/images/dashboard.png)](./github/images/dashboard.png)  
-**Short URLs**  
-[![Short URLs](.github/images/urls.png)](./github/images/urls.png)  
-**Settings**  
-[![Settings](.github/images/settings.png)](./github/images/settings.png)  
 
 ## Prerequisites
 - [Node.js v16 or higher](https://nodejs.org/en/download)  
+
 
 ## Installation
 
@@ -36,6 +30,7 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 1. Build project in root folder: `npm run build`  
 1. Run: `npm run start`  
 
+
 ## Updating  
 
 ### Client
@@ -48,6 +43,7 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 1. Change directories: `cd server`  
 1. Build server project: `npm run build`  
 1. Run `npm run start`  
+
 
 ## Configuration
 
@@ -116,45 +112,22 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 }
 ```
 
-## API Documentation
 
-### <u>Slug Routes</u>  
+## Screenshots  
+**Dashboard**  
+[![Dashboard](.github/images/dashboard.png)](./github/images/dashboard.png)  
+**Short URLs**  
+[![Short URLs](.github/images/urls.png)](./github/images/urls.png)  
+**Settings**  
+[![Settings](.github/images/settings.png)](./github/images/settings.png)  
+**API Documentation**
+[![Settings](.github/images/api-docs.png)](./github/images/api-docs.png)  
 
-`GET: /:slug`  
-- Uses short link slug to redirect to long URL address.  
-
-`GET: /api/v1/shorturls`  
-- Returns all shorturls.  
-
-`POST: /api/v1/shorturls`  
-- Creates a new shorturl.  
-
-`PUT: /api/v1/shorturls`  
-- Updates an existing shorturl.  
-
-`DELETE: /api/v1/shorturls`  
-- Deletes an existing shorturl.  
-
-`GET: /api/v1/shorturls/create`  
-- Creates a new shorturl.  
-
-
-### <u>User Routes</u>  
-
-`GET: /api/v1/users/:id`  
-- Returns the specified user account by ID.  
-
-`GET: /api/v1/users`  
-- Returns all user accounts.  
-
-`POST: /api/v1/users`  
-- Creates a new user account.  
-
-`PUT: /api/v1/users`  
-- Updates an existing user account.  
-
-`DELETE: /api/v1/users`  
-- Deletes an existing user account.  
-
-`POST: /api/v1/users/:id/key/reset`  
-- Resets the specified user account's API key.  
+**Admin Dashboard**  
+[![Short URLs](.github/images/admin-dashboard.png)](./github/images/admin-dashboard.png)  
+**Admin Short URLs**  
+[![Short URLs](.github/images/admin-urls.png)](./github/images/admin-urls.png)  
+**Admin Users**  
+[![Short URLs](.github/images/admin-users.png)](./github/images/admin-users.png)  
+**Admin Settings**  
+[![Short URLs](.github/images/admin-settings.png)](./github/images/admin-settings.png)  
