@@ -76,7 +76,7 @@ export const CreateUserDialog = (props: CreateUserDialogProps) => {
       open={open}
       onClose={handleClose}
     >
-      <DialogTitle>
+      <DialogTitle align="center">
         {editMode
           ? 'Edit User Account'
           : 'Create User Account'

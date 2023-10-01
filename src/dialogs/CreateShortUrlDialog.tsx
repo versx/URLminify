@@ -86,7 +86,7 @@ export const CreateShortUrlDialog = (props: CreateShortUrlDialogProps) => {
       open={open}
       onClose={handleClose}
     >
-      <DialogTitle>
+      <DialogTitle align="center">
         {editMode
           ? 'Edit Short URL'
           : 'Create Short URL'
