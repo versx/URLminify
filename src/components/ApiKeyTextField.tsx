@@ -47,28 +47,26 @@ export const ApiKeyTextField = (props: any) => {
   };
 
   return (
-    <>
-      <TextField
-        disabled
-        fullWidth
-        multiline
-        label="API Key"
-        value={apiKey}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={resetApiKey} title="Reset API Key">
-                <RefreshIcon />
-              </IconButton>
-              <IconButton onClick={copyToClipboard} title="Copy to Clipboard">
-                <FileCopyIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        variant="outlined"
-        style={{ marginBottom: '15px' }}
-      />
-    </>
+    <TextField
+      disabled
+      fullWidth
+      multiline
+      label="API Key"
+      value={apiKey}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton onClick={resetApiKey} title="Reset API Key">
+              <RefreshIcon />
+            </IconButton>
+            <IconButton onClick={copyToClipboard} title="Copy to Clipboard">
+              <FileCopyIcon />
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+      variant="outlined"
+      style={{ marginBottom: '15px' }}
+    />
   );
 };
