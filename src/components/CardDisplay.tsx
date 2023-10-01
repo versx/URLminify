@@ -42,19 +42,24 @@ export interface CardDisplayProps {
   valueSize?: number;
   height?: string;
   width?: string;
+  elevation?: number;
 };
 
 export const CardDisplay = (props: CardDisplayProps) => {
   const {
     text, icon, value, href,
-    valueSize = 20,
+    valueSize = 20, elevation = 3,
     height = '120px', width = '220px',
   } = props;
   const theme = useTheme();
   const classes = useStyles(theme, height, width);
 
   const Card = () => (
-    <Container component={Paper} elevation={1} style={classes.cardContainer}>
+    <Container
+      component={Paper}
+      elevation={elevation}
+      style={classes.cardContainer}
+    >
       <div style={classes.iconAndTextContainer}>
         <span style={classes.icon}>{icon}</span>
         <Typography variant="body1">{text}</Typography>
