@@ -17,8 +17,9 @@ import { useSnackbar } from 'notistack';
 import {
   Order,
   ShortUrlActionsButtonGroup,
-  ShortUrlTableHead,
-  ShortUrlTableToolbar,
+  ShortUrlTableHeadCells,
+  SortableTableHead,
+  SortableTableToolbar,
   StyledTableCell,
   StyledTableRow,
 } from '../../components';
@@ -181,7 +182,7 @@ export const AdminShortUrlsPage = () => {
         Admin - Short URLs
       </Typography>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <ShortUrlTableToolbar
+        <SortableTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}
         />
@@ -205,7 +206,8 @@ export const AdminShortUrlsPage = () => {
             //sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
-            <ShortUrlTableHead
+            <SortableTableHead
+              headCells={ShortUrlTableHeadCells}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -251,7 +253,7 @@ export const AdminShortUrlsPage = () => {
                       <strong>{row.slug}</strong>
                     </StyledTableCell>
                     <StyledTableCell align="left" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
-                      <Tooltip title={row.originalUrl}>
+                      <Tooltip title={row.originalUrl} arrow>
                         <a
                           href={row.originalUrl}
                           target="_blank"

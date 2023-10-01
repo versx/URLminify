@@ -9,7 +9,7 @@ import { Delete as DeleteIcon } from '@mui/icons-material';
 
 import { TableToolbarProps } from '..';
 
-export const UserTableToolbar = (props: TableToolbarProps) => {
+export const SortableTableToolbar = (props: TableToolbarProps) => {
   const { numSelected, onDelete } = props;
 
   return (
@@ -35,11 +35,10 @@ export const UserTableToolbar = (props: TableToolbarProps) => {
       )}
       {numSelected > 0 && (
         <Tooltip
-          title={`Delete ${numSelected.toLocaleString()} selected users`}
+          arrow
+          title={`Delete ${numSelected.toLocaleString()} selected`}
         >
-          <IconButton
-            onClick={onDelete}
-          >
+          <IconButton onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

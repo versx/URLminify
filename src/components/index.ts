@@ -11,6 +11,7 @@ export * from './QuotaRemaining';
 export * from './RedirectSlug';
 export * from './ShortUrlTable';
 export * from './SlugLimitSetter';
+export * from './SortableTable';
 export * from './StatTile';
 export * from './StyledTableCell';
 export * from './StyledTableRow';

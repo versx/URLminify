@@ -18,16 +18,17 @@ import { useSnackbar } from 'notistack';
 import {
   Order,
   ShortUrlActionsButtonGroup,
-  ShortUrlTableHead,
-  ShortUrlTableToolbar,
+  ShortUrlTableHeadCells,
+  SortableTableHead,
+  SortableTableToolbar,
   StyledTableCell,
   StyledTableRow,
-} from '..';
-import { CreateShortUrlDialog } from '../../dialogs';
-import { getComparator, stableSort, substr } from '../../modules';
-import { ShortUrlService } from '../../services';
-import { getUserToken } from '../../stores';
-import { ShortUrl } from '../../types';
+} from '.';
+import { CreateShortUrlDialog } from '../dialogs';
+import { getComparator, stableSort, substr } from '../modules';
+import { ShortUrlService } from '../services';
+import { getUserToken } from '../stores';
+import { ShortUrl } from '../types';
 
 interface ShortUrlTableState {
   open: boolean;
@@ -220,7 +221,7 @@ export const ShortUrlTable = (props: any) => {
           </Fab>
         </Tooltip>
 
-        <ShortUrlTableToolbar
+        <SortableTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}
         />
@@ -244,7 +245,8 @@ export const ShortUrlTable = (props: any) => {
             //sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
-            <ShortUrlTableHead
+            <SortableTableHead
+              headCells={ShortUrlTableHeadCells}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -290,7 +292,7 @@ export const ShortUrlTable = (props: any) => {
                       <strong>{row.slug}</strong>
                     </StyledTableCell>
                     <StyledTableCell align="left" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
-                      <Tooltip title={row.originalUrl}>
+                      <Tooltip title={row.originalUrl} arrow>
                         <a
                           href={row.originalUrl}
                           target="_blank"

@@ -18,17 +18,18 @@ import { useSnackbar } from 'notistack';
 
 import {
   Order, 
+  SortableTableHead,
+  SortableTableToolbar,
   StyledTableCell,
   StyledTableRow,
   UserActionsButtonGroup,
-  UserTableHead,
-  UserTableToolbar,
-} from '../../components';
-import { CreateUserDialog } from '../../dialogs';
-import { getComparator, stableSort } from '../../modules';
-import { UserService } from '../../services';
-import { getUserToken } from '../../stores';
-import { User } from '../../types';
+  UserTableHeadCells,
+} from '.';
+import { CreateUserDialog } from '../dialogs';
+import { getComparator, stableSort } from '../modules';
+import { UserService } from '../services';
+import { getUserToken } from '../stores';
+import { User } from '../types';
 
 interface UserTableState {
   open: boolean;
@@ -217,7 +218,7 @@ export const UserTable = () => {
           </Fab>
         </Tooltip>
 
-        <UserTableToolbar
+        <SortableTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteUsers}
         />
@@ -241,7 +242,8 @@ export const UserTable = () => {
             //sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
-            <UserTableHead
+            <SortableTableHead
+              headCells={UserTableHeadCells}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}

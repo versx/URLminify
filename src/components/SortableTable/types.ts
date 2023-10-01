@@ -13,7 +13,9 @@ export interface HeadCell<T> {
   style?: any;
 };
 
+//export interface TableProps<T> {
 export interface TableProps<T> {
+  headCells: readonly HeadCell<T>[];
   numSelected: number;
   onRequestSort: (property: keyof T) => (event: MouseEvent<unknown>) => void;
   onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void;
