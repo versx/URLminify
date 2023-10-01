@@ -51,7 +51,9 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 ```json
 {
   // Base API url address of server.
-  "apiUrl": "http://127.0.0.1:8080/api/v1/"
+  "apiUrl": "http://127.0.0.1:8080/api/v1/",
+  // Domain name used for URL slugs.
+  "domain": "http://127.0.0.1:8080"
 }
 ```
 
