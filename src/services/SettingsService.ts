@@ -1,4 +1,5 @@
 import { http } from '../modules';
+import { Setting } from '../types';
 
 const getSettings = async () => {
   try {
@@ -10,10 +11,10 @@ const getSettings = async () => {
   }
 };
 
-const setSetting = async <T>(name: string, value: T) => {
+const setSettings = async (settings: Setting[]) => {
   try {
     const response = await http()
-      .put('settings', { name, value });
+      .put('settings', { settings });
     return response.data;
   } catch (err) {
     console.error(err);
@@ -22,5 +23,5 @@ const setSetting = async <T>(name: string, value: T) => {
 
 export const SettingsService = {
   getSettings,
-  setSetting,
+  setSettings,
 };

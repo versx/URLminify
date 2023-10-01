@@ -10,13 +10,13 @@ const getSettings = async (req: Request, res: Response) => {
   });
 };
 
-const setSetting = async (req: Request, res: Response) => {
-  const { name, value } = req.body;
-  const result = await SettingsService.setSetting(name, value);
+const setSettings = async (req: Request, res: Response) => {
+  const { settings } = req.body;
+  const result = await SettingsService.setSettings(settings);
   if (!result) {
     return res.json({
       status: 'error',
-      error: `Failed to set setting '${name}' to '${value}'`,
+      error: `Failed to set settings '${settings}'`,
     });
   }
 
@@ -25,5 +25,5 @@ const setSetting = async (req: Request, res: Response) => {
 
 export const SettingsController = {
   getSettings,
-  setSetting,
+  setSettings,
 };

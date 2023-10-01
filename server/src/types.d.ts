@@ -101,10 +101,10 @@ export type UserModel = {
 
 export type SettingModel = {
   name: string;
-  value: string;
+  value: string | number | boolean | any;
 
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 };
 
 export type Status = 'ok' | 'error';

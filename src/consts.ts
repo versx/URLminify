@@ -1,8 +1,10 @@
 import { RouteInfo } from './types';
 
+export const DefaultEnableRegistration = true;
 export const DefaultMaxSlugLimit = 1000;
 
 export const SettingKeys = {
+  EnableRegistration: 'enable_registration',
   MaxSlugLimit: 'max_slug_limit',
 };
 

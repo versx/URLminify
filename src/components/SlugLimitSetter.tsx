@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ interface SlugLimitProps {
 export const SlugLimitSetter = (props: SlugLimitProps) => {
   const { limit, onSubmit, onLimitChange } = props;
 
-  const handleLimitChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLimitChange = (event: ChangeEvent<HTMLInputElement>) => {
     let newLimit = parseInt(event.target.value, 10);
     if (isNaN(newLimit) || newLimit < 0) {
       newLimit = 0;
@@ -25,13 +25,13 @@ export const SlugLimitSetter = (props: SlugLimitProps) => {
     onLimitChange(newLimit);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     onSubmit(limit!);
   };
 
   return (
-    <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
+    <Box component={Paper} elevation={3}>
       <Typography variant="h6">
         Max URL Slug Limit
       </Typography>

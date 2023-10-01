@@ -8,5 +8,5 @@ export const SettingsRouter = (app: Application) => {
   app.use(AdminMiddleware, ValidateMiddleware)
     .route(SettingsApiRoute)
       .get(SettingsController.getSettings)
-      .put(SettingsController.setSetting);
+      .put(SettingsController.setSettings);
 };

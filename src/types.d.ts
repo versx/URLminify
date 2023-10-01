@@ -26,10 +26,10 @@ export type User = {
 
 export type Setting = {
   name: string;
-  value: string;
+  value: string | number | boolean | any;
 
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 };
 
 export type CreateShortUrlRequest = {

@@ -11,23 +11,28 @@ const getSetting = async (name: string): Promise<SettingModel> => {
   return model;
 };
 
-const setSetting = async (name: string, value: string): Promise<boolean> => {
-  const model = await db.setting.findByPk(name);
-  if (!model) {
-    return false;
+const setSettings = async (settings: any[]): Promise<boolean> => {
+  let error = false;
+  for (const setting of settings) {
+    const model = await db.setting.findByPk(setting.name);
+    if (!model) {
+      db.setting.create(setting);
+      continue;
+    }
+  
+    try {
+      model.set(setting);
+      await model.save();
+    } catch (err) {
+      console.error(err);
+      error = true;
+    }
   }
-
-  try {
-    model.set({ value });
-    await model.save();
-    return true;
-  } catch (err) {
-    return false;
-  }
+  return !error;
 };
 
 export const SettingsService = {
   getSettings,
   getSetting,
-  setSetting,
+  setSettings,
 };
