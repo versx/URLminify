@@ -5,6 +5,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useColorMode } from '../contexts';
+
 interface StatTileProps {
   title: string;
   value: number;
@@ -14,8 +16,17 @@ interface StatTileProps {
 
 export const StatTile = (props: StatTileProps) => {
   const { title, value, color = 'primary.main', elevation = 3 } = props;
+  const theme = useColorMode();
+  const themeColor = theme.mode === 'dark' ? 'white' : 'rgb(224, 224, 224)';
+
   return (
-    <Card elevation={elevation}>
+    <Card
+      elevation={elevation}
+      style={{
+        border: `1px solid ${themeColor}`,
+        borderRadius: '8px',
+      }}
+    >
       <CardContent style={{ textAlign: 'center' }}>
         <Typography variant="h5" color={color} gutterBottom>
           {value}

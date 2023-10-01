@@ -4,15 +4,23 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import App from '../App';
 import { ColorModeContext } from '../contexts';
+import { get, set } from '../modules';
+import { ThemeColorMode } from '../types';
 
 // Reference: https://mui.com/material-ui/customization/dark-mode/#toggling-color-mode
 export const ToggleColorMode = () => {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const cachedMode = get('colorMode', 'light');
+  const [mode, setMode] = useState<ThemeColorMode>(cachedMode);
   const colorMode = useMemo(() => ({
     toggleColorMode: () => {
-      setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      setMode((prevMode) => {
+        const newMode = prevMode === 'light' ? 'dark' : 'light';
+        set('colorMode', newMode);
+        return newMode;
+      });
     },
-  }), []);
+    mode,
+  }), [mode]);
 
   const theme = useMemo(() => createTheme({
     palette: {

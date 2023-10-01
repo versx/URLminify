@@ -99,3 +99,5 @@ export type UserStatsData = {
   enabled: number;
   disabled: number;
 };
+
+export type ThemeColorMode = 'light' | 'dark';
