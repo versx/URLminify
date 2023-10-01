@@ -55,7 +55,10 @@ export const DrawerAppBar = (props: any) => {
   const isAuthenticated = Boolean(get('isAuthenticated'));
   const isAdmin = Boolean(currentUser?.admin);
   
-  const handleOpenAdminMenu = (event: any) => setAnchorEl(event.currentTarget);
+  const handleOpenAdminMenu = (event: any) => {
+    event.stopPropagation(); // Stop the event propagation
+    setAnchorEl(event.currentTarget);
+  };
   const handleCloseAdminMenu = () => setAnchorEl(null);
 
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);

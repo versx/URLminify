@@ -57,7 +57,7 @@ export const AccountMenu = () => {
         >
           <Avatar
             sx={{
-              bgcolor: '#000',
+              bgcolor: '#303030',
               b: '0.5px solid yellow',
               width: 32, height: 32,
             }}
