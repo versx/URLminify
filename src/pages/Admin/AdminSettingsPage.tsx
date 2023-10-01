@@ -8,11 +8,13 @@ import { useSnackbar } from 'notistack';
 import { SettingKeys } from '../../consts';
 import { SlugLimitSetter } from '../../components';
 import { SettingsService } from '../../services';
+import { getUserToken } from '../../stores';
 import { Setting } from '../../types';
 
 export const AdminSettingsPage = () => {
   const [slugLimit, setSlugLimit] = useState(500);
   const { enqueueSnackbar } = useSnackbar();
+  const currentUser = getUserToken();
 
   const handleSubmit = async (newLimit: number) => {
     const response = await SettingsService.setSetting(SettingKeys.MaxSlugLimit, newLimit);
@@ -25,6 +27,9 @@ export const AdminSettingsPage = () => {
   };
 
   const handleReloadSettings = useCallback(() => {
+    if (!currentUser?.admin) {
+      return;
+    }
     SettingsService.getSettings().then((response: any) => {
       if (response.status !== 'ok') {
         enqueueSnackbar(`Failed to reload settings.`, { variant: 'error' });
@@ -33,7 +38,7 @@ export const AdminSettingsPage = () => {
       const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === 'max_slug_limit');
       setSlugLimit(slugLimitSetting.value);
     });
-  }, [enqueueSnackbar]);
+  }, [currentUser?.admin, enqueueSnackbar]);
 
   useEffect(() => handleReloadSettings(), [handleReloadSettings]);
 

@@ -8,7 +8,7 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 
 
 ## Prerequisites
-- [Node.js v16 or higher](https://nodejs.org/en/download)  
+- [Node.js v18 or higher](https://nodejs.org/en/download)  
 
 
 ## Installation

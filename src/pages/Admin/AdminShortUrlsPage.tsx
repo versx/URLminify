@@ -39,6 +39,9 @@ export const AdminShortUrlsPage = () => {
   const currentUser = getUserToken();
 
   const handleReloadShortUrls = useCallback(() => {
+    if (!currentUser?.admin) {
+      return;
+    }
     ShortUrlService.getShortUrls().then((response: any) => {
       if (response.status !== 'ok') {
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
@@ -46,7 +49,7 @@ export const AdminShortUrlsPage = () => {
       }
       setRows(response.shortUrls);
     });
-  }, [enqueueSnackbar]);
+  }, [currentUser?.admin, enqueueSnackbar]);
 
   const handleDeleteShortUrls = async () => {
     if (selected.length === 0) {

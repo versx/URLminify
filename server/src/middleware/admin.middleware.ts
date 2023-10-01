@@ -44,12 +44,12 @@ export const AdminMiddleware = async (req: Request, res: Response, next: NextFun
   try {
     (req as any).user = user;
 
-    if (!(req as any)?.user?.admin) {
-      return res.json({
-        status: 'error',
-        error: 'User is not authorized!',
-      });
-    }
+    //if (!(req as any)?.user?.admin) {
+    //  return res.json({
+    //    status: 'error',
+    //    error: 'User is not authorized!',
+    //  });
+    //}
 
     next();
   } catch (err) {

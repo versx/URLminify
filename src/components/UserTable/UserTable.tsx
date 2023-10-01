@@ -53,6 +53,9 @@ export const UserTable = () => {
   const currentUser = getUserToken();
 
   const handleReloadUsers = useCallback(() => {
+    if (!currentUser?.admin) {
+      return;
+    }
     UserService.getUsers().then((response: any) => {
       if (response.status !== 'ok') {
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
@@ -60,7 +63,7 @@ export const UserTable = () => {
       }
       setRows(response.users);
     });
-  }, [enqueueSnackbar]);
+  }, [currentUser?.admin, enqueueSnackbar]);
 
   const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
   const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});
