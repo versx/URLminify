@@ -205,9 +205,12 @@ export const UserTable = () => {
             aria-label="add"
             onClick={handleOpen}
             style={{
-              position: 'absolute',
-              bottom: 32,
-              right: 32,
+              margin: '0px',
+              top: 'auto',
+              right: '32px',
+              bottom: '32px',
+              left: 'auto',
+              position: 'fixed',
             }}
           >
             <AddIcon />

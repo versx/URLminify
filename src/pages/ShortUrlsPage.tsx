@@ -75,6 +75,7 @@ export const ShortUrlsPage = () => {
         title="Short URL Statistics"
         data={stats}
       />
+
       <ShortUrlTable />
     </Container>
   );
