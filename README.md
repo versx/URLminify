@@ -115,19 +115,19 @@ NodeJS frontend and backend to create short URL addresses from longer URL addres
 
 ## Screenshots  
 **Dashboard**  
-[![Dashboard](./.github/images/dashboard.png)](././github/images/dashboard.png)  
+[![Dashboard](.github/images/dashboard.png)](.github/images/dashboard.png)  
 **Short URLs**  
-[![Short URLs](./.github/images/urls.png)](././github/images/urls.png)  
+[![Short URLs](.github/images/urls.png)](.github/images/urls.png)  
 **Settings**  
-[![Settings](./.github/images/settings.png)](././github/images/settings.png)  
+[![Settings](.github/images/settings.png)](.github/images/settings.png)  
 **API Documentation**
-[![Settings](./.github/images/api-docs.png)](././github/images/api-docs.png)  
+[![Settings](.github/images/api-docs.png)](.github/images/api-docs.png)  
 
 **Admin Dashboard**  
-[![Short URLs](./.github/images/admin-dashboard.png)](././github/images/admin-dashboard.png)  
+[![Short URLs](.github/images/admin-dashboard.png)](.github/images/admin-dashboard.png)  
 **Admin Short URLs**  
-[![Short URLs](./.github/images/admin-urls.png)](././github/images/admin-urls.png)  
+[![Short URLs](.github/images/admin-urls.png)](.github/images/admin-urls.png)  
 **Admin Users**  
-[![Short URLs](./.github/images/admin-users.png)](././github/images/admin-users.png)  
+[![Short URLs](.github/images/admin-users.png)](.github/images/admin-users.png)  
 **Admin Settings**  
-[![Short URLs](./.github/images/admin-settings.png)](././github/images/admin-settings.png)  
+[![Short URLs](.github/images/admin-settings.png)](.github/images/admin-settings.png)  
