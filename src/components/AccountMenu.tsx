@@ -18,12 +18,14 @@ import { useSnackbar } from 'notistack';
 import { Routes } from '../consts';
 import { AuthService } from '../services';
 import { getUserToken } from '../stores';
+import { useColorMode } from '../contexts';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { enqueueSnackbar } = useSnackbar();
   const open = Boolean(anchorEl);
   const currentUser = getUserToken();
+  const theme = useColorMode();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -57,8 +59,7 @@ export const AccountMenu = () => {
         >
           <Avatar
             sx={{
-              bgcolor: '#303030',
-              b: '0.5px solid yellow',
+              bgcolor: theme.mode === 'light' ? '#303030' : '#909090',
               width: 32, height: 32,
             }}
           >

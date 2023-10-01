@@ -78,7 +78,7 @@ export const AdminDashboardPage = () => {
 
   return (
     <Container>
-      <Tooltip title="Admin Settings">
+      <Tooltip title="Admin Settings" arrow>
         <IconButton
           size="large"
           onClick={handleSettings}

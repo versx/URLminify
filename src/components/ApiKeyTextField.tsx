@@ -3,6 +3,7 @@ import {
   IconButton,
   InputAdornment,
   TextField,
+  Tooltip,
 } from '@mui/material';
 import {
   FileCopy as FileCopyIcon,
@@ -56,12 +57,16 @@ export const ApiKeyTextField = (props: any) => {
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton onClick={resetApiKey} title="Reset API Key">
-              <RefreshIcon />
-            </IconButton>
-            <IconButton onClick={copyToClipboard} title="Copy to Clipboard">
-              <FileCopyIcon />
-            </IconButton>
+            <Tooltip title="Reset API Key" arrow>
+              <IconButton onClick={resetApiKey}>
+                <RefreshIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Copy to Clipboard" arrow>
+              <IconButton onClick={copyToClipboard}>
+                <FileCopyIcon />
+              </IconButton>
+            </Tooltip>
           </InputAdornment>
         ),
       }}

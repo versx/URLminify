@@ -139,15 +139,17 @@ export const DrawerAppBar = (props: any) => {
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <AppBar component="nav">
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Tooltip title="Toggle navigation drawer" arrow>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
 
           <img
             src="/logo192.png"
