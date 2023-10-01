@@ -14,5 +14,6 @@ export * from './SlugLimitSetter';
 export * from './StatTile';
 export * from './StyledTableCell';
 export * from './StyledTableRow';
+export * from './ToggleColorMode';
 export * from './UrlStats';
 export * from './UserTable';

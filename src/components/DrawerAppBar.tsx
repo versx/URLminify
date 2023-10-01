@@ -11,10 +11,14 @@ import {
   ListItemButton,
   ListItemText,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import {
   ArrowDropDown as ArrowDropDownIcon,
+  Brightness4 as Brightness4Icon,
+  Brightness7 as Brightness7Icon,
   Dashboard as DashboardIcon,
   Link as LinkIcon,
   Menu as MenuIcon,
@@ -24,6 +28,7 @@ import {
 
 import { AccountMenu, AdminDropdown, DropdownItem } from '.';
 import { Routes } from '../consts';
+import { ColorModeContext } from '../contexts';
 import { get } from '../modules';
 import { getUserToken } from '../stores';
 import { User } from '../types';
@@ -50,6 +55,9 @@ export const DrawerAppBar = (props: any) => {
   const { children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
   
   const currentUser = getUserToken() as User;
   const isAuthenticated = Boolean(get('isAuthenticated'));
@@ -182,6 +190,15 @@ export const DrawerAppBar = (props: any) => {
               )}
             </>
           </Box>
+          <Tooltip title="Toggle light/dark theme" arrow>
+            <IconButton
+              color="inherit"
+              sx={{ ml: 1 }}
+              onClick={colorMode.toggleColorMode}
+            >
+              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Tooltip>
           {isAuthenticated && (<AccountMenu />)}
         </Toolbar>
       </AppBar>

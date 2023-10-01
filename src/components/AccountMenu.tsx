@@ -46,7 +46,7 @@ export const AccountMenu = () => {
 
   return (
     <>
-      <Tooltip title="Account Settings">
+      <Tooltip title="Account Settings" arrow>
         <IconButton
           onClick={handleClick}
           size="small"
