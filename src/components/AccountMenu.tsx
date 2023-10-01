@@ -46,8 +46,8 @@ export const AccountMenu = () => {
 
   return (
     <>
-      <Tooltip title="Account Settings">
-        <>
+      <>
+        <Tooltip title="Account Settings">
           <IconButton
             onClick={handleClick}
             size="small"
@@ -60,9 +60,9 @@ export const AccountMenu = () => {
               {currentUser?.username[0]}
             </Avatar>
           </IconButton>
-          &nbsp;{currentUser?.username}
-        </>
-      </Tooltip>
+        </Tooltip>
+        &nbsp;{currentUser?.username}
+      </>
       <Menu
         anchorEl={anchorEl}
         id="account-menu"

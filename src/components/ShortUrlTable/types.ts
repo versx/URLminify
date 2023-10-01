@@ -15,7 +15,7 @@ export interface HeadCell<T> {
 
 export interface TableProps<T> {
   numSelected: number;
-  onRequestSort: (event: MouseEvent<unknown>, property: keyof T) => void;
+  onRequestSort: (property: keyof T) => (event: MouseEvent<unknown>) => void;
   onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;

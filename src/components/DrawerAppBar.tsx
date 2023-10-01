@@ -15,7 +15,11 @@ import {
 } from '@mui/material';
 import {
   ArrowDropDown as ArrowDropDownIcon,
+  Dashboard as DashboardIcon,
+  Link as LinkIcon,
   Menu as MenuIcon,
+  Person as PersonIcon,
+  Settings as SettingsIcon,
 } from '@mui/icons-material';
 
 import { AccountMenu, AdminDropdown, DropdownItem } from '.';
@@ -35,11 +39,11 @@ const navItems: DropdownItem[] = [
 ];
 
 const adminItems: DropdownItem[] = [
-  { text: 'Dashboard', path: Routes.admin.dashboard },
-  { text: 'Short URLs', path: Routes.admin.shortUrls },
-  { text: 'Users', path: Routes.admin.users },
+  { text: 'Dashboard', path: Routes.admin.dashboard, icon: <DashboardIcon /> },
+  { text: 'Short URLs', path: Routes.admin.shortUrls, icon: <LinkIcon /> },
+  { text: 'Users', path: Routes.admin.users, icon: <PersonIcon /> },
   { text: 'divider', path: 'divider' },
-  { text: 'Settings', path: Routes.admin.settings },
+  { text: 'Settings', path: Routes.admin.settings, icon: <SettingsIcon /> },
 ];
 
 export const DrawerAppBar = (props: any) => {

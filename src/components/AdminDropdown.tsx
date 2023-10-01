@@ -1,3 +1,4 @@
+import React, { ReactNode } from 'react';
 import {
   Divider,
   Menu,
@@ -15,6 +16,7 @@ export type DropdownItem = {
   text: string;
   path: string;
   requiresAuth?: boolean;
+  icon?: ReactNode;
 };
 
 export const AdminDropdown = (props: any) => {
@@ -68,7 +70,7 @@ export const AdminDropdown = (props: any) => {
           href={item.path}
           onClick={onClose}
         >
-          {item.text}
+          {item.icon}&nbsp;{item.text}
         </MenuItem>
       ))}
     </Menu>

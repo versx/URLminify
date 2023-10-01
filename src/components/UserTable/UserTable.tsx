@@ -1,15 +1,18 @@
 import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  Box,
   Checkbox,
+  Fab,
   Paper,
   Table,
   TableBody,
   TableContainer,
   TablePagination,
   TextField,
-  Typography,
+  Tooltip,
 } from '@mui/material';
+import {
+  Add as AddIcon,
+} from '@mui/icons-material';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 
@@ -21,13 +24,25 @@ import {
   UserTableHead,
   UserTableToolbar,
 } from '../../components';
+import { CreateUserDialog } from '../../dialogs';
 import { getComparator, stableSort } from '../../modules';
 import { UserService } from '../../services';
 import { getUserToken } from '../../stores';
 import { User } from '../../types';
 
-export const UserTable = (props: any) => {
+interface UserTableState {
+  open: boolean;
+  editMode: boolean;
+  editModel: User | undefined;
+};
+
+export const UserTable = () => {
   const [rows, setRows] = useState<User[]>([]);
+  const [state, setState] = useState<UserTableState>({
+    open: false,
+    editMode: false,
+    editModel: undefined,
+  });
   const [search, setSearch] = useState('');
   const [order, setOrder] = useState<Order>('asc');
   const [orderBy, setOrderBy] = useState<keyof User>('id');
@@ -37,22 +52,45 @@ export const UserTable = (props: any) => {
   const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
-  const handleReloadShortUrls = useCallback(() => {
+  const handleReloadUsers = useCallback(() => {
     UserService.getUsers().then((response: any) => {
       if (response.status !== 'ok') {
         enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
         return;
       }
-      setRows(response.shortUrls);
+      setRows(response.users);
     });
   }, [enqueueSnackbar]);
 
-  const handleDeleteShortUrls = async () => {
+  const handleOpen = () => setState({...state, open: true, editMode: false, editModel: undefined});
+  const handleClose = () => setState({...state, open: false, editMode: false, editModel: undefined});
+  const handleSubmit = () => {
+    enqueueSnackbar(`User account ${state.editMode ? 'updated' : 'created'} successfully!`, { variant: 'success' });
+
+    setState({
+      ...state,
+      open: false,
+      editMode: false,
+      editModel: undefined,
+    });
+    handleReloadUsers();
+  };
+
+  const handleEditUser = (user: User) => {
+    setState({
+      ...state,
+      open: true,
+      editMode: true,
+      editModel: user,
+    });
+  };
+
+  const handleDeleteUsers = async () => {
     if (selected.length === 0) {
       return;
     }
 
-    const result = window.confirm(`Are you sure you want to delete ${selected.length.toLocaleString()} short URLs?`);
+    const result = window.confirm(`Are you sure you want to delete ${selected.length.toLocaleString()} user accounts?`);
     if (!result) {
       return;
     }
@@ -61,16 +99,16 @@ export const UserTable = (props: any) => {
     for (const userId of selected) {
       const response = await UserService.deleteAccount(userId);
       if (response.status !== 'ok') {
-        enqueueSnackbar('Error occurred reloading short URLs.', { variant: 'error' });
+        enqueueSnackbar('Error occurred deleting user account.', { variant: 'error' });
         error = true;
       }
     }
 
     setSelected([]);
-    handleReloadShortUrls();
+    handleReloadUsers();
 
     if (!error) {
-      enqueueSnackbar('Short URL deleted successfully!', { variant: 'success' });
+      enqueueSnackbar('User account deleted successfully!', { variant: 'success' });
     }
   };
 
@@ -89,10 +127,10 @@ export const UserTable = (props: any) => {
     enqueueSnackbar('User account deleted successfully!', { variant: 'success' });
 
     setSelected([]);
-    handleReloadShortUrls();
+    handleReloadUsers();
   };
 
-  const handleRequestSort = (event: MouseEvent<unknown>, property: keyof User) => {
+  const handleRequestSort = (property: keyof User) => (event: MouseEvent<unknown>) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -100,7 +138,7 @@ export const UserTable = (props: any) => {
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n: any) => n.slug);
+      const newSelected = rows.map((n: any) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -150,24 +188,32 @@ export const UserTable = (props: any) => {
     if (!currentUser?.admin) {
       return;
     }
-    UserService.getUsers().then((response: any) => {
-      if (response.status !== 'ok') {
-        enqueueSnackbar('Failed to get users.', { variant: 'error' });
-        return;
-      }
-      setRows(response.shortUrls);
-    });
-  }, [currentUser?.admin, enqueueSnackbar]);
+    handleReloadUsers();
+  }, [currentUser?.admin, handleReloadUsers]);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Typography variant="h4" gutterBottom>
-        Admin - Users
-      </Typography>
+    <>
       <Paper sx={{ width: '100%', mb: 2 }}>
+        <Tooltip
+          title="Create user account"
+        >
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={handleOpen}
+            style={{
+              position: 'absolute',
+              bottom: 32,
+              right: 32,
+            }}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+
         <UserTableToolbar
           numSelected={selected.length}
-          onDelete={handleDeleteShortUrls}
+          onDelete={handleDeleteUsers}
         />
         <TextField
           color="primary"
@@ -186,7 +232,7 @@ export const UserTable = (props: any) => {
         <TableContainer>
           <Table
             stickyHeader
-            sx={{ minWidth: 750 }}
+            //sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
             <UserTableHead
@@ -199,10 +245,10 @@ export const UserTable = (props: any) => {
               isAdmin={true}
             />
             <TableBody>
-              {visibleRows.map((row: any, index: number) => { // User
-                const isItemSelected = isSelected(row.id);
+              {visibleRows.map((row: User, index: number) => {
+                const isItemSelected = isSelected(row.id!);
                 const labelId = `enhanced-table-checkbox-${index}`;
-                if (search !== '' && !(row.id.toString().includes(search) || row.username.includes(search))) {
+                if (search !== '' && !(row.id!.toString().includes(search) || row.username.includes(search))) {
                   return '';
                 }
 
@@ -215,7 +261,7 @@ export const UserTable = (props: any) => {
                     tabIndex={-1}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
-                    onClick={(event: any) => handleRowClick(event, row.id)}
+                    onClick={(event: any) => handleRowClick(event, row.id!)}
                   >
                     <StyledTableCell padding="checkbox">
                       <Checkbox
@@ -238,21 +284,25 @@ export const UserTable = (props: any) => {
                       {row.username}
                     </StyledTableCell>
                     <StyledTableCell align="right">
+                      {(row.shortUrls?.length ?? 0).toLocaleString()}
+                    </StyledTableCell>
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.admin ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"
-                      title={moment(row.createdAt!).format('MMMM Do YYYY, h:mm:ss a')}
+                      title={moment(row.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                      sx={{ display: { xs: 'none', sm: 'table-cell' } }}
                     >
-                      {moment(row.createdAt!).calendar()}
+                      {moment(row.createdAt).calendar()}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       <UserActionsButtonGroup
                         model={row}
-                        onEdit={() => {}}
+                        onEdit={handleEditUser}
                         onDelete={handleDeleteUser}
                       />
                     </StyledTableCell>
@@ -281,6 +331,14 @@ export const UserTable = (props: any) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </Box>
+
+      <CreateUserDialog
+        open={state.open}
+        editMode={state.editMode}
+        model={state.editModel}
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+      />
+    </>
   );
 };

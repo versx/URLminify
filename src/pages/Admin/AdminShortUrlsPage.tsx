@@ -105,7 +105,7 @@ export const AdminShortUrlsPage = () => {
     }
   };
 
-  const handleRequestSort = (event: MouseEvent<unknown>, property: keyof ShortUrl) => {
+  const handleRequestSort = (property: keyof ShortUrl) => (event: MouseEvent<unknown>) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -199,7 +199,7 @@ export const AdminShortUrlsPage = () => {
         <TableContainer>
           <Table
             stickyHeader
-            sx={{ minWidth: 750 }}
+            //sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
             <ShortUrlTableHead
@@ -247,7 +247,7 @@ export const AdminShortUrlsPage = () => {
                     >
                       <strong>{row.slug}</strong>
                     </StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell align="left" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       <Tooltip title={row.originalUrl}>
                         <a
                           href={row.originalUrl}
@@ -266,10 +266,10 @@ export const AdminShortUrlsPage = () => {
                     <StyledTableCell align="right">
                       {row.visits.toLocaleString()}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.expiry ? moment(row.expiry).calendar() : ''}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell align="right">
@@ -278,6 +278,7 @@ export const AdminShortUrlsPage = () => {
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                      sx={{ display: { xs: 'none', sm: 'table-cell' } }}
                     >
                       {moment(row.createdAt).calendar()}
                     </StyledTableCell>

@@ -63,8 +63,6 @@ export const UserTableHead = (props: TableProps<User>) => {
     onRequestSort, onSelectAllClick,
   } = props;
 
-  const createSortHandler = (property: keyof User) => (event: MouseEvent<unknown>) => onRequestSort(event, property);
-
   return (
     <TableHead>
       <StyledTableRow>
@@ -75,7 +73,7 @@ export const UserTableHead = (props: TableProps<User>) => {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all short URLs',
+              'aria-label': 'select all users',
             }}
             style={{color: 'white'}}
           />
@@ -93,7 +91,7 @@ export const UserTableHead = (props: TableProps<User>) => {
               direction={orderBy === headCell.id ? order : 'asc'}
               style={{color: 'white'}}
               IconComponent={ArrowDownwardIcon}
-              onClick={createSortHandler(headCell.id)}
+              onClick={onRequestSort(headCell.id)}
             >
               <strong>{headCell.label}</strong>
               {orderBy === headCell.id ? (
