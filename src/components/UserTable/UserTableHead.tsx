@@ -39,18 +39,21 @@ const headCells: readonly HeadCell<User>[] = [
     disablePadding: false,
     align: 'right',
     label: 'Enabled',
+    style: { display: { xs: 'none', sm: 'table-cell' } },
   },
   {
     id: 'admin',
     disablePadding: false,
     align: 'right',
     label: 'Admin',
+    style: { display: { xs: 'none', sm: 'table-cell' } },
   },
   {
     id: 'createdAt',
     disablePadding: false,
     align: 'right',
     label: 'Created',
+    style: { display: { xs: 'none', sm: 'table-cell' } },
   },
 ];
 
@@ -83,7 +86,7 @@ export const UserTableHead = (props: TableProps<User>) => {
             align={headCell.align ?? 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
-            style={{ minWidth: headCell.minWidth, color: 'white' }}
+            sx={{ minWidth: headCell.minWidth, color: 'white', ...headCell.style }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}

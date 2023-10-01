@@ -237,7 +237,7 @@ export const AdminUsersPage = () => {
         <TableContainer>
           <Table
             stickyHeader
-            sx={{ minWidth: 750 }}
+            //sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
           >
             <UserTableHead
@@ -291,15 +291,16 @@ export const AdminUsersPage = () => {
                     <StyledTableCell align="right">
                       {(row.shortUrls?.length ?? 0).toLocaleString()}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.admin ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+                      sx={{ display: { xs: 'none', sm: 'table-cell' } }}
                     >
                       {moment(row.createdAt).calendar()}
                     </StyledTableCell>

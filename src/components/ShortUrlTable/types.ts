@@ -10,6 +10,7 @@ export interface HeadCell<T> {
   align?: 'left' | 'right' | 'center' | 'justify' | 'inherit' | undefined;
   //format?: (value: number) => string;
   isAdmin?: boolean;
+  style?: any;
 };
 
 export interface TableProps<T> {
