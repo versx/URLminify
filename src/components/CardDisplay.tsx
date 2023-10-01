@@ -1,13 +1,14 @@
 import React, { ReactElement } from 'react';
 import {
-  Box,
+  Container,
+  Paper,
   Typography,
 } from '@mui/material';
 import { Theme, useTheme } from '@mui/material/styles';
 
 const useStyles: any = (theme: Theme, height: string = '130px', width: string = '220px') => ({
   cardContainer: {
-    border: '1px solid #e0e0e0',
+    border: '1px solid rgb(224, 224, 224)', //#e0e0e0
     borderRadius: '8px',
     padding: '16px',
     display: 'flex',
@@ -53,7 +54,7 @@ export const CardDisplay = (props: CardDisplayProps) => {
   const classes = useStyles(theme, height, width);
 
   const Card = () => (
-    <>
+    <Container component={Paper} elevation={1} style={classes.cardContainer}>
       <div style={classes.iconAndTextContainer}>
         <span style={classes.icon}>{icon}</span>
         <Typography variant="body1">{text}</Typography>
@@ -61,19 +62,17 @@ export const CardDisplay = (props: CardDisplayProps) => {
       <Typography variant="h6" style={{...classes.value, fontSize: valueSize}}>
         <strong>{value}</strong>
       </Typography>
-    </>
+    </Container>
   );
 
-  return href ? (
+  return !href ? (
+    <Card />
+  ) : (
     <a
       href={href}
-      style={{...classes.cardContainer, textDecoration: 'none', color: 'inherit'}}
+      style={{textDecoration: 'none', color: 'inherit'}}
     >
       <Card />
     </a>
-  ) : (
-    <Box style={classes.cardContainer}>
-      <Card />
-    </Box>
   );
 };

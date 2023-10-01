@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import {
+  AdminPanelSettings as AdminPanelSettingsIcon,
   ArrowDropDown as ArrowDropDownIcon,
   Brightness4 as Brightness4Icon,
   Brightness7 as Brightness7Icon,
@@ -178,15 +179,16 @@ export const DrawerAppBar = (props: any) => {
                 )
               ))}
               {isAdmin && (
-                <Button
-                  aria-controls="admin-menu"
-                  aria-haspopup="true"
-                  sx={{ color: '#fff' }}
-                  onClick={handleOpenAdminMenu}
-                >
-                  Admin
-                  <ArrowDropDownIcon />
-                </Button>
+                <Tooltip title="Admin Dashboard" arrow>
+                  <IconButton
+                    aria-controls="admin-menu"
+                    aria-haspopup="true"
+                    sx={{ color: '#fff' }}
+                    onClick={handleOpenAdminMenu}
+                  >
+                    <AdminPanelSettingsIcon />
+                  </IconButton>
+                </Tooltip>
               )}
             </>
           </Box>
