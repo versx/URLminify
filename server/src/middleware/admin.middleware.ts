@@ -44,6 +44,7 @@ export const AdminMiddleware = async (req: Request, res: Response, next: NextFun
   try {
     (req as any).user = user;
 
+    // TODO: Check if user is admin
     //if (!(req as any)?.user?.admin) {
     //  return res.json({
     //    status: 'error',

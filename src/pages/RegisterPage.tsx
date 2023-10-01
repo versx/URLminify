@@ -37,14 +37,14 @@ export const RegisterPage = () => {
   useEffect(() => {
     SettingsService.getSettings().then((response: any) => {
       if (response.status !== 'ok') {
-        // TODO: Error
+        enqueueSnackbar('Failed to fetch settings from API.', { variant: 'error' });
         return;
       }
       const enableRegistrationSetting = response.settings.find((setting: Setting) => setting.name === SettingKeys.EnableRegistration);
       const enableRegistration = parseInt(enableRegistrationSetting?.value) !== 0 ?? DefaultEnableRegistration;
       setEnableRegister(enableRegistration);
     });
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <Container style={{ height: '35vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

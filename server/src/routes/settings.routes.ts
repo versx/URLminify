@@ -5,8 +5,8 @@ import { SettingsController } from '../controllers';
 import { AdminMiddleware, ValidateMiddleware } from '../middleware';
 
 export const SettingsRouter = (app: Application) => {
-  app.use(AdminMiddleware, ValidateMiddleware)
-    .route(SettingsApiRoute)
+  //app.use(AdminMiddleware, ValidateMiddleware)
+    app.route(SettingsApiRoute)
       .get(SettingsController.getSettings)
-      .put(SettingsController.setSettings);
+      .put(AdminMiddleware, ValidateMiddleware, SettingsController.setSettings);
 };
