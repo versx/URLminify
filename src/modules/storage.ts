@@ -1,6 +1,6 @@
 export const get = (key: string, defaultValue: any = null) => {
-  const data = localStorage.getItem(key) ?? defaultValue;
-  return data ? JSON.parse(data) : null;
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : defaultValue;
 };
     
 export const set = (key: string, value: any) => {
