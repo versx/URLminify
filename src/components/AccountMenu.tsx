@@ -51,7 +51,7 @@ export const AccountMenu = () => {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2, color: 'inherit' }}
+            sx={{ ml: 1, color: 'inherit' }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}

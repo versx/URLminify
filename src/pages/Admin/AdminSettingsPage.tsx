@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 import { SettingKeys } from '../../consts';
 import { SlugLimitSetter } from '../../components';
 import { SettingsService } from '../../services';
-import { SettingModel } from '../../types';
+import { Setting } from '../../types';
 
 export const AdminSettingsPage = () => {
   const [slugLimit, setSlugLimit] = useState(500);
@@ -30,7 +30,7 @@ export const AdminSettingsPage = () => {
         enqueueSnackbar(`Failed to reload settings.`, { variant: 'error' });
         return;
       }
-      const slugLimitSetting = response.settings.find((setting: SettingModel) => setting.name === 'daily_slug_limit');
+      const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === 'max_slug_limit');
       setSlugLimit(slugLimitSetting.value);
     });
   }, [enqueueSnackbar]);

@@ -24,7 +24,7 @@ export type User = {
   shortUrls?: ShortUrl[];
 };
 
-export type SettingModel = {
+export type Setting = {
   name: string;
   value: string;
 
@@ -82,4 +82,12 @@ export type RouteInfo = {
   description: string;
   parameters?: Array<RouteParamInfo>;
   response?: string;
+};
+
+export type UrlStatsData = {
+  total: number;
+  active: number;
+  expired: number;
+  enabled: number;
+  disabled: number;
 };

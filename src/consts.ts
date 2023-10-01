@@ -16,6 +16,8 @@ export const Routes = {
   },
 };
 
+export const DefaultMaxSlugLimit = 1000;
+
 export const SettingKeys = {
   MaxSlugLimit: 'max_slug_limit',
 };
