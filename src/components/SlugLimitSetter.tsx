@@ -33,7 +33,7 @@ export const SlugLimitSetter = (props: SlugLimitProps) => {
   return (
     <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
       <Typography variant="h6">
-        Daily URL Slug Limit
+        Max URL Slug Limit
       </Typography>
       <form onSubmit={handleSubmit} style={{ marginTop: 15, width: '100%' }}>
         <TextField

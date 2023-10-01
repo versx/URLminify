@@ -1,5 +1,11 @@
 import { RouteInfo } from './types';
 
+export const DefaultMaxSlugLimit = 1000;
+
+export const SettingKeys = {
+  MaxSlugLimit: 'max_slug_limit',
+};
+
 export const Routes = {
   dashboard: '/',
   slugs: '/:slug',
@@ -14,12 +20,6 @@ export const Routes = {
     users: '/admin/users',
     settings: '/admin/settings',
   },
-};
-
-export const DefaultMaxSlugLimit = 1000;
-
-export const SettingKeys = {
-  MaxSlugLimit: 'max_slug_limit',
 };
 
 export const ApiRoutes: RouteInfo[] = [
@@ -61,7 +61,7 @@ export const ApiRoutes: RouteInfo[] = [
   {
     method: 'DELETE',
     path: '/api/v1/users',
-    description: 'Delets a user account.',
+    description: 'Deletes a user account.',
     parameters: [
       { name: 'userId', type: 'number', description: 'The account ID of the user to delete.' },
     ],
