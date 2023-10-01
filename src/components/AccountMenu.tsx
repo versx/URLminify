@@ -46,23 +46,27 @@ export const AccountMenu = () => {
 
   return (
     <>
-      <>
-        <Tooltip title="Account Settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 1, color: 'inherit' }}
-            aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
+      <Tooltip title="Account Settings">
+        <IconButton
+          onClick={handleClick}
+          size="small"
+          sx={{ ml: 1, color: 'inherit' }}
+          aria-controls={open ? 'account-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+        >
+          <Avatar
+            sx={{
+              bgcolor: '#000',
+              b: '0.5px solid yellow',
+              width: 32, height: 32,
+            }}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>
-              {currentUser?.username[0]}
-            </Avatar>
-          </IconButton>
-        </Tooltip>
-        &nbsp;{currentUser?.username}
-      </>
+            {currentUser?.username[0]}
+          </Avatar>
+        </IconButton>
+      </Tooltip>
+      &nbsp;{currentUser?.username}
       <Menu
         anchorEl={anchorEl}
         id="account-menu"

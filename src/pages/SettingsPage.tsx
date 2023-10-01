@@ -47,7 +47,7 @@ export const SettingsPage = () => {
           </Typography>
           <ApiKeyTextField initialValue={currentUser?.apiKey} />
         </Container>
-        
+
         <Container component={Paper} elevation={2} style={{ padding: '20px', marginTop: '20px' }}>
           <Typography variant="h6" align="center" gutterBottom>
             Change Password
