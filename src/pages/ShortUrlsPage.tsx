@@ -3,6 +3,7 @@ import {
   Container,
   Typography,
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import { DefaultMaxSlugLimit } from '../consts';
 import { QuotaRemaining, ShortUrlTable, UrlStats } from '../components';
@@ -19,12 +20,13 @@ export const ShortUrlsPage = () => {
     disabled: 0,
   });
   const slugLimitRef = useRef(DefaultMaxSlugLimit);
+  const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
   const handleReloadStats = useCallback(() => {
     ShortUrlService.getShortUrls(currentUser?.id).then((response: any) => {
       if (response.status !== 'ok') {
-        // TODO: enqueueSnackbar('Error occurred reloading short URL statistics.', { variant: 'error' });
+        enqueueSnackbar('Error occurred reloading short URL statistics.', { variant: 'error' });
         return;
       }
       const shortUrls = response.shortUrls;
@@ -43,15 +45,14 @@ export const ShortUrlsPage = () => {
     });
 
     SettingsService.getSettings().then((response: any) => {
-      //console.log('getSettings response', response);
       if (response.status !== 'ok') {
-        // TODO: enqueueSnackbar(`Failed to reload settings.`, { variant: 'error' });
+        enqueueSnackbar(`Failed to fetch settings.`, { variant: 'error' });
         return;
       }
       const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === 'max_slug_limit');
       slugLimitRef.current = slugLimitSetting?.value ?? DefaultMaxSlugLimit;
     });
-  }, [currentUser?.id]);
+  }, [currentUser?.id, enqueueSnackbar]);
 
   useEffect(() => handleReloadStats(), [handleReloadStats]);
 
