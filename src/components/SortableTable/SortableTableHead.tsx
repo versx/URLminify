@@ -47,7 +47,7 @@ export const ShortUrlTableHeadCells: readonly HeadCell<ShortUrl>[] = [
     disablePadding: false,
     align: 'right',
     label: 'Enabled',
-    style: { display: { xs: 'none', sm: 'table-cell' } },
+    style: { display: { xs: 'none', sm: 'none', md: 'table-cell' } },
   },
   {
     id: 'userId',
@@ -61,7 +61,7 @@ export const ShortUrlTableHeadCells: readonly HeadCell<ShortUrl>[] = [
     disablePadding: false,
     align: 'right',
     label: 'Created',
-    style: { display: { xs: 'none', sm: 'table-cell' } },
+    style: { display: { xs: 'none', sm: 'none', md: 'none', lg: 'table-cell' } },
   },
 ];
 
@@ -96,14 +96,14 @@ export const UserTableHeadCells: readonly HeadCell<User>[] = [
     disablePadding: false,
     align: 'right',
     label: 'Admin',
-    style: { display: { xs: 'none', sm: 'table-cell' } },
+    style: { display: { xs: 'none', sm: 'none', md: 'table-cell' } },
   },
   {
     id: 'createdAt',
     disablePadding: false,
     align: 'right',
     label: 'Created',
-    style: { display: { xs: 'none', sm: 'table-cell' } },
+    style: { display: { xs: 'none', sm: 'none', md: 'table-cell' } },
   },
 ];
 

@@ -321,7 +321,7 @@ export const ShortUrlTable = () => {
                     <StyledTableCell align="left" sx={{ display: { xs: 'none', sm: 'table-cell' }, whiteSpace: 'nowrap' }}>
                       {row.expiry ? moment(row.expiry).calendar() : ''}
                     </StyledTableCell>
-                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'none', md: 'table-cell' } }}>
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
                     {isAdminPage && currentUser?.admin && (
@@ -332,7 +332,7 @@ export const ShortUrlTable = () => {
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
-                      sx={{ display: { xs: 'none', sm: 'table-cell' }, whiteSpace: 'nowrap' }}
+                      sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'table-cell' }, whiteSpace: 'nowrap' }}
                     >
                       {moment(row.createdAt).calendar()}
                     </StyledTableCell>

@@ -282,13 +282,13 @@ export const UserTable = () => {
                     <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
-                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'table-cell' } }}>
+                    <StyledTableCell align="right" sx={{ display: { xs: 'none', sm: 'none', md: 'table-cell' } }}>
                       {row.admin ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"
                       title={moment(row.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
-                      sx={{ display: { xs: 'none', sm: 'table-cell' } }}
+                      sx={{ display: { xs: 'none', sm: 'none', md: 'table-cell' } }}
                     >
                       {moment(row.createdAt).calendar()}
                     </StyledTableCell>
