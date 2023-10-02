@@ -26,6 +26,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { useSnackbar } from 'notistack';
 
 import { BreadcrumbItem, Breadcrumbs, PieChart } from '../../components';
 import { ViewTelemetryDetailsDialog } from '../../dialogs';
@@ -195,11 +196,12 @@ const crumbs: BreadcrumbItem[] = [{
 export const AdminTelemetryPage = () => {
   const [telemetryData, setTelemetryData] = useState<Telemetry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
   const [selectedRow, setSelectedRow] = useState<any>(null);
   const [open, setOpen] = useState(false);
 
-  ChartJS.register(ArcElement, Title, Tooltip, Legend);
+  const { enqueueSnackbar } = useSnackbar();
+
+  ChartJS.register(ArcElement, Legend, Title, Tooltip);
 
   const handleRowClick = (param: GridRowParams) => {
     setSelectedRow(param.row);
@@ -209,13 +211,13 @@ export const AdminTelemetryPage = () => {
   useEffect(() => {
     TelemetryService.getTelemetry().then((response: any) => {
       if (response.status !== 'ok') {
-        // TODO: Error
+        enqueueSnackbar(`Failed to fetch telemetry data with error: ${response.error}`, { variant: 'error' });
         return;
       }
       setTelemetryData(response.telemetry);
       setIsLoading(false);
     });
-  }, []);
+  }, [enqueueSnackbar]);
 
   const userAgents = aggregateData(telemetryData, 'browser' as keyof Telemetry);
   const browsers = toObject(Object.keys(userAgents).map((ua: any) => ({ [parseUserAgent(ua).browser.name]: userAgents[ua] })));

@@ -5,10 +5,12 @@ interface PieChartProps<T> {
   title: string;
   data: T[];
   labels: string[];
+  height?: number;
+  width?: number;
 };
 
 export const PieChart = <T extends unknown>(props: PieChartProps<T>) => {
-  const { title, data, labels } = props;
+  const { title, data, labels, height = 250, width = 250 } = props;
 
   const chartData = {
     labels,
@@ -41,8 +43,8 @@ export const PieChart = <T extends unknown>(props: PieChartProps<T>) => {
           responsive: true,
           //maintainAspectRatio: true,
         }}
-        //height={400}
-        //width={400}
+        height={height}
+        width={width}
       />
     </Container>
   );
