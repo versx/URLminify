@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Button,
@@ -10,17 +10,21 @@ import {
 import { useSnackbar } from 'notistack';
 
 import { DefaultEnableRegistration, Routes, SettingKeys } from '../consts';
-import { AuthService, SettingsService } from '../services';
-import { Setting } from '../types';
+import { useServerSettings } from '../hooks';
+import { AuthService } from '../services';
 
 export const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [enableRegister, setEnableRegister] = useState(DefaultEnableRegistration);
+  const { settings } = useServerSettings();
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
   const from = location.state?.from || Routes.login;
+
+  const enableRegister = settings
+    ? parseInt(settings[SettingKeys.EnableRegistration] ?? DefaultEnableRegistration) !== 0
+    : DefaultEnableRegistration;
 
   const [errors, setErrors] = useState({
     username: false,
@@ -56,21 +60,8 @@ export const RegisterPage = () => {
     }
 
     enqueueSnackbar('Successfully registered your user account! Redirecting to login page.', { variant: 'success' });
-    //localStorage.setItem('isAuthenticated', 'true');
     window.location.href = from;
   };
-
-  useEffect(() => {
-    SettingsService.getSettings().then((response: any) => {
-      if (response.status !== 'ok') {
-        enqueueSnackbar('Failed to fetch settings from API.', { variant: 'error' });
-        return;
-      }
-      const enableRegistrationSetting = response.settings.find((setting: Setting) => setting.name === SettingKeys.EnableRegistration);
-      const enableRegistration = parseInt(enableRegistrationSetting?.value) !== 0 ?? DefaultEnableRegistration;
-      setEnableRegister(enableRegistration);
-    });
-  }, [enqueueSnackbar]);
 
   return (
     <Container style={{ height: '35vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -92,9 +83,19 @@ export const RegisterPage = () => {
           Register
         </Typography>
         {!enableRegister ? (
-          <>
-            Registration has been disabled by the administrator.
-          </>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <Typography variant="subtitle1" align="center">
+              User account registration has been disabled by the administrator.
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              href={from}
+              sx={{ mt: 3 }}
+            >
+              Go Back
+            </Button>
+          </div>
         ) : (
           <>
             <TextField
