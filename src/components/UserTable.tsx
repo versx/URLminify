@@ -10,9 +10,7 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import {
-  Add as AddIcon,
-} from '@mui/icons-material';
+import { Add as AddIcon } from '@mui/icons-material';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 

@@ -6,11 +6,15 @@ import {
   FormControlLabel,
   Paper,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-import { DefaultEnableRegistration, DefaultMaxSlugLimit, SettingKeys } from '../../consts';
+import {
+  DefaultEnableRegistration, DefaultEnableTelemetry,
+  DefaultMaxSlugLimit, SettingKeys,
+} from '../../consts';
 import { IOSSwitch } from '../../components';
 import { SettingsService } from '../../services';
 import { getUserToken } from '../../stores';
@@ -19,6 +23,7 @@ import { Setting } from '../../types';
 export const AdminSettingsPage = () => {
   const [slugLimit, setSlugLimit] = useState(DefaultMaxSlugLimit);
   const [enableRegistration, setEnableRegistration] = useState(DefaultEnableRegistration);
+  const [enableTelemetry, setEnableTelemetry] = useState(DefaultEnableTelemetry);
   const { enqueueSnackbar } = useSnackbar();
   const currentUser = getUserToken();
 
@@ -26,13 +31,14 @@ export const AdminSettingsPage = () => {
     const response = await SettingsService.setSettings([
       { name: SettingKeys.MaxSlugLimit, value: newLimit },
       { name: SettingKeys.EnableRegistration, value: enableRegistration },
+      { name: SettingKeys.EnableTelemetry, value: enableTelemetry },
     ]);
     if (response.status !== 'ok') {
-      enqueueSnackbar(`Failed to update setting.`, { variant: 'error' });
+      enqueueSnackbar(`Failed to update settings.`, { variant: 'error' });
       return;
     }
 
-    enqueueSnackbar(`Setting updated successfully.`, { variant: 'success' });
+    enqueueSnackbar(`Settings updated successfully.`, { variant: 'success' });
   };
 
   const handleLimitChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,18 +76,21 @@ export const AdminSettingsPage = () => {
       <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
         <div style={{ padding: '20px', justifyContent: 'center' }}>
           <form onSubmit={(e) => handleSubmit(e, slugLimit)}>
-            <TextField
-              fullWidth
-              label="Max URL Slug Limit Per User"
-              variant="outlined"
-              type="number"
-              value={slugLimit}
-              onChange={handleLimitChange}
-              InputProps={{ inputProps: { min: 0 } }} // to ensure non-negative numbers
-              style={{
-                marginBottom: 15,
-              }}
-            />
+            <Tooltip title="Maximum number of URL slugs a user can create." arrow>
+              <TextField
+                fullWidth
+                label="Max Slug Limit Per User"
+                variant="outlined"
+                type="number"
+                value={slugLimit}
+                onChange={handleLimitChange}
+                InputProps={{ inputProps: { min: 0 } }} // to ensure non-negative numbers
+                style={{
+                  marginBottom: 15,
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="Allow users to register new accounts." arrow>
             <FormControlLabel
               control={
                 <IOSSwitch
@@ -95,8 +104,26 @@ export const AdminSettingsPage = () => {
                 marginBottom: 15,
               }}
             />
+            </Tooltip>
+            <br />
+            <Tooltip title="Save telemetry data of users that visit short URL slugs." arrow>
+              <FormControlLabel
+                control={
+                  <IOSSwitch
+                    sx={{ m: 1 }}
+                    checked={enableTelemetry}
+                    onChange={(e => setEnableTelemetry(e.target.checked))}
+                  />
+                }
+                label="Save Telemetry Data"
+                style={{
+                  marginBottom: 15,
+                }}
+              />
+            </Tooltip>
             <br />
             <Button
+              fullWidth
               variant="contained"
               color="primary"
               type="submit"

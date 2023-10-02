@@ -1,10 +1,12 @@
 import { RouteInfo } from './types';
 
 export const DefaultEnableRegistration = true;
+export const DefaultEnableTelemetry = true;
 export const DefaultMaxSlugLimit = 1000;
 
 export const SettingKeys = {
   EnableRegistration: 'enable_registration',
+  EnableTelemetry: 'enable_telemetry',
   MaxSlugLimit: 'max_slug_limit',
 };
 

@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-import { DefaultMaxSlugLimit } from '../consts';
+import { DefaultMaxSlugLimit, SettingKeys } from '../consts';
 import { QuotaRemaining, ShortUrlTable, UrlStats } from '../components';
 import { SettingsService, ShortUrlService } from '../services';
 import { getUserToken } from '../stores';
@@ -49,7 +49,7 @@ export const ShortUrlsPage = () => {
         enqueueSnackbar(`Failed to fetch settings.`, { variant: 'error' });
         return;
       }
-      const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === 'max_slug_limit');
+      const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === SettingKeys.MaxSlugLimit);
       slugLimitRef.current = slugLimitSetting?.value ?? DefaultMaxSlugLimit;
     });
   }, [currentUser?.id, enqueueSnackbar]);
