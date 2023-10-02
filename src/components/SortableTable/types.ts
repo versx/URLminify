@@ -13,7 +13,6 @@ export interface HeadCell<T> {
   style?: any;
 };
 
-//export interface TableProps<T> {
 export interface TableProps<T> {
   headCells: readonly HeadCell<T>[];
   numSelected: number;
@@ -27,5 +26,7 @@ export interface TableProps<T> {
 
 export interface TableToolbarProps {
   numSelected: number;
+  search: string;
   onDelete: () => void;
+  onSearch: (keyword: string) => void;
 };

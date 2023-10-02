@@ -7,7 +7,6 @@ import {
   TableBody,
   TableContainer,
   TablePagination,
-  TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -199,25 +198,14 @@ export const AdminShortUrlsPage = () => {
         Admin - Short URLs
       </Typography>
 
+      <SortableTableToolbar
+        numSelected={selected.length}
+        search={search}
+        onDelete={handleDeleteShortUrls}
+        onSearch={setSearch}
+      />
+
       <Paper sx={{ width: '100%', mb: 2, border: '1px solid grey', borderRadius: '8px' }}>
-        <SortableTableToolbar
-          numSelected={selected.length}
-          onDelete={handleDeleteShortUrls}
-        />
-        <TextField
-          color="primary"
-          variant="outlined"
-          placeholder="Search..."
-          value={search}
-          size="small"
-          type="search"
-          style={{
-            display: 'flex',
-            alignItems: 'end',
-            marginBottom: 3,
-          }}
-          onChange={(e) => setSearch(e.target.value)}
-        />
         <TableContainer>
           <Table
             stickyHeader
@@ -235,7 +223,7 @@ export const AdminShortUrlsPage = () => {
               isAdmin={true}
             />
             <TableBody>
-              {visibleRows.map((row: any, index: number) => { //ShortUrl
+              {visibleRows.map((row: ShortUrl, index: number) => {
                 const isItemSelected = isSelected(row.slug);
                 const labelId = `enhanced-table-checkbox-${index}`;
                 if (search !== '' && !(row.slug.includes(search) || row.originalUrl.includes(search))) {
@@ -296,7 +284,7 @@ export const AdminShortUrlsPage = () => {
                       {row.enabled ? 'Yes' : 'No'}
                     </StyledTableCell>
                     <StyledTableCell align="right">
-                      {row.user?.username ?? row.userId}
+                      {(row as any).user?.username ?? row.userId}
                     </StyledTableCell>
                     <StyledTableCell
                       align="right"

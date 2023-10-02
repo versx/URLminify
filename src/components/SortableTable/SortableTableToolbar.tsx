@@ -1,5 +1,6 @@
 import {
   IconButton,
+  TextField,
   Toolbar,
   Tooltip,
   Typography,
@@ -10,7 +11,7 @@ import { Delete as DeleteIcon } from '@mui/icons-material';
 import { TableToolbarProps } from '..';
 
 export const SortableTableToolbar = (props: TableToolbarProps) => {
-  const { numSelected, onDelete } = props;
+  const { numSelected, search, onDelete, onSearch } = props;
 
   return (
     <Toolbar
@@ -33,7 +34,7 @@ export const SortableTableToolbar = (props: TableToolbarProps) => {
           {numSelected} selected
         </Typography>
       )}
-      {numSelected > 0 && (
+      {numSelected > 0 ? (
         <Tooltip
           arrow
           title={`Delete ${numSelected.toLocaleString()} selected`}
@@ -42,6 +43,21 @@ export const SortableTableToolbar = (props: TableToolbarProps) => {
             <DeleteIcon color="error" />
           </IconButton>
         </Tooltip>
+      ) : (
+        <TextField
+          color="primary"
+          variant="outlined"
+          placeholder="Search..."
+          value={search}
+          size="small"
+          type="search"
+          style={{
+            position: 'absolute',
+            right: 0,
+            //marginBottom: '30px',
+          }}
+          onChange={(e) => onSearch(e.target.value)}
+        />
       )}
     </Toolbar>
   );

@@ -6,6 +6,8 @@ export type ShortUrl = {
   expiry: Date | null;
   enabled: boolean;
 
+  //user?: User | null;
+
   createdAt?: Date;
   updatedAt?: Date;
 };

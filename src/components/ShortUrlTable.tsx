@@ -8,7 +8,6 @@ import {
   TableBody,
   TableContainer,
   TablePagination,
-  TextField,
   Tooltip,
 } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material'
@@ -201,6 +200,13 @@ export const ShortUrlTable = (props: any) => {
 
   return (
     <Box sx={{ width: '100%', p: 2 }}>
+      <SortableTableToolbar
+        numSelected={selected.length}
+        search={search}
+        onDelete={handleDeleteShortUrls}
+        onSearch={setSearch}
+      />
+
       <Paper sx={{ width: '100%', mb: 2, border: '1px solid grey', borderRadius: '8px' }}>
         <Tooltip
           title="Create short URL"
@@ -222,6 +228,7 @@ export const ShortUrlTable = (props: any) => {
           </Fab>
         </Tooltip>
 
+        {/*
         <SortableTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}
@@ -240,6 +247,7 @@ export const ShortUrlTable = (props: any) => {
           }}
           onChange={(e) => setSearch(e.target.value)}
         />
+        */}
         <TableContainer>
           <Table
             stickyHeader

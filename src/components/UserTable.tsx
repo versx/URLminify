@@ -7,7 +7,6 @@ import {
   TableBody,
   TableContainer,
   TablePagination,
-  TextField,
   Tooltip,
 } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
@@ -195,6 +194,12 @@ export const UserTable = () => {
 
   return (
     <>
+        <SortableTableToolbar
+          numSelected={selected.length}
+          search={search}
+          onDelete={handleDeleteUsers}
+          onSearch={setSearch}
+        />
       <Paper sx={{ width: '100%', mb: 2, border: '1px solid grey', borderRadius: '8px' }}>
         <Tooltip
           title="Create user account"
@@ -216,10 +221,14 @@ export const UserTable = () => {
           </Fab>
         </Tooltip>
 
+        {/*
         <SortableTableToolbar
           numSelected={selected.length}
+          search={search}
           onDelete={handleDeleteUsers}
+          onSearch={setSearch}
         />
+        
         <TextField
           color="primary"
           variant="outlined"
@@ -234,6 +243,7 @@ export const UserTable = () => {
           }}
           onChange={(e) => setSearch(e.target.value)}
         />
+        */}
         <TableContainer>
           <Table
             stickyHeader
