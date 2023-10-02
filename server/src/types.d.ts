@@ -32,6 +32,7 @@ export type SequelizeDatabaseConnection = {
   connection: Sequelize;
   setting?: Model;
   shortUrl?: Model;
+  telemetry?: Model;
   user?: Model;
 };
 
@@ -105,6 +106,65 @@ export type SettingModel = {
 
   createdAt?: Date | null;
   updatedAt?: Date | null;
+};
+
+export type TelemetryModel = {
+  slug: string;
+  isp: string;
+  ipAddr: string;
+  continent: string;
+  continentCode: string;
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  district: string;
+  zip: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  offset: number;
+  currency: string;
+  isp: string;
+  org: string;
+  as: string;
+  asname: string;
+  reverse: string;
+  mobile: boolean;
+  proxy: boolean;
+  hosting: boolean;
+
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
+};
+
+export interface GeolocationResponse {
+  status: 'success' | 'fail';
+  message?: 'private range' | 'reserved range' | 'invalid query';
+  continent: string;
+  continentCode: string;
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  district: string;
+  zip: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  offset: number;
+  currency: string;
+  isp: string;
+  org: string;
+  as: string;
+  asname: string;
+  reverse: string;
+  mobile: boolean;
+  proxy: boolean;
+  hosting: boolean;
+  query: string;
 };
 
 export type Status = 'ok' | 'error';

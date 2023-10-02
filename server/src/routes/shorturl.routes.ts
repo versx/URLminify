@@ -2,10 +2,10 @@ import { Application } from 'express';
 
 import { ShortUrlsApiRoute } from '../consts';
 import { ShortUrlController } from '../controllers';
-import { ValidateMiddleware } from '../middleware';
+import { TelemetryMiddleware, ValidateMiddleware } from '../middleware';
 
 export const ShortUrlRouter = (app: Application) => {
-  app.get('/:slug', ShortUrlController.getShortUrl);
+  app.get('/:slug', TelemetryMiddleware, ShortUrlController.getShortUrl);
 
   app.use(ValidateMiddleware)
     .route(ShortUrlsApiRoute)

@@ -1,3 +1,6 @@
+import { Request } from 'express';
+
+import { logWarn } from '.';
 import { ColorType } from '../types';
 
 // 5 - ukhndyw
@@ -19,6 +22,45 @@ export const isValidUrl = (url: string | null) => {
   }
 
   return true;
+};
+
+export const getIpAddress = async (req: Request, defaultValue: string = '0.0.0.0') => {
+  const cfHeader = req.get('cf-connecting-ip');
+  const forwardedHost = req.get('x-forwarded-host');
+  const forwardedFor = req.get('x-forwarded-for');
+  const remoteIp = req.connection.remoteAddress;
+  const localIp = req.connection.localAddress;
+  let ipAddr = cfHeader ?? forwardedHost ?? forwardedFor ?? remoteIp ?? localIp;
+  //const ipAddrTest = ipAddr?.match('[0-9]+.[0-9].+[0-9]+.[0-9]+$')![0];
+  if (ipAddr === '127.0.0.1') {
+    ipAddr = await getExternalIpAddress();
+  }
+  return ipAddr ?? defaultValue;
+};
+
+export const getExternalIpAddress = async (defaultValue: string = '127.0.0.1') => {
+  const apiUrl = 'https://icanhazip.com';
+  const response = await fetch(apiUrl);
+  if (response?.status !== 200) {
+    //throw new Error('Unable to get external IP address.');
+    logWarn('Unable to get external IP address.');
+    return defaultValue;
+  }
+  const ipAddr = await response.text();
+  return ipAddr;
+};
+
+export const getGeolocationDetails = async (ipAddr: string) => {
+  // Reference: https://ip-api.com/docs/api:json
+  const apiUrl = 'http://ip-api.com/json';
+  const response = await fetch(`${apiUrl}/${ipAddr}?fields=66846719`);
+  if (response?.status !== 200) {
+    //throw new Error('Unable to get geolocation details.');
+    logWarn('Unable to get geolocation details.');
+    return null;
+  }
+  const data = await response.json();
+  return data;
 };
 
 export const color = (color: ColorType, message: any) => {
