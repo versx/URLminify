@@ -5,6 +5,7 @@ export * from './ApiKeyTextField';
 export * from './Breadcrumbs';
 export * from './CardDisplay';
 export * from './ChangePassword';
+export * from './Charts';
 export * from './DrawerAppBar';
 export * from './IOSSwitch';
 export * from './ProtectedRoute';

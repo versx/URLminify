@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import { AuthRouter } from './auth.routes';
 import { SettingsRouter } from './settings.routes';
 import { ShortUrlRouter } from './shorturl.routes';
+import { TelemetryRouter } from './telemetry.routes';
 import { UserRouter } from './user.routes';
 import { LoggingMiddleware } from '../middleware';
 
@@ -29,4 +30,7 @@ export const ApiRouter = (app: Application) => {
 
   // Initialize user routes
   UserRouter(app);
+
+  // Initialize telemetry routes
+  TelemetryRouter(app);
 };

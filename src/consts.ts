@@ -35,6 +35,7 @@ export const Routes = {
     dashboard: '/admin',
     shortUrls: '/admin/urls',
     users: '/admin/users',
+    telemetry: '/admin/telemetry',
     settings: '/admin/settings',
   },
 };

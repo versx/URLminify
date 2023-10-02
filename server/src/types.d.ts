@@ -110,7 +110,6 @@ export type SettingModel = {
 
 export type TelemetryModel = {
   slug: string;
-  isp: string;
   ipAddr: string;
   continent: string;
   continentCode: string;

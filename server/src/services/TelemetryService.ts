@@ -2,7 +2,7 @@ import { db } from '../models';
 import { TelemetryModel } from '../types';
 
 const getTelemetry = async () => {
-  const models = await db.shortUrl.findAll();
+  const models = await db.telemetry.findAll();
   return models;
 };
 

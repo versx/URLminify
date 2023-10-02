@@ -26,6 +26,37 @@ export type User = {
   shortUrls?: ShortUrl[];
 };
 
+export type Telemetry = {
+  slug: string;
+  ipAddr: string;
+  continent: string;
+  continentCode: string;
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  district: string;
+  zip: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  offset: number;
+  offsetSeconds: number;
+  currency: string;
+  isp: string;
+  org: string;
+  as: string;
+  asname: string;
+  reverse: string;
+  mobile: boolean;
+  proxy: boolean;
+  hosting: boolean;
+
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
+};
+
 export type Setting = {
   name: string;
   value: string | number | boolean | any;

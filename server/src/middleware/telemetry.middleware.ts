@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 
 import { SettingKeys } from '../consts';
 import {
+  getExternalIpAddress,
   getGeolocationDetails,
-  getIpAddress,
+  //getIpAddress,
   logDebug,
   logError,
   SettingsService,
@@ -27,7 +28,8 @@ export const TelemetryMiddleware = async (req: Request, res: Response, next: Nex
   }
 
   try {
-    const ipAddr = await getIpAddress(req);
+    //const ipAddr = await getIpAddress(req);
+    const ipAddr = await getExternalIpAddress();
     const geolocation = await getGeolocationDetails(ipAddr);
     if (ipAddr === '0.0.0.0' || !geolocation) {
       logDebug(`Unable to obtain IP address or geolocation details. Skipping telemetry.`);

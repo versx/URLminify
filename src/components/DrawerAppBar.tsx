@@ -13,6 +13,7 @@ import {
   AdminPanelSettings as AdminPanelSettingsIcon,
   ArrowDropDown as ArrowDropDownIcon,
   Dashboard as DashboardIcon,
+  Dataset as DatasetIcon,
   Link as LinkIcon,
   Menu as MenuIcon,
   Person as PersonIcon,
@@ -37,6 +38,7 @@ const AdminItems: DropdownItem[] = [
   { text: 'Dashboard', path: Routes.admin.dashboard, icon: <AdminPanelSettingsIcon />, tooltip: 'Admin Dashboard' },
   { text: 'Short URLs', path: Routes.admin.shortUrls, icon: <LinkIcon />, tooltip: 'Admin Short URLs Dashboard' },
   { text: 'Users', path: Routes.admin.users, icon: <PersonIcon />, tooltip: 'Admin User Accounts Dashboard' },
+  { text: 'Telemetry', path: Routes.admin.telemetry, icon: <DatasetIcon />, tooltip: 'Telemetry Data' },
   { text: 'divider', path: 'divider' },
   { text: 'Settings', path: Routes.admin.settings, icon: <SettingsIcon />, tooltip: 'Admin Settings' },
 ];

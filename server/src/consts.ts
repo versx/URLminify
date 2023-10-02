@@ -4,6 +4,7 @@ export const AuthApiRoute = BaseApiRoute + 'auth';
 export const SettingsApiRoute = BaseApiRoute + 'settings';
 export const ShortUrlsApiRoute = BaseApiRoute + 'shorturls';
 export const UsersApiRoute = BaseApiRoute + 'users';
+export const TelemetryApiRoute = BaseApiRoute + 'telemetry';
 
 export const DefaultExpiresIn = 365 * 86400; // 1 year
 
