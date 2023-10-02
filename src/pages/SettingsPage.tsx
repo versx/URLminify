@@ -6,12 +6,14 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-import { ApiKeyTextField, ChangePassword } from '../components';
+import { ApiKeyTextField, ChangePassword, ThemeSelector } from '../components';
+import { useColorMode } from '../contexts';
 import { AuthService, UserService } from '../services';
 import { getUserToken } from '../stores';
 
 export const SettingsPage = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const { mode, setColorMode } = useColorMode();
   const currentUser = getUserToken();
 
   const handleDeleteAccount = async () => {
@@ -41,6 +43,16 @@ export const SettingsPage = () => {
         Settings
       </Typography>
       <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', justifyContent: 'center', alignItems: 'center' }}>
+        <Container component={Paper} elevation={2} style={{ padding: '20px', marginTop: '20px' }}>
+          <Typography variant="h6" align="center" gutterBottom>
+            Theme
+          </Typography>
+          <ThemeSelector
+            theme={mode}
+            onThemeChange={setColorMode}
+          />
+        </Container>
+
         <Container component={Paper} elevation={2} style={{ padding: '20px', marginTop: '20px' }}>
           <Typography variant="h6" align="center" gutterBottom>
             API Key

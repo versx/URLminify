@@ -15,6 +15,7 @@ export * from './SortableTable';
 export * from './StatTile';
 export * from './StyledTableCell';
 export * from './StyledTableRow';
+export * from './ThemeSelector';
 export * from './ToggleColorMode';
 export * from './UrlStats';
 export * from './UserTable';

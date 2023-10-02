@@ -3,6 +3,7 @@ import { RouteInfo } from './types';
 export const DefaultEnableRegistration = true;
 export const DefaultEnableTelemetry = true;
 export const DefaultMaxSlugLimit = 1000;
+export const DefaultUserTheme = 'system';
 
 export const SettingKeys = {
   EnableRegistration: 'enable_registration',

@@ -100,4 +100,4 @@ export type UserStatsData = {
   disabled: number;
 };
 
-export type ThemeColorMode = 'light' | 'dark';
+export type ThemeColorMode = 'light' | 'dark' | 'system';
