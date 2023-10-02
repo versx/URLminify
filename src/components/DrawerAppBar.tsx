@@ -3,13 +3,8 @@ import {
   AppBar,
   Box,
   Button,
-  Divider,
   Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Toolbar,
   Tooltip,
   Typography,
@@ -24,38 +19,33 @@ import {
   Settings as SettingsIcon,
 } from '@mui/icons-material';
 
-import { AccountMenu, AdminDropdown, DropdownItem } from '.';
-import { Routes } from '../consts';
+import { AccountMenu, AdminDropdown, DropdownItem, SidebarDrawer } from '.';
+import { ActiveMenuItemColor, DrawerWidth, Routes, Title } from '../consts';
 import { get } from '../modules';
 import { getUserToken } from '../stores';
 import { User } from '../types';
 
-const Title = 'URLminify';
-const DrawerWidth = 240;
-
-const navItems: DropdownItem[] = [
-  { text: 'Dashboard', path: Routes.dashboard, requiresAuth: true },
-  { text: 'URLs', path: Routes.shortUrls, requiresAuth: true },
-  { text: 'Login', path: Routes.login, requiresAuth: false },
-  { text: 'Register', path: Routes.register, requiresAuth: false },
+const NavItems: DropdownItem[] = [
+  { text: 'Dashboard', path: Routes.dashboard, requiresAuth: true, icon: <DashboardIcon />, tooltip: 'Dashboard' },
+  { text: 'URLs', path: Routes.shortUrls, requiresAuth: true, icon: <LinkIcon />, tooltip: 'Short URLs' },
+  { text: 'Login', path: Routes.login, requiresAuth: false, icon: <PersonIcon />, tooltip: 'Login' },
+  { text: 'Register', path: Routes.register, requiresAuth: false, icon: <PersonIcon />, tooltip: 'Register' },
 ];
 
-const adminItems: DropdownItem[] = [
-  { text: 'Dashboard', path: Routes.admin.dashboard, icon: <DashboardIcon /> },
-  { text: 'Short URLs', path: Routes.admin.shortUrls, icon: <LinkIcon /> },
-  { text: 'Users', path: Routes.admin.users, icon: <PersonIcon /> },
+const AdminItems: DropdownItem[] = [
+  { text: 'Dashboard', path: Routes.admin.dashboard, icon: <AdminPanelSettingsIcon />, tooltip: 'Admin Dashboard' },
+  { text: 'Short URLs', path: Routes.admin.shortUrls, icon: <LinkIcon />, tooltip: 'Admin Short URLs Dashboard' },
+  { text: 'Users', path: Routes.admin.users, icon: <PersonIcon />, tooltip: 'Admin User Accounts Dashboard' },
   { text: 'divider', path: 'divider' },
-  { text: 'Settings', path: Routes.admin.settings, icon: <SettingsIcon /> },
+  { text: 'Settings', path: Routes.admin.settings, icon: <SettingsIcon />, tooltip: 'Admin Settings' },
 ];
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  //const theme = useTheme();
-  //const { toggleColorMode } = useColorMode();
-  
   const currentUser = getUserToken() as User;
   const isAuthenticated = Boolean(get('isAuthenticated'));
   const isAdmin = Boolean(currentUser?.admin);
@@ -66,70 +56,12 @@ export const DrawerAppBar = (props: any) => {
   };
   const handleCloseAdminMenu = () => setAnchorEl(null);
 
-  const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
+  const handleToggleAdminMenu = (event: any) => {
+    event.stopPropagation();
+    setAdminOpen(prev => !prev);
+  };
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2, justifyContent: 'center' }}>
-        <a
-          href={Routes.dashboard}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textDecoration: 'none',
-            color: 'inherit',
-          }}
-        >
-          <img
-            src="/logo192.png"
-            alt="URLminify Logo"
-            style={{
-              height: 28,
-              width: 28,
-              marginRight: '10px',
-            }}
-          />
-          {Title}
-        </a>
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => isAuthenticated && item.requiresAuth && (
-          <ListItem key={item.path} disablePadding>
-            <ListItemButton
-              href={item.path}
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-                textAlign: 'center',
-              }}
-            >
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        {isAdmin && (
-          <ListItem key='admin' disablePadding>
-            <ListItemButton
-              aria-controls="admin-menu"
-              aria-haspopup="true"
-              style={{
-                textDecoration: 'none',
-                color: 'inherit',
-                textAlign: 'center',
-                justifyContent: 'center',
-              }}
-              onClick={handleOpenAdminMenu}
-            >
-              Admin
-              <ArrowDropDownIcon />
-            </ListItemButton>
-          </ListItem>
-        )}
-      </List>
-    </Box>
-  );
+  const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -167,15 +99,25 @@ export const DrawerAppBar = (props: any) => {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             <>
-              {navItems.map((item) => (
-                ((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
-                <a key={item.path} href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
-                  <Button key={item.path} sx={{ color: '#fff' }}>
-                    {item.text}
-                  </Button>
-                </a>
-                )
-              ))}
+              {NavItems.map((item: DropdownItem, index: number) =>
+                (((isAuthenticated && item.requiresAuth) || (!isAuthenticated && !item.requiresAuth)) && (
+                <Tooltip
+                  arrow
+                  key={index}
+                  title={item.tooltip ?? item.text}
+                >
+                  <a href={item.path} style={{textDecoration: 'none', color: 'inherit'}}>
+                    <Button
+                      style={{
+                        textDecoration: 'none',
+                        color: item.path === window.location.pathname ? ActiveMenuItemColor : 'inherit',
+                      }}
+                    >
+                      {item.text}
+                    </Button>
+                  </a>
+                </Tooltip>
+              )))}
               {isAdmin && (
                 <Tooltip title="Admin Dashboard" arrow>
                   <IconButton
@@ -184,23 +126,15 @@ export const DrawerAppBar = (props: any) => {
                     sx={{ color: '#fff' }}
                     onClick={handleOpenAdminMenu}
                   >
-                    <AdminPanelSettingsIcon />
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <AdminPanelSettingsIcon />
+                      <ArrowDropDownIcon sx={{ fontSize: '1rem', ml: 0.5 }} />
+                    </Box>
                   </IconButton>
                 </Tooltip>
               )}
             </>
           </Box>
-          {/*
-          <Tooltip title="Toggle light/dark theme" arrow>
-            <IconButton
-              color="inherit"
-              sx={{ ml: 1 }}
-              onClick={toggleColorMode}
-            >
-              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-          </Tooltip>
-          */}
           {isAuthenticated && (<AccountMenu />)}
         </Toolbar>
       </AppBar>
@@ -217,7 +151,13 @@ export const DrawerAppBar = (props: any) => {
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DrawerWidth },
           }}
         >
-          {drawer}
+          <SidebarDrawer
+            adminOpen={adminOpen}
+            navItems={NavItems}
+            adminItems={AdminItems}
+            onToggleAdminMenu={handleToggleAdminMenu}
+            onToggleDrawer={handleDrawerToggle}
+          />
         </Drawer>
       </nav>
       <Box component="main" sx={{ p: 3, w: '100vw' }}>
@@ -228,7 +168,7 @@ export const DrawerAppBar = (props: any) => {
         <AdminDropdown
           isAdmin={isAdmin}
           open={anchorEl}
-          items={adminItems}
+          items={AdminItems}
           onClose={handleCloseAdminMenu}
         />
       )}

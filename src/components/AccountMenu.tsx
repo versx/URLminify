@@ -1,6 +1,7 @@
 import React, { MouseEvent, useState } from 'react';
 import {
   Avatar,
+  Box,
   Divider,
   IconButton,
   ListItemIcon,
@@ -9,23 +10,22 @@ import {
   Tooltip,
 } from '@mui/material';
 import {
+  ArrowDropDown as ArrowDropDownIcon,
   Article as ArticleIcon,
   Logout as LogoutIcon,
   Settings as SettingsIcon,
 } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
 
-import { Routes } from '../consts';
+import { ActiveMenuItemColor, Routes } from '../consts';
 import { AuthService } from '../services';
 import { getUserToken } from '../stores';
-import { useColorMode } from '../contexts';
 
 export const AccountMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { enqueueSnackbar } = useSnackbar();
   const open = Boolean(anchorEl);
   const currentUser = getUserToken();
-  const theme = useColorMode();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -50,21 +50,25 @@ export const AccountMenu = () => {
     <>
       <Tooltip title="Account Settings" arrow>
         <IconButton
-          onClick={handleClick}
           size="small"
           sx={{ ml: 1, color: 'inherit' }}
           aria-controls={open ? 'account-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
         >
-          <Avatar
-            sx={{
-              bgcolor: theme.mode === 'light' ? '#303030' : '#909090',
-              width: 32, height: 32,
-            }}
-          >
-            {currentUser?.username[0]}
-          </Avatar>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar
+              sx={{
+                //bgcolor: theme.mode === 'light' ? '#303030' : '#909090',
+                width: 32,
+                height: 32,
+              }}
+            >
+              {currentUser?.username[0]}
+            </Avatar>
+            <ArrowDropDownIcon sx={{ fontSize: '1rem', ml: 0.5 }} />
+          </Box>
         </IconButton>
       </Tooltip>
       &nbsp;{currentUser?.username}
@@ -103,25 +107,43 @@ export const AccountMenu = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleMyAccount}>
-          <ListItemIcon>
-            <SettingsIcon fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleApiDocs}>
-          <ListItemIcon>
-            <ArticleIcon fontSize="small" />
-          </ListItemIcon>
-          API Documentation
-        </MenuItem>
+        <Tooltip title="User Account Settings" placement="left-start" arrow>
+          <MenuItem
+            onClick={handleMyAccount}
+            style={{
+              textDecoration: 'none',
+              color: Routes.settings === window.location.pathname ? ActiveMenuItemColor : 'inherit',
+            }}
+          >
+            <ListItemIcon>
+              <SettingsIcon fontSize="small" />
+            </ListItemIcon>
+            Settings
+          </MenuItem>
+        </Tooltip>
+        <Tooltip title="API Documentation" placement="left-start" arrow>
+          <MenuItem
+            onClick={handleApiDocs}
+            style={{
+              textDecoration: 'none',
+              color: Routes.apiDocs === window.location.pathname ? ActiveMenuItemColor : 'inherit',
+            }}
+          >
+            <ListItemIcon>
+              <ArticleIcon fontSize="small" />
+            </ListItemIcon>
+            API Documentation
+          </MenuItem>
+        </Tooltip>
         <Divider />
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <LogoutIcon fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        <Tooltip title="Logout of current user account" placement="left-start" arrow>
+          <MenuItem onClick={handleLogout}>
+            <ListItemIcon>
+              <LogoutIcon fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Tooltip>
       </Menu>
     </>
   );

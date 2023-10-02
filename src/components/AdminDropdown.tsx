@@ -3,7 +3,10 @@ import {
   Divider,
   Menu,
   MenuItem,
+  Tooltip,
 } from '@mui/material';
+
+import { ActiveMenuItemColor } from '../consts';
 
 export interface AdminDropdownProps {
   open: boolean;
@@ -17,6 +20,7 @@ export type DropdownItem = {
   path: string;
   requiresAuth?: boolean;
   icon?: ReactNode;
+  tooltip?: string;
 };
 
 export const AdminDropdown = (props: any) => {
@@ -64,14 +68,25 @@ export const AdminDropdown = (props: any) => {
       {items.map((item: DropdownItem, index: number) => item.text === 'divider' ? (
         <Divider key={index} />
       ) : (
-        <MenuItem
+        <Tooltip
+          arrow
           key={index}
-          component="a"
-          href={item.path}
-          onClick={onClose}
+          placement="left-start"
+          title={item.tooltip ?? item.text}
         >
-          {item.icon}&nbsp;{item.text}
-        </MenuItem>
+          <MenuItem
+            key={index}
+            component="a"
+            href={item.path}
+            onClick={onClose}
+            style={{
+              textDecoration: 'none',
+              color: item.path === window.location.pathname ? ActiveMenuItemColor : 'inherit',
+            }}
+          >
+            {item.icon}&nbsp;{item.text}
+          </MenuItem>
+        </Tooltip>
       ))}
     </Menu>
   );

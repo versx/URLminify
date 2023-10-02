@@ -11,6 +11,7 @@ export * from './ProtectedRoute';
 export * from './QuotaRemaining';
 export * from './RedirectSlug';
 export * from './ShortUrlTable';
+export * from './SidebarDrawer';
 export * from './SlugLimitSetter';
 export * from './SortableTable';
 export * from './StatTile';
