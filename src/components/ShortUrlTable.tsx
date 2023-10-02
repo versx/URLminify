@@ -228,26 +228,6 @@ export const ShortUrlTable = (props: any) => {
           </Fab>
         </Tooltip>
 
-        {/*
-        <SortableTableToolbar
-          numSelected={selected.length}
-          onDelete={handleDeleteShortUrls}
-        />
-        <TextField
-          color="primary"
-          variant="outlined"
-          placeholder="Search..."
-          value={search}
-          size="small"
-          type="search"
-          style={{
-            display: 'flex',
-            alignItems: 'end',
-            marginBottom: 3,
-          }}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        */}
         <TableContainer>
           <Table
             stickyHeader
