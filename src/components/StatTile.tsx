@@ -16,8 +16,8 @@ interface StatTileProps {
 
 export const StatTile = (props: StatTileProps) => {
   const { title, value, color = 'primary.main', elevation = 3 } = props;
-  const theme = useColorMode();
-  const themeColor = theme.mode === 'dark' ? 'white' : 'rgb(224, 224, 224)';
+  const { mode } = useColorMode();
+  const themeColor = mode === 'dark' ? 'white' : 'grey'; //'rgb(224, 224, 224)';
 
   return (
     <Card

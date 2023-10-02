@@ -51,7 +51,7 @@ export const DashboardPage = () => {
         Dashboard
       </Typography>
 
-      <Paper style={{ display: 'flex', padding: '20px', marginBottom: '20px', justifyContent: 'center', alignItems: 'center' }}>
+      <Paper style={{ display: 'flex', padding: '20px', marginBottom: '20px', justifyContent: 'center', alignItems: 'center', border: '1px solid grey' }}>
         <Typography variant="h6" gutterBottom>
           Total Visits
         </Typography>
@@ -85,7 +85,7 @@ export const DashboardPage = () => {
         </PieChart>
       </Paper>
 
-      <Paper style={{ padding: '20px', marginBottom: '20px' }}>
+      <Paper style={{ padding: '20px', marginBottom: '20px', border: '1px solid grey' }}>
         <Typography variant="h6" gutterBottom>
           Top 5 Visited Short URLs
         </Typography>

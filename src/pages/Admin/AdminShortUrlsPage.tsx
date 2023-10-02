@@ -193,14 +193,13 @@ export const AdminShortUrlsPage = () => {
   }, [currentUser?.admin, enqueueSnackbar]);
 
   return (
-    <Container sx={{ width: '100%' }}>
-
+    <Container sx={{ width: '100%', p: 2 }}>
       <Breadcrumbs crumbs={crumbs} />
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Short URLs
       </Typography>
 
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%', mb: 2, border: '1px solid grey', borderRadius: '8px' }}>
         <SortableTableToolbar
           numSelected={selected.length}
           onDelete={handleDeleteShortUrls}

@@ -200,8 +200,8 @@ export const ShortUrlTable = (props: any) => {
   useEffect(() => handleReloadShortUrls(), [handleReloadShortUrls]);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: '100%', p: 2 }}>
+      <Paper sx={{ width: '100%', mb: 2, border: '1px solid grey', borderRadius: '8px' }}>
         <Tooltip
           title="Create short URL"
         >

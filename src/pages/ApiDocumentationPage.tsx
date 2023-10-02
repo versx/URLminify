@@ -33,7 +33,14 @@ export const ApiDocumentationPage = () => {
       </Typography>
 
       {ApiRoutes.map((route, index) => (
-        <Paper elevation={3} style={{ margin: '20px 0', padding: '20px' }} key={index}>
+        <Paper
+          key={index}
+          elevation={3}
+          style={{
+            margin: '20px 0',padding: '20px',
+            border: '1px solid grey',
+          }}
+        >
           <Typography variant="h6">
             {route.method} {route.path}
           </Typography>

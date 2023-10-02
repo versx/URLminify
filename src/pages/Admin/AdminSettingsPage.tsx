@@ -90,7 +90,7 @@ export const AdminSettingsPage = () => {
         Admin - Settings
       </Typography>
 
-      <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
+      <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3, border: '1px solid grey' }}>
         <div style={{ padding: '20px', justifyContent: 'center' }}>
           <form onSubmit={(e) => handleSubmit(e, slugLimit)}>
             <Tooltip title="Maximum number of URL slugs a user can create." arrow>

@@ -8,7 +8,8 @@ import { Theme, useTheme } from '@mui/material/styles';
 
 const useStyles: any = (theme: Theme, height: string = '130px', width: string = '220px') => ({
   cardContainer: {
-    border: '1px solid rgb(224, 224, 224)', //#e0e0e0
+    //border: '1px solid rgb(224, 224, 224)', //#e0e0e0
+    border: '1px solid grey', //#e0e0e0
     borderRadius: '8px',
     padding: '16px',
     display: 'flex',

@@ -21,7 +21,7 @@ const crumbs: BreadcrumbItem[] = [{
 
 export const AdminUsersPage = () => {
   return (
-    <Container sx={{ width: '100%' }}>
+    <Container sx={{ width: '100%', p: 2 }}>
       <Breadcrumbs crumbs={crumbs} />
 
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
