@@ -106,7 +106,7 @@ export const AdminDashboardPage = () => {
         Admin - Dashboard
       </Typography>
 
-      <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px' }}>
+      <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px', border: '1px solid grey', borderRadius: '8px' }}>
         <Typography variant="h5" gutterBottom style={{textAlign: 'center'}}>
           Overall Statistics
         </Typography>
@@ -116,6 +116,7 @@ export const AdminDashboardPage = () => {
               text="Short URLs"
               icon={<LinkIcon sx={{fontSize: 48}} />}
               value={shortUrls.length.toLocaleString()}
+              elevation={0}
               href={Routes.admin.shortUrls}
               width="100%"
               height="130px"
@@ -126,6 +127,7 @@ export const AdminDashboardPage = () => {
               text="Users"
               icon={<PersonIcon sx={{fontSize: 48}} />}
               value={users.length.toLocaleString()}
+              elevation={0}
               href={Routes.admin.users}
               width="100%"
               height="130px"
@@ -133,47 +135,47 @@ export const AdminDashboardPage = () => {
           </Grid>
         </Grid>
       </Container>
-      <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px' }}>
+      <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px', border: '1px solid grey', borderRadius: '8px' }}>
         <Typography variant="h5" gutterBottom style={{textAlign: 'center'}}>
           Short URL Statistics
         </Typography>
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12}>
-            <StatTile title="Total" value={urlStats.total} color="primary.main" elevation={1} />
+            <StatTile title="Total" value={urlStats.total} color="primary.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Expiring" value={urlStats.active} color="primary.main" elevation={1} />
+            <StatTile title="Expiring" value={urlStats.active} color="primary.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Expired" value={urlStats.expired} color="error.main" elevation={1} />
+            <StatTile title="Expired" value={urlStats.expired} color="error.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Enabled" value={urlStats.enabled} color="primary.main" elevation={1} />
+            <StatTile title="Enabled" value={urlStats.enabled} color="primary.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Disabled" value={urlStats.disabled} color="error.main" elevation={1} />
+            <StatTile title="Disabled" value={urlStats.disabled} color="error.main" elevation={0} />
           </Grid>
         </Grid>
       </Container>
-      <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px' }}>
+      <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px', border: '1px solid grey', borderRadius: '8px' }}>
         <Typography variant="h5" gutterBottom style={{textAlign: 'center'}}>
           User Statistics
         </Typography>
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12}>
-            <StatTile title="Total" value={userStats.total} color="primary.main" elevation={1}/>
+            <StatTile title="Total" value={userStats.total} color="primary.main" elevation={0}/>
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Admins" value={userStats.admins} color="primary.main" elevation={1} />
+            <StatTile title="Admins" value={userStats.admins} color="primary.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Users" value={userStats.users} color="primary.main" elevation={1} />
+            <StatTile title="Users" value={userStats.users} color="primary.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Enabled" value={userStats.enabled} color="primary.main" elevation={1} />
+            <StatTile title="Enabled" value={userStats.enabled} color="primary.main" elevation={0} />
           </Grid>
           <Grid item xs={6}>
-            <StatTile title="Disabled" value={userStats.disabled} color="error.main" elevation={1} />
+            <StatTile title="Disabled" value={userStats.disabled} color="error.main" elevation={0} />
           </Grid>
         </Grid>
       </Container>

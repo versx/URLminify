@@ -193,7 +193,7 @@ export const AdminShortUrlsPage = () => {
   }, [currentUser?.admin, enqueueSnackbar]);
 
   return (
-    <Container sx={{ width: '100%', p: 2 }}>
+    <Container sx={{ width: '100%' }}>
       <Breadcrumbs crumbs={crumbs} />
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Short URLs
