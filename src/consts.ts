@@ -10,6 +10,11 @@ export const DefaultEnableTelemetry = true;
 export const DefaultMaxSlugLimit = 1000;
 export const DefaultUserTheme = 'system';
 
+export const StorageKeys = {
+  AdminOpen: 'adminOpen',
+  ColorMode: 'colorMode',
+};
+
 export const SettingKeys = {
   EnableRegistration: 'enable_registration',
   EnableTelemetry: 'enable_telemetry',

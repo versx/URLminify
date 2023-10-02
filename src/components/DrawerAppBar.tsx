@@ -20,8 +20,8 @@ import {
 } from '@mui/icons-material';
 
 import { AccountMenu, AdminDropdown, DropdownItem, SidebarDrawer } from '.';
-import { ActiveMenuItemColor, DrawerWidth, Routes, Title } from '../consts';
-import { get } from '../modules';
+import { ActiveMenuItemColor, DrawerWidth, Routes, StorageKeys, Title } from '../consts';
+import { get, set } from '../modules';
 import { getUserToken } from '../stores';
 import { User } from '../types';
 
@@ -42,8 +42,11 @@ const AdminItems: DropdownItem[] = [
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
+
+  const cachedAdminOpen = get(StorageKeys.AdminOpen, false);
+
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [adminOpen, setAdminOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(cachedAdminOpen);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const currentUser = getUserToken() as User;
@@ -58,7 +61,8 @@ export const DrawerAppBar = (props: any) => {
 
   const handleToggleAdminMenu = (event: any) => {
     event.stopPropagation();
-    setAdminOpen(prev => !prev);
+    set(StorageKeys.AdminOpen, !adminOpen);
+    setAdminOpen((prev: boolean) => !prev);
   };
 
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);

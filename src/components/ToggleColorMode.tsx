@@ -3,16 +3,14 @@ import { CssBaseline, useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import App from '../App';
-import { DefaultUserTheme } from '../consts';
+import { DefaultUserTheme, StorageKeys } from '../consts';
 import { ColorModeContext } from '../contexts';
 import { get, set } from '../modules';
 import { ThemeColorMode } from '../types';
 
-const ColorModeKey = 'colorMode';
-
 // Reference: https://mui.com/material-ui/customization/dark-mode/#toggling-color-mode
 export const ToggleColorMode = () => {
-  const cachedMode = get(ColorModeKey, DefaultUserTheme);
+  const cachedMode = get(StorageKeys.ColorMode, DefaultUserTheme);
   const [mode, setMode] = useState<ThemeColorMode>(cachedMode);
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   
@@ -20,13 +18,13 @@ export const ToggleColorMode = () => {
     toggleColorMode: () => {
       setMode((prevMode) => {
         const newMode = prevMode === 'light' ? 'dark' : 'light';
-        set(ColorModeKey, newMode);
+        set(StorageKeys.ColorMode, newMode);
         return newMode;
       });
     },
     setColorMode: (theme: ThemeColorMode) => {
       setMode(theme);
-      set(ColorModeKey, theme);
+      set(StorageKeys.ColorMode, theme);
     },
     mode: mode,
   }), [mode]);
