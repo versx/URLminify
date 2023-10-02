@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { atob, AuthService, UserService } from '../services';
+import { atob, AuthService, logError, UserService } from '../services';
 
 export const AdminMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   let token = req.headers['x-access-token']?.toString();
@@ -42,19 +42,19 @@ export const AdminMiddleware = async (req: Request, res: Response, next: NextFun
   }
 
   try {
-    (req as any).user = user;
+    // Check if user is admin
+    if (decoded?.admin && !user?.admin) {
+      return res.json({
+        status: 'error',
+        error: 'User is not authorized!',
+      });
+    }
 
-    // TODO: Check if user is admin
-    //if (!(req as any)?.user?.admin) {
-    //  return res.json({
-    //    status: 'error',
-    //    error: 'User is not authorized!',
-    //  });
-    //}
+    (req as any).user = user;
 
     next();
   } catch (err) {
-    console.error(err);
+    logError(err);
     return res.json({
       status: 'error',
       error: 'Not authorized!',

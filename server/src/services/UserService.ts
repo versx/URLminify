@@ -1,6 +1,6 @@
 import { compareSync, hashSync } from 'bcryptjs';
 
-import { AuthService, btoa } from '.';
+import { AuthService, btoa, logError, logWarn } from '.';
 import {
   DefaultUserPasswordIterations,
   ShortUrlAttributes,
@@ -57,7 +57,7 @@ const createUser = async (user: UserModel, isAdmin: boolean = false): Promise<Us
     return false;
   }
 
-  const accessToken = AuthService.generateAccessToken(user.username);
+  const accessToken = AuthService.generateAccessToken(user.username, isAdmin);
   const apiKey = btoa(accessToken);
   const password = hashSync(user.password, DefaultUserPasswordIterations);
 
@@ -80,7 +80,7 @@ const deleteUser = async (userId: number) => {
     }
     return true;
   } catch (err) {
-    console.error(err);
+    logError(err);
     return false;
   }
 };
@@ -93,7 +93,7 @@ const changePassword = async (userId: number, oldPassword: string, newPassword: 
     }
 
     if (!compareSync(oldPassword, user.password)) {
-      console.warn('old password does not match');
+      logWarn('Old password does not match');
       return false;
     }
 
@@ -101,10 +101,11 @@ const changePassword = async (userId: number, oldPassword: string, newPassword: 
     user.set({
       password: newPasswordHash,
     });
+
     await user.save();
     return true;
   } catch (err) {
-    console.error(err);
+    logError(err);
     return false;
   }
 };
@@ -112,14 +113,15 @@ const changePassword = async (userId: number, oldPassword: string, newPassword: 
 const resetApiKey = async (id: number) => {
   try {
     const user = await getUser(id);
-    const accessToken = AuthService.generateAccessToken(user.username);
+    const accessToken = AuthService.generateAccessToken(user.username, user.admin);
     const apiKey = btoa(accessToken);
 
     user.set({ apiKey });
     await user.save();
+
     return apiKey;
   } catch (err) {
-    console.error(err);
+    logError(err);
     return null;
   }
 };

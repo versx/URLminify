@@ -1,6 +1,6 @@
 import { compareSync } from 'bcryptjs';
 import { createHash, randomBytes } from 'crypto';
-import { JwtPayload, sign, verify } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 import config from '../config.json';
 import { UserService, logError } from '.';
@@ -46,23 +46,21 @@ const register = async (username: string, password: string) => {
   }
 };
 
-const generateAccessToken = (username: string): string => {
+const generateAccessToken = (username: string, isAdmin: boolean = false): string => {
   const signOptions = { expiresIn: DefaultExpiresIn };
-  const accessToken = sign({ username }, config.auth.secret, signOptions);
+  const accessToken = sign({ username, admin: isAdmin }, config.auth.secret, signOptions);
   return accessToken;
 };
 
 const verifyAccessToken = (accessToken: string): Promise<any | false> => new Promise((resolve, reject) => {
-  verify(accessToken, config.auth.secret, (err: any, decoded: string | JwtPayload | undefined) => {
-    //console.log('decoded:', decoded);
-
-    if (err) {
-      logError(err.message);
-      return resolve(false);
-    }
-
+  try {
+    const decoded = verify(accessToken, config.auth.secret);
+    // TODO: Check if decoded.exp expired
     return resolve(decoded);
-  });
+  } catch (err) {
+    logError(err.message);
+    return resolve(false);
+  }
 });
 
 const createVerificationCode = () => {
