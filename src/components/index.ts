@@ -2,6 +2,7 @@ export * from './AccountMenu';
 export * from './AdminDropdown';
 export * from './AdminProtectedRoute';
 export * from './ApiKeyTextField';
+export * from './Breadcrumbs';
 export * from './CardDisplay';
 export * from './ChangePassword';
 export * from './DrawerAppBar';

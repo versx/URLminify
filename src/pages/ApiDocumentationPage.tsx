@@ -9,15 +9,31 @@ import {
   Typography,
 } from '@mui/material';
 
+import { BreadcrumbItem, Breadcrumbs } from '../components';
 import { ApiRoutes } from '../consts';
 import { RouteParamInfo } from '../types';
+
+const crumbs: BreadcrumbItem[] = [{
+  text: 'Dashboard',
+  color: 'white',
+  href: '/',
+  selected: false,
+},{
+  text: 'API Documentation',
+  color: 'white',
+  href: '/api-docs',
+  selected: true,
+}];
 
 export const ApiDocumentationPage = () => {
   return (
     <Container sx={{ width: '100%' }}>
+      <Breadcrumbs crumbs={crumbs} />
+
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         API Documentation
       </Typography>
+
       {ApiRoutes.map((route, index) => (
         <Paper elevation={3} style={{ margin: '20px 0', padding: '20px' }} key={index}>
           <Typography variant="h6">

@@ -6,10 +6,28 @@ import {
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-import { ApiKeyTextField, ChangePassword, ThemeSelector } from '../components';
+import {
+  ApiKeyTextField,
+  BreadcrumbItem,
+  Breadcrumbs,
+  ChangePassword,
+  ThemeSelector,
+} from '../components';
 import { useColorMode } from '../contexts';
 import { AuthService, UserService } from '../services';
 import { getUserToken } from '../stores';
+
+const crumbs: BreadcrumbItem[] = [{
+  text: 'Dashboard',
+  color: 'white',
+  href: '/',
+  selected: false,
+},{
+  text: 'Settings',
+  color: 'white',
+  href: '/settings',
+  selected: true,
+}];
 
 export const SettingsPage = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -39,9 +57,12 @@ export const SettingsPage = () => {
 
   return (
     <Container style={{ height: '35vh' }}>
+      <Breadcrumbs crumbs={crumbs} />
+
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Settings
       </Typography>
+
       <div style={{ display: 'flex', flexDirection: 'column', padding: '20px', justifyContent: 'center', alignItems: 'center' }}>
         <Container component={Paper} elevation={2} style={{ padding: '20px', marginTop: '20px' }}>
           <Typography variant="h6" align="center" gutterBottom>

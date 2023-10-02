@@ -15,6 +15,8 @@ import moment from 'moment';
 import { useSnackbar } from 'notistack';
 
 import {
+  BreadcrumbItem,
+  Breadcrumbs,
   Order,
   ShortUrlActionsButtonGroup,
   ShortUrlTableHeadCells,
@@ -27,6 +29,23 @@ import { getComparator, stableSort, substr } from '../../modules';
 import { ShortUrlService } from '../../services';
 import { getUserToken } from '../../stores';
 import { ShortUrl } from '../../types';
+
+const crumbs: BreadcrumbItem[] = [{
+  text: 'Dashboard',
+  color: 'white',
+  href: '/',
+  selected: false,
+},{
+  text: 'Admin',
+  color: 'white',
+  href: '/admin',
+  selected: false,
+},{
+  text: 'Short URLs',
+  color: 'white',
+  href: '/admin/urls',
+  selected: true,
+}];
 
 export const AdminShortUrlsPage = () => {
   const [rows, setRows] = useState<ShortUrl[]>([]);
@@ -178,9 +197,12 @@ export const AdminShortUrlsPage = () => {
 
   return (
     <Container sx={{ width: '100%' }}>
+
+      <Breadcrumbs crumbs={crumbs} />
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Short URLs
       </Typography>
+
       <Paper sx={{ width: '100%', mb: 2 }}>
         <SortableTableToolbar
           numSelected={selected.length}

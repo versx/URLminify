@@ -3,9 +3,25 @@ import {
   Typography,
 } from '@mui/material';
 
+import { BreadcrumbItem, Breadcrumbs } from '../components';
+
+const crumbs: BreadcrumbItem[] = [{
+  text: 'Dashboard',
+  color: 'white',
+  href: '/',
+  selected: false,
+},{
+  text: '404 Not Found',
+  color: 'white',
+  href: '/',
+  selected: true,
+}];
+
 export const NotFoundPage = () => {
   return (
     <Container style={{ height: '35vh', textAlign: 'center' }}>
+      <Breadcrumbs crumbs={crumbs} />
+
       <Typography variant="h3" gutterBottom>
         404
       </Typography>

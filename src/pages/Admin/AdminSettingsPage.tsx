@@ -15,10 +15,27 @@ import {
   DefaultEnableRegistration, DefaultEnableTelemetry,
   DefaultMaxSlugLimit, SettingKeys,
 } from '../../consts';
-import { IOSSwitch } from '../../components';
+import { BreadcrumbItem, Breadcrumbs, IOSSwitch } from '../../components';
 import { SettingsService } from '../../services';
 import { getUserToken } from '../../stores';
 import { Setting } from '../../types';
+
+const crumbs: BreadcrumbItem[] = [{
+  text: 'Dashboard',
+  color: 'white',
+  href: '/',
+  selected: false,
+},{
+  text: 'Admin',
+  color: 'white',
+  href: '/admin',
+  selected: false,
+},{
+  text: 'Settings',
+  color: 'white',
+  href: '/admin/settings',
+  selected: true,
+}];
 
 export const AdminSettingsPage = () => {
   const [slugLimit, setSlugLimit] = useState(DefaultMaxSlugLimit);
@@ -70,9 +87,12 @@ export const AdminSettingsPage = () => {
 
   return (
     <Container style={{ height: '35vh' }}>
+
+      <Breadcrumbs crumbs={crumbs} />
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Settings
       </Typography>
+
       <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
         <div style={{ padding: '20px', justifyContent: 'center' }}>
           <form onSubmit={(e) => handleSubmit(e, slugLimit)}>

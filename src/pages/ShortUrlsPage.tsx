@@ -6,7 +6,11 @@ import {
 import { useSnackbar } from 'notistack';
 
 import { DefaultMaxSlugLimit, SettingKeys } from '../consts';
-import { QuotaRemaining, ShortUrlTable, UrlStats } from '../components';
+import {
+  QuotaRemaining,
+  ShortUrlTable,
+  UrlStats,
+} from '../components';
 import { SettingsService, ShortUrlService } from '../services';
 import { getUserToken } from '../stores';
 import { Setting, UrlStatsData } from '../types';
@@ -67,6 +71,7 @@ export const ShortUrlsPage = () => {
       >
         Short URLs
       </Typography>
+
       <QuotaRemaining
         used={stats.total}
         total={slugLimitRef.current}

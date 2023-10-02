@@ -15,9 +15,21 @@ import {
 import { useSnackbar } from 'notistack';
 
 import { Routes } from '../../consts';
-import { CardDisplay, StatTile } from '../../components';
+import { BreadcrumbItem, Breadcrumbs, CardDisplay, StatTile } from '../../components';
 import { ShortUrlService, UserService } from '../../services';
 import { ShortUrl, UrlStatsData, User, UserStatsData } from '../../types';
+
+const crumbs: BreadcrumbItem[] = [{
+  text: 'Dashboard',
+  color: 'white',
+  href: '/',
+  selected: false,
+},{
+  text: 'Admin',
+  color: 'white',
+  href: '/admin',
+  selected: true,
+}];
 
 export const AdminDashboardPage = () => {
   const [shortUrls, setShortUrls] = useState<ShortUrl[]>([]);
@@ -90,9 +102,12 @@ export const AdminDashboardPage = () => {
           <SettingsIcon sx={{fontSize: 36}} />
         </IconButton>
       </Tooltip>
+
+      <Breadcrumbs crumbs={crumbs} />
       <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
         Admin - Dashboard
       </Typography>
+
       <Container component={Paper} elevation={6} style={{ padding: '16px', marginTop: '24px', marginBottom: '24px' }}>
         <Typography variant="h5" gutterBottom style={{textAlign: 'center'}}>
           Overall Statistics
