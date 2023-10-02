@@ -8,7 +8,6 @@ import {
   Toolbar,
   Tooltip,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import {
   AdminPanelSettings as AdminPanelSettingsIcon,
@@ -42,6 +41,9 @@ const AdminItems: DropdownItem[] = [
   { text: 'Settings', path: Routes.admin.settings, icon: <SettingsIcon />, tooltip: 'Admin Settings' },
 ];
 
+// #303030
+// #121212
+
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
   const cachedAdminOpen = get(StorageKeys.AdminOpen, false);
@@ -49,15 +51,14 @@ export const DrawerAppBar = (props: any) => {
   const [adminOpen, setAdminOpen] = useState(cachedAdminOpen);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const { mode } = useColorMode();
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const { mode, prefersDarkMode } = useColorMode();
   const colorMode = mode === 'system'
     ? prefersDarkMode ? 'default' : 'primary'
     : mode === 'dark' ? 'default' : 'primary';
   const currentUser = getUserToken() as User;
   const isAuthenticated = Boolean(get(StorageKeys.IsAuthenticated));
   const isAdmin = Boolean(currentUser?.admin);
-  
+
   const handleOpenAdminMenu = (event: any) => {
     event.stopPropagation(); // Stop the event propagation
     setAnchorEl(event.currentTarget);
@@ -72,8 +73,6 @@ export const DrawerAppBar = (props: any) => {
 
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
 
-  //#303030
-  //#121212
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <AppBar
@@ -125,7 +124,16 @@ export const DrawerAppBar = (props: any) => {
                     <Button
                       style={{
                         textDecoration: 'none',
-                        color: item.path === window.location.pathname ? ActiveMenuItemColor : 'inherit',
+                        color: item.path === window.location.pathname
+                          // Active nav items
+                          ? mode === 'system'
+                            ? prefersDarkMode ? ActiveMenuItemColor : 'white'
+                            : mode === 'dark' ? ActiveMenuItemColor : 'black'
+                          // Not active nav items
+                          : 'white',
+                          //: mode === 'system'
+                          //  ? prefersDarkMode ? 'white' : 'white'
+                          //  : mode === 'dark' ? 'white' : 'white',
                       }}
                     >
                       {item.text}

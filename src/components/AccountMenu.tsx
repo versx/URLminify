@@ -18,6 +18,7 @@ import {
 import { useSnackbar } from 'notistack';
 
 import { ActiveMenuItemColor, Routes } from '../consts';
+import { useColorMode } from '../contexts';
 import { AuthService } from '../services';
 import { getUserToken } from '../stores';
 
@@ -26,6 +27,7 @@ export const AccountMenu = () => {
   const { enqueueSnackbar } = useSnackbar();
   const open = Boolean(anchorEl);
   const currentUser = getUserToken();
+  const { mode } = useColorMode();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -60,7 +62,7 @@ export const AccountMenu = () => {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Avatar
               sx={{
-                //bgcolor: theme.mode === 'light' ? '#303030' : '#909090',
+                bgcolor: mode === 'light' ? '#303030' : ActiveMenuItemColor, //'#909090',
                 width: 32,
                 height: 32,
               }}

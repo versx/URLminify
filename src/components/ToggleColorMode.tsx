@@ -26,8 +26,9 @@ export const ToggleColorMode = () => {
       setMode(theme);
       set(StorageKeys.ColorMode, theme);
     },
+    prefersDarkMode,
     mode: mode,
-  }), [mode]);
+  }), [mode, prefersDarkMode]);
 
   const theme = useMemo(() => createTheme({
     palette: {

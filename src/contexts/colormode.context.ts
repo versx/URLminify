@@ -5,6 +5,7 @@ import { ThemeColorMode } from '../types';
 
 export const ColorModeContext = createContext({
   mode: DefaultUserTheme,
+  prefersDarkMode: false,
   toggleColorMode: () => {},
   setColorMode: (mode: ThemeColorMode) => {},
 });
