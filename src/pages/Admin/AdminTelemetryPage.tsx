@@ -222,6 +222,7 @@ export const AdminTelemetryPage = () => {
   const userAgents = aggregateData(telemetryData, 'browser' as keyof Telemetry);
   const browsers = toObject(Object.keys(userAgents).map((ua: any) => ({ [parseUserAgent(ua).browser.name]: userAgents[ua] })));
   const systems = toObject(Object.keys(userAgents).map((ua: any) => ({ [parseUserAgent(ua).platform.name]: userAgents[ua] })));
+  const devices = aggregateData(telemetryData, 'mobile' as keyof Telemetry);
   const countries = aggregateData(telemetryData, 'country' as keyof Telemetry);
   const isps = aggregateData(telemetryData, 'isp' as keyof Telemetry);
   const slugs = aggregateData(telemetryData, 'slug' as keyof Telemetry);
@@ -235,35 +236,42 @@ export const AdminTelemetryPage = () => {
 
       <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3, border: '1px solid grey' }}>
         <Grid container spacing={2} style={{ padding: '20px', justifyContent: 'center' }}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <PieChart
               data={Object.values(systems)}
               labels={Object.keys(systems)}
               title="Operating System"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <PieChart
               data={Object.values(browsers)}
               labels={Object.keys(browsers)}
               title="Web Browser"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
+            <PieChart
+              data={Object.values(devices)}
+              labels={Object.keys(devices).map(device => device === 'true' ? 'Mobile' : 'Desktop')}
+              title="Device"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
             <PieChart
               data={Object.values(countries)}
               labels={Object.keys(countries)}
               title="Country"
-          />
+            />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <PieChart
               data={Object.values(isps)}
               labels={Object.keys(isps)}
-              title="Internet Service Provider"
+              title="ISP" //"Internet Service Provider"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={4}>
             <PieChart
               data={Object.values(slugs)}
               labels={Object.keys(slugs)}
