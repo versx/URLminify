@@ -15,12 +15,10 @@ import { RouteParamInfo } from '../types';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: 'API Documentation',
-  color: 'white',
   href: '/api-docs',
   selected: true,
 }];

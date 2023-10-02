@@ -19,12 +19,10 @@ import { getUserToken } from '../stores';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: 'Settings',
-  color: 'white',
   href: '/settings',
   selected: true,
 }];

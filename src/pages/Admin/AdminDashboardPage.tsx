@@ -21,12 +21,10 @@ import { ShortUrl, UrlStatsData, User, UserStatsData } from '../../types';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: 'Admin',
-  color: 'white',
   href: '/admin',
   selected: true,
 }];

@@ -7,17 +7,14 @@ import { BreadcrumbItem, Breadcrumbs, UserTable } from '../../components';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: 'Admin',
-  color: 'white',
   href: '/admin',
   selected: false,
 },{
   text: 'Users',
-  color: 'white',
   href: '/admin/users',
   selected: true,
 }];

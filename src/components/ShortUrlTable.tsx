@@ -24,6 +24,7 @@ import {
   StyledTableCell,
   StyledTableRow,
 } from '.';
+import { ActiveMenuItemColor } from '../consts';
 import { CreateShortUrlDialog } from '../dialogs';
 import { getComparator, stableSort, substr } from '../modules';
 import { ShortUrlService } from '../services';
@@ -300,7 +301,7 @@ export const ShortUrlTable = (props: any) => {
                           onClick={(event: any) => handleLinkClick(event, row)}
                           style={{
                             textDecoration: 'none',
-                            color: 'dodgerblue',
+                            color: ActiveMenuItemColor,
                           }}
                         >
                           {substr(row.originalUrl)}

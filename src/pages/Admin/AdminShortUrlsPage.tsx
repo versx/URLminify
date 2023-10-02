@@ -32,17 +32,14 @@ import { ShortUrl } from '../../types';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: 'Admin',
-  color: 'white',
   href: '/admin',
   selected: false,
 },{
   text: 'Short URLs',
-  color: 'white',
   href: '/admin/urls',
   selected: true,
 }];

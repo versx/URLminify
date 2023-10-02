@@ -7,12 +7,10 @@ import { BreadcrumbItem, Breadcrumbs } from '../components';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: '404 Not Found',
-  color: 'white',
   href: '/',
   selected: true,
 }];

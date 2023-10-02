@@ -22,17 +22,14 @@ import { Setting } from '../../types';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
-  color: 'white',
   href: '/',
   selected: false,
 },{
   text: 'Admin',
-  color: 'white',
   href: '/admin',
   selected: false,
 },{
   text: 'Settings',
-  color: 'white',
   href: '/admin/settings',
   selected: true,
 }];

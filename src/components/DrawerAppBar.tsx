@@ -8,6 +8,7 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import {
   AdminPanelSettings as AdminPanelSettingsIcon,
@@ -21,6 +22,7 @@ import {
 
 import { AccountMenu, AdminDropdown, DropdownItem, SidebarDrawer } from '.';
 import { ActiveMenuItemColor, DrawerWidth, Routes, StorageKeys, Title } from '../consts';
+import { useColorMode } from '../contexts';
 import { get, set } from '../modules';
 import { getUserToken } from '../stores';
 import { User } from '../types';
@@ -42,13 +44,16 @@ const AdminItems: DropdownItem[] = [
 
 export const DrawerAppBar = (props: any) => {
   const { children } = props;
-
   const cachedAdminOpen = get(StorageKeys.AdminOpen, false);
-
   const [mobileOpen, setMobileOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(cachedAdminOpen);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  const { mode } = useColorMode();
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const colorMode = mode === 'system'
+    ? prefersDarkMode ? 'default' : 'primary'
+    : mode === 'dark' ? 'default' : 'primary';
   const currentUser = getUserToken() as User;
   const isAuthenticated = Boolean(get(StorageKeys.IsAuthenticated));
   const isAdmin = Boolean(currentUser?.admin);
@@ -67,9 +72,15 @@ export const DrawerAppBar = (props: any) => {
 
   const handleDrawerToggle = () => setMobileOpen((prevState) => !prevState);
 
+  //#303030
+  //#121212
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <AppBar component="nav">
+      <AppBar
+        enableColorOnDark
+        component="nav"
+        color={colorMode}
+      >
         <Toolbar>
           <Tooltip title="Toggle navigation drawer" arrow>
             <IconButton
@@ -127,8 +138,8 @@ export const DrawerAppBar = (props: any) => {
                   <IconButton
                     aria-controls="admin-menu"
                     aria-haspopup="true"
-                    sx={{ color: '#fff' }}
                     onClick={handleOpenAdminMenu}
+                    style={{color: 'inherit'}}
                   >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <AdminPanelSettingsIcon />

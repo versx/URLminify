@@ -39,7 +39,7 @@ export const SortableTableToolbar = (props: TableToolbarProps) => {
           title={`Delete ${numSelected.toLocaleString()} selected`}
         >
           <IconButton onClick={onDelete}>
-            <DeleteIcon />
+            <DeleteIcon color="error" />
           </IconButton>
         </Tooltip>
       )}

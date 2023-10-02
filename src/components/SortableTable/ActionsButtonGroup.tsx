@@ -8,6 +8,7 @@ import {
   Edit as EditIcon,
 } from '@mui/icons-material'
 
+import { ActiveMenuItemColor } from '../../consts';
 import { ShortUrl, User } from '../../types';
 
 export interface ActionsButtonGroupProps<T, TKey> {
@@ -24,9 +25,8 @@ export const ShortUrlActionsButtonGroup = (props: ActionsButtonGroupProps<ShortU
       <Tooltip title="Edit short URL" arrow>
         <IconButton
           size="small"
-          onMouseOver={(event: any) => event.target.style.color = 'dodgerblue'}
-          onMouseOut={(event: any) => event.target.style.color = 'rgba(0, 0, 0, 0.54)'}
           onClick={() => onEdit(model)}
+          style={{ color: ActiveMenuItemColor }}
         >
           <EditIcon />
         </IconButton>
@@ -34,8 +34,7 @@ export const ShortUrlActionsButtonGroup = (props: ActionsButtonGroupProps<ShortU
       <Tooltip title="Delete short URL" arrow>
         <IconButton
           size="small"
-          onMouseOver={(event: any) => event.target.style.color = 'red'}
-          onMouseOut={(event: any) => event.target.style.color = 'rgba(0, 0, 0, 0.54)'}
+          color="error"
           onClick={() => onDelete(model.slug)}
         >
           <DeleteIcon />
@@ -53,9 +52,8 @@ export const UserActionsButtonGroup = (props: ActionsButtonGroupProps<User, numb
       <Tooltip title="Edit short URL" arrow>
         <IconButton
           size="small"
-          onMouseOver={(event: any) => event.target.style.color = 'dodgerblue'}
-          onMouseOut={(event: any) => event.target.style.color = 'rgba(0, 0, 0, 0.54)'}
           onClick={() => onEdit(model)}
+          style={{ color: ActiveMenuItemColor }}
         >
           <EditIcon />
         </IconButton>
@@ -63,8 +61,7 @@ export const UserActionsButtonGroup = (props: ActionsButtonGroupProps<User, numb
       <Tooltip title="Delete short URL" arrow>
         <IconButton
           size="small"
-          onMouseOver={(event: any) => event.target.style.color = 'red'}
-          onMouseOut={(event: any) => event.target.style.color = 'rgba(0, 0, 0, 0.54)'}
+          color="error"
           onClick={() => onDelete(model.id!)}
         >
           <DeleteIcon />
