@@ -125,6 +125,7 @@ export type TelemetryModel = {
   lon: number;
   timezone: string;
   offset: number;
+  offsetSeconds: number;
   currency: string;
   isp: string;
   org: string;

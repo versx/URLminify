@@ -32,21 +32,21 @@ const getShortUrl = async (req: Request, res: Response) => {
   if (!shortUrl) {
     return res.json({
       status: 'error',
-      message: 'Slug does not exist.',
+      message: `Slug '${slug}' does not exist.`,
     });
   }
 
   if (!shortUrl.enabled) {
     return res.json({
       status: 'error',
-      message: 'Slug is disabled.',
+      message: `Slug '${slug}' is disabled.`,
     });
   }
 
   if (shortUrl.expiry && shortUrl.expiry < new Date()) {
     return res.json({
       status: 'error',
-      message: 'Slug has expired.',
+      message: `Slug '${slug}' has expired.`,
     });
   }
 
