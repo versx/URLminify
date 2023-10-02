@@ -13,6 +13,8 @@ export const DefaultUserTheme = 'system';
 export const StorageKeys = {
   AdminOpen: 'adminOpen',
   ColorMode: 'colorMode',
+  IsAuthenticated: 'isAuthenticated',
+  User: 'user',
 };
 
 export const SettingKeys = {

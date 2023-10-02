@@ -50,7 +50,7 @@ export const DrawerAppBar = (props: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const currentUser = getUserToken() as User;
-  const isAuthenticated = Boolean(get('isAuthenticated'));
+  const isAuthenticated = Boolean(get(StorageKeys.IsAuthenticated));
   const isAdmin = Boolean(currentUser?.admin);
   
   const handleOpenAdminMenu = (event: any) => {
