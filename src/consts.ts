@@ -3,7 +3,7 @@ import { RouteInfo } from './types';
 export const Title = 'URLminify';
 export const DrawerWidth = 240;
 
-export const ActiveMenuItemColor = '#1e90ff';
+export const ActiveMenuItemColor = '#0088fe'; //'#1e90ff';
 
 export const DefaultEnableRegistration = true;
 export const DefaultEnableTelemetry = true;
