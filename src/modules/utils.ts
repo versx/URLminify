@@ -1,4 +1,5 @@
 import { Order } from '../components';
+import { Setting } from '../types';
 
 export const substr = (text: string, maxChars: number = 30, addEllipsis: boolean = true) => {
   if (text.length <= maxChars) {
@@ -272,4 +273,25 @@ export const toObject = (arr: any[]) => {
     }
   }
   return result;
+};
+
+export const toObj = (arr: any[]) => arr.reduce((acc: any, item: any) => {
+  acc[item.name] = item.value;
+  return acc;
+}, {});
+
+export const toArr = (obj: any, name: string, value: any) => {
+  const newSettings: Setting[] = [];
+  for (const key of Object.keys(obj)) {
+    newSettings.push({ name: key, value: key === name ? value : obj[key] });
+  }
+  return newSettings
+};
+
+export const toArr2 = (obj: any) => {
+  const newSettings: Setting[] = [];
+  for (const key of Object.keys(obj)) {
+    newSettings.push({ name: key, value: obj[key] });
+  }
+  return newSettings
 };

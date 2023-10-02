@@ -14,6 +14,8 @@ export const StorageKeys = {
   AdminOpen: 'adminOpen',
   ColorMode: 'colorMode',
   IsAuthenticated: 'isAuthenticated',
+  ServerSettings: 'serverSettings',
+  SettingsETag: 'settingsETag',
   User: 'user',
 };
 

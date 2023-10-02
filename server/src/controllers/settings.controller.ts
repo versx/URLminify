@@ -20,7 +20,8 @@ const setSettings = async (req: Request, res: Response) => {
     });
   }
 
-  res.json({ status: 'ok' });
+  const newSettings = await SettingsService.getSettings();
+  res.json({ status: 'ok', settings: newSettings });
 };
 
 export const SettingsController = {

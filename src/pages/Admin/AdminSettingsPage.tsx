@@ -1,7 +1,6 @@
-import React, { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent } from 'react';
 import {
   Box,
-  Button,
   Container,
   FormControlLabel,
   Paper,
@@ -9,16 +8,14 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import { Theme, useTheme } from '@mui/material/styles';
 
+import { BreadcrumbItem, Breadcrumbs, IOSSwitch } from '../../components';
 import {
   DefaultEnableRegistration, DefaultEnableTelemetry,
   DefaultMaxSlugLimit, SettingKeys,
 } from '../../consts';
-import { BreadcrumbItem, Breadcrumbs, IOSSwitch } from '../../components';
-import { SettingsService } from '../../services';
-import { getUserToken } from '../../stores';
-import { Setting } from '../../types';
+import { useServerSettings } from '../../hooks';
 
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
@@ -34,120 +31,106 @@ const crumbs: BreadcrumbItem[] = [{
   selected: true,
 }];
 
-export const AdminSettingsPage = () => {
-  const [slugLimit, setSlugLimit] = useState(DefaultMaxSlugLimit);
-  const [enableRegistration, setEnableRegistration] = useState(DefaultEnableRegistration);
-  const [enableTelemetry, setEnableTelemetry] = useState(DefaultEnableTelemetry);
-  const { enqueueSnackbar } = useSnackbar();
-  const currentUser = getUserToken();
-
-  const handleSubmit = async (event: FormEvent, newLimit: number) => {
-    const response = await SettingsService.setSettings([
-      { name: SettingKeys.MaxSlugLimit, value: newLimit },
-      { name: SettingKeys.EnableRegistration, value: enableRegistration },
-      { name: SettingKeys.EnableTelemetry, value: enableTelemetry },
-    ]);
-    if (response.status !== 'ok') {
-      enqueueSnackbar(`Failed to update settings.`, { variant: 'error' });
-      return;
-    }
-
-    enqueueSnackbar(`Settings updated successfully.`, { variant: 'success' });
-  };
-
-  const handleLimitChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let newLimit = parseInt(event.target.value, 10);
-    if (isNaN(newLimit) || newLimit < 0) {
-      newLimit = 0;
-    }
+const useStyles = (theme: Theme) => ({
+  element: {
+    marginBottom: 15,
+  },
+  root: {
+    height: '35vh',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     
-    setSlugLimit(newLimit);
+    border: '1px solid grey',
+  },
+  inputContainer: {
+    padding: '20px',
+    justifyContent: 'center',
+  },
+});
+
+export const AdminSettingsPage = () => {
+  const { settings, setSetting } = useServerSettings();
+  const theme = useTheme();
+  const classes = useStyles(theme);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { target: { name, type, checked, value } } = event;
+    const newValue = type === 'checkbox' ? checked : value;
+    setSetting(name, newValue);
   };
-
-  const handleReloadSettings = useCallback(() => {
-    if (!currentUser?.admin) {
-      return;
-    }
-    SettingsService.getSettings().then((response: any) => {
-      if (response.status !== 'ok') {
-        enqueueSnackbar(`Failed to reload settings.`, { variant: 'error' });
-        return;
-      }
-      const enableRegistrationSetting = response.settings.find((setting: Setting) => setting.name === SettingKeys.EnableRegistration);
-      setEnableRegistration(parseInt(enableRegistrationSetting?.value) !== 0 ?? DefaultEnableRegistration);
-      const slugLimitSetting = response.settings.find((setting: Setting) => setting.name === SettingKeys.MaxSlugLimit);
-      setSlugLimit(slugLimitSetting?.value ?? DefaultMaxSlugLimit);
-    });
-  }, [currentUser?.admin, enqueueSnackbar]);
-
-  useEffect(() => handleReloadSettings(), [handleReloadSettings]);
 
   return (
-    <Container style={{ height: '35vh' }}>
-
+    <Container style={classes.root}>
       <Breadcrumbs crumbs={crumbs} />
-      <Typography variant="h4" gutterBottom style={{textAlign: 'center'}}>
+      <Typography variant="h4" gutterBottom align="center">
         Admin - Settings
       </Typography>
 
-      <Box component={Paper} elevation={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3, border: '1px solid grey' }}>
-        <div style={{ padding: '20px', justifyContent: 'center' }}>
-          <form onSubmit={(e) => handleSubmit(e, slugLimit)}>
-            <Tooltip title="Maximum number of URL slugs a user can create." arrow>
-              <TextField
-                fullWidth
-                label="Max Slug Limit Per User"
-                variant="outlined"
-                type="number"
-                value={slugLimit}
-                onChange={handleLimitChange}
-                InputProps={{ inputProps: { min: 0 } }} // to ensure non-negative numbers
-                style={{
-                  marginBottom: 15,
-                }}
-              />
-            </Tooltip>
-            <Tooltip title="Allow users to register new accounts." arrow>
+      <Box component={Paper} elevation={2} sx={classes.container}>
+        <div style={classes.inputContainer}>
+          <Tooltip
+            arrow
+            title="Maximum number of URL slugs a user can create."
+          >
+            <TextField
+              fullWidth
+              name={SettingKeys.MaxSlugLimit}
+              label="Max Slug Limit Per User"
+              variant="outlined"
+              type="number"
+              value={settings
+                ? parseInt(settings[SettingKeys.MaxSlugLimit])
+                : DefaultMaxSlugLimit
+              }
+              onChange={handleChange}
+              InputProps={{ inputProps: { min: 0 } }} // Ensure non-negative numbers
+              style={classes.element}
+            />
+          </Tooltip>
+          <Tooltip
+            arrow
+            title="Allow users to register new accounts."
+          >
             <FormControlLabel
               control={
                 <IOSSwitch
                   sx={{ m: 1 }}
-                  checked={enableRegistration}
-                  onChange={(e => setEnableRegistration(e.target.checked))}
+                  name={SettingKeys.EnableRegistration}
+                  checked={settings
+                    ? parseInt(settings[SettingKeys.EnableRegistration]) !== 0
+                    : DefaultEnableRegistration
+                  }
+                  onChange={handleChange}
                 />
               }
               label="Enable User Registration"
-              style={{
-                marginBottom: 15,
-              }}
+              style={classes.element}
             />
-            </Tooltip>
-            <br />
-            <Tooltip title="Save telemetry data of users that visit short URL slugs." arrow>
-              <FormControlLabel
-                control={
-                  <IOSSwitch
-                    sx={{ m: 1 }}
-                    checked={enableTelemetry}
-                    onChange={(e => setEnableTelemetry(e.target.checked))}
-                  />
-                }
-                label="Save Telemetry Data"
-                style={{
-                  marginBottom: 15,
-                }}
-              />
-            </Tooltip>
-            <br />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
-              Save
-            </Button>
-          </form>
+          </Tooltip>
+          <br />
+          <Tooltip
+            arrow
+            title="Save telemetry data of users that visit short URL slugs."
+          >
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  sx={{ m: 1 }}
+                  name={SettingKeys.EnableTelemetry}
+                  checked={settings
+                    ? parseInt(settings[SettingKeys.EnableTelemetry]) !== 0
+                    : DefaultEnableTelemetry
+                  }
+                  onChange={handleChange}
+                />
+              }
+              label="Save Telemetry Data"
+              style={classes.element}
+            />
+          </Tooltip>
         </div>
       </Box>
     </Container>
