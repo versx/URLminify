@@ -186,19 +186,22 @@ export const parseUserAgent = (userAgent: string): UserAgentResult => {
   if (/MSIE/.test(ua)) {
     b.name = 'Internet Explorer';
     b.msie = true;
-  } else if (/Firefox/.test(ua)) {
+  //} else if (/Firefox/.test(ua)) {
+  } else if (/Firefox|FxiOS/.test(ua)) {
     b.name = 'Mozilla Firefox';
     b.firefox = true;
-  } else if (/Edg/.test(ua)) {
+  //} else if (/Edg/.test(ua)) {
+  } else if (/Edge|Edga|Edgios|Edg/.test(ua)) {
     b.name = 'Microsoft Edge';
     b.edge = true;
-  } else if (/Chrome/.test(ua)) { // must be tested before Safari
+  //} else if (/Chrome/.test(ua)) { // must be tested before Safari
+  } else if (/Chrome|CriOS/.test(ua)) { // must be tested before Safari
     b.name = 'Google Chrome';
     b.chrome = true;
   } else if (/Safari/.test(ua)) {
     b.name = 'Apple Safari';
     b.safari = true;
-  } else if (/Opera/.test(ua)) {
+  } else if (/Opera|OPR/.test(ua)) {
     b.name = 'Opera';
     b.opera = true;
   } else {

@@ -4,7 +4,6 @@ import { SettingKeys } from '../consts';
 import {
   getExternalIpAddress,
   getGeolocationDetails,
-  //getIpAddress,
   logDebug,
   logError,
   SettingsService,
@@ -36,18 +35,19 @@ export const TelemetryMiddleware = async (req: Request, res: Response, next: Nex
       return next();
     }
 
-    const browser = req.get('user-agent') ?? null;
+    const defaultValue = 'Unknown';
+    const browser = req.get('user-agent') ?? defaultValue;
     const referrer = req.get('referrer') ?? req.get('referer') ?? null;
     const forwardedFor = req.get('x-forwarded-for') ?? null;
-    const language = req.get('accept-language') ?? null;
-    const country = req.get('cf-ipcountry') ?? geolocation?.country ?? null;
+    const language = req.get('accept-language') ?? defaultValue;
+    const country = req.get('cf-ipcountry') ?? geolocation?.country ?? defaultValue;
     const district = req.get('cf-ipcity') ?? geolocation?.district === ''
-      ? null
-      : geolocation?.district ?? null;
+      ? defaultValue
+      : geolocation?.district ?? defaultValue;
     const mobile = req.get('cf-device-type')
       ? req.get('cf-device-type') === 'mobile'
       : geolocation?.mobile ?? false;
-  
+
     TelemetryService.createTelemetry({
       ...geolocation,
       slug,
