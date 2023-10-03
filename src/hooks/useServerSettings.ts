@@ -64,7 +64,10 @@ export const useServerSettings = () => {
           localStorage.setItem(StorageKeys.SettingsETag, etag);
         })
         .catch((err: any) => {
-          console.error(err);
+          // 304 is not an error
+          if (err.response?.status !== 304) {
+            console.error(err);
+          }
         });
     } catch (err) {
       console.error(err);
