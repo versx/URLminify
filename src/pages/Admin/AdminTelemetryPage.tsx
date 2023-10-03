@@ -30,7 +30,7 @@ import { useSnackbar } from 'notistack';
 
 import { BreadcrumbItem, Breadcrumbs, PieChart } from '../../components';
 import { ViewTelemetryDetailsDialog } from '../../dialogs';
-import { aggregateData, parseUserAgent, toObject } from '../../modules';
+import { aggregateData, parseUserAgent, toObject, UserAgentParser } from '../../modules';
 import { TelemetryService } from '../../services';
 import { Telemetry } from '../../types';
 
@@ -220,6 +220,12 @@ export const AdminTelemetryPage = () => {
   }, [enqueueSnackbar]);
 
   const userAgents = aggregateData(telemetryData, 'browser' as keyof Telemetry);
+  for (const ua in userAgents) {
+    const uap = new UserAgentParser(ua);
+    const parsed = uap.parse();
+    //console.log('parsed:', parsed.browser, parsed.version, parsed.os, parsed.platform);
+    console.log('parsed:', parsed);
+  }
   const browsers = toObject(Object.keys(userAgents).map((ua: any) => ({ [parseUserAgent(ua).browser.name]: userAgents[ua] })));
   const systems = toObject(Object.keys(userAgents).map((ua: any) => ({ [parseUserAgent(ua).platform.name]: userAgents[ua] })));
   const devices = aggregateData(telemetryData, 'mobile' as keyof Telemetry);
