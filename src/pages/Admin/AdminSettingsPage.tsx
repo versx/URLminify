@@ -69,7 +69,7 @@ export const AdminSettingsPage = () => {
         Admin - Settings
       </Typography>
 
-      <Box component={Paper} elevation={2} sx={classes.container}>
+      <Box component={Paper} elevation={0} sx={classes.container}>
         <div style={classes.inputContainer}>
           <Tooltip
             arrow

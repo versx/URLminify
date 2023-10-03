@@ -56,6 +56,7 @@ export const ApiRoutes: RouteInfo[] = [
     method: 'GET',
     path: '/api/v1/users',
     description: 'Retrieve a list of all user accounts.',
+    //parameters: [],
     response: 'Array of user account objects',
   },
   {
@@ -117,7 +118,7 @@ export const ApiRoutes: RouteInfo[] = [
   {
     method: 'GET',
     path: '/api/v1/shorturls/create',
-    description: 'Creates a new short URL.',
+    description: 'Creates a new short URL via query parameters.',
     parameters: [
       { name: 'userId', type: 'number', description: '' },
     ],
@@ -127,8 +128,7 @@ export const ApiRoutes: RouteInfo[] = [
     method: 'GET',
     path: '/api/v1/shorturls/stats',
     description: 'Retrieves overall statistics of current data entities.',
-    parameters: [
-    ],
+    //parameters: [],
     response: 'Short URL and User statistics',
   },
   {
@@ -167,5 +167,28 @@ export const ApiRoutes: RouteInfo[] = [
       { name: 'userId', type: 'number', description: 'User ID of short URL to delete.' },
     ],
     response: 'The result of deleting the short URL',
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/settings',
+    description: 'Retrieve all global settings.',
+    //parameters: [],
+    response: 'Array of settings',
+  },
+  {
+    method: 'POST',
+    path: '/api/v1/settings',
+    description: 'Updates the global settings.',
+    parameters: [
+      { name: 'settings', type: 'SettingModel', description: 'List of settings' },
+    ],
+    response: 'Array of the updated settings',
+  },
+  {
+    method: 'GET',
+    path: '/api/v1/telemetry',
+    description: 'Retrieve all saved telemetry data.',
+    //parameters: [],
+    response: 'Array of saved telemetry data',
   },
 ];
