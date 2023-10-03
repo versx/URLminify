@@ -1,9 +1,26 @@
 import { Request, Response } from 'express';
 
-import { SettingsService } from '../services';
+import { generateETag, SettingsService } from '../services';
+import { SettingModel } from '../types';
+
+let settings: SettingModel[] = [];
 
 const getSettings = async (req: Request, res: Response) => {
-  const settings = await SettingsService.getSettings();
+  const clientETag = req.header('If-None-Match');
+  const currentETag = generateETag(settings);
+  console.log('getSettings:', clientETag, currentETag);
+
+  // Compare client's ETag with current ETag
+  if (clientETag === currentETag) {
+    console.log('settings have not changed');
+    res.status(304).end(); // No changes, send Not Modified
+    return;
+  }
+
+  console.log('new settings to reload');
+  res.setHeader('ETag', currentETag); // Send new ETag
+  // Send updated resource
+  settings = await SettingsService.getSettings();
   res.json({
     status: 'ok',
     settings,

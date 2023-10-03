@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { createHash } from 'crypto';
 
 import { logWarn } from '.';
 import { ColorType } from '../types';
@@ -112,3 +113,8 @@ export const ColorCodes = {
   BgWhite: '\x1b[47m',
   BgGray: '\x1b[100m',
 };
+
+export const generateETag = (content: any, algo: string = 'sha256') =>
+  createHash(algo)
+    .update(JSON.stringify(content))
+    .digest('hex');

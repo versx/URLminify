@@ -133,4 +133,7 @@ export type UserStatsData = {
   disabled: number;
 };
 
+export interface ServerSettings extends Record<string, any> {
+};
+
 export type ThemeColorMode = 'light' | 'dark' | 'system';

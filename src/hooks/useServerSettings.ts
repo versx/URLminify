@@ -5,8 +5,7 @@ import config from '../config.json';
 import { StorageKeys } from '../consts';
 import { toArr, toObj } from '../modules';
 import { SettingsService } from '../services';
-
-interface ServerSettings extends Record<string, any> { };
+import { ServerSettings } from '../types';
 
 export const useServerSettings = () => {
   const [settingsState, setSettingsState] = useState<ServerSettings>(() => {
@@ -50,12 +49,14 @@ export const useServerSettings = () => {
           'If-None-Match': localStorage.getItem(StorageKeys.SettingsETag) as string,
         },
       }).then((response: any) => {
+        //console.log('fetchSettings:', response);
         if (response.status !== 200) {
           return;
         }
   
         // Newer version is available
         response.json().then((data: any) => {
+          //console.log('fetchSettings json:', data);
           const obj = toObj(data.settings);
           setSettingsState(obj);
 

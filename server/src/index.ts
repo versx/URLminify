@@ -21,6 +21,11 @@ import { UserService, color, log } from './services';
   // Initialize HTTP server
   const app = express();
   app.use(cors({
+    allowedHeaders: [
+      'Content-Type',
+      'If-None-Match',
+      'x-access-token',
+    ],
     origin: true,
     credentials: true,
   }));
