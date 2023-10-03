@@ -51,7 +51,6 @@ export const ApiKeyTextField = (props: any) => {
     <TextField
       disabled
       fullWidth
-      // TODO: multiline
       label="API Key"
       value={apiKey}
       InputProps={{

@@ -16,7 +16,7 @@ export const AdminMiddleware = async (req: Request, res: Response, next: NextFun
     }
   }
 
-  const apiKey = atob(token); // TODO: Possibly use accessTokens
+  const apiKey = atob(token);
   const decoded = await AuthService.verifyAccessToken(apiKey);
   if (!decoded) {
     return res.json({
