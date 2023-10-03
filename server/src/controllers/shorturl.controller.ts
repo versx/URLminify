@@ -2,11 +2,12 @@ import { Request, Response } from 'express';
 
 import config from '../config.json';
 import { DefaultMaxSlugLimit, SettingKeys } from '../consts';
-import { isValidUrl, SettingsService, ShortUrlService } from '../services';
+import { isValidUrl, ShortUrlService } from '../services';
 import {
   CreateShortUrlRequest, CreateShortUrlResponse,
   UpdateShortUrlRequest, UpdateShortUrlResponse,
 } from '../types';
+import { SettingsController } from './settings.controller';
 
 const getShortUrls = async (req: Request, res: Response) => {
   const { pretty = false, userId } = req.query;
@@ -64,7 +65,8 @@ const createShortUrl = async (req: Request, res: Response) => {
   }
 
   const count = await ShortUrlService.getCount(payload.userId);
-  const maxSlugLimit = await SettingsService.getSetting(SettingKeys.MaxSlugLimit);
+  //const maxSlugLimit = await SettingsService.getSetting(SettingKeys.MaxSlugLimit);
+  const maxSlugLimit = SettingsController.settings.find(s => s.name === SettingKeys.MaxSlugLimit)?.value ?? DefaultMaxSlugLimit;
   if (count >= maxSlugLimit?.value ?? DefaultMaxSlugLimit) {
     return res.json({
       status: 'error',
