@@ -22,13 +22,21 @@ import { UserService, color, log } from './services';
   const app = express();
   app.use(cors({
     allowedHeaders: [
+      //'Accept',
       'Content-Type',
+      //'Content-Length',
       'If-None-Match',
       'x-access-token',
+      //'*',
     ],
     origin: true,
     credentials: true,
   }));
+
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Expose-Headers', 'ETag');
+    next();
+  });
 
   // Initialize routes
   ApiRouter(app);

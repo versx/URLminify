@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 
-import config from '../config.json';
 import { StorageKeys } from '../consts';
-import { toArr, toObj } from '../modules';
+import { http, toArr, toArr2, toObj } from '../modules';
 import { SettingsService } from '../services';
 import { ServerSettings } from '../types';
 
@@ -27,50 +26,56 @@ export const useServerSettings = () => {
     enqueueSnackbar(`Updated settings successfully.`, { variant: 'success' });
   };
 
-  //const setSettings = async (settings: ServerSettings) => {
-  //  const settingsArr = toArr2(settings);
-  //  const response = await SettingsService.setSettings(settingsArr);
-  //  if (response.status !== 'ok') {
-  //    enqueueSnackbar(`Failed to update settings with error: ${response.error}`, { variant: 'error' });
-  //    return;
-  //  }
+  const setSettings = async (settings: ServerSettings) => {
+    const settingsArr = toArr2(settings);
+    const response = await SettingsService.setSettings(settingsArr);
+    if (response.status !== 'ok') {
+      enqueueSnackbar(`Failed to update settings with error: ${response.error}`, { variant: 'error' });
+      return;
+    }
 
-  //  const settingsObj = toObj(response.settings);
-  //  setSettingsState(settingsObj);
-  //  enqueueSnackbar(`Updated settings successfully.`, { variant: 'success' });
-  //};
+    const settingsObj = toObj(response.settings);
+    setSettingsState(settingsObj);
+    enqueueSnackbar(`Updated settings successfully.`, { variant: 'success' });
+  };
 
-  const fetchSettings = () => {
+  const fetchSettings = useCallback(() => {
     try {
-      // Send any metadata like timestamp/version to the server
-      fetch(config.apiUrl + 'settings', {
+      const options = {
         headers: {
-          // Example using ETag
-          'If-None-Match': localStorage.getItem(StorageKeys.SettingsETag) as string,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-None-Match': localStorage.getItem(StorageKeys.SettingsETag) as string | undefined,
         },
-      }).then((response: any) => {
-        //console.log('fetchSettings:', response);
-        if (response.status !== 200) {
-          return;
-        }
-  
-        // Newer version is available
-        response.json().then((data: any) => {
-          //console.log('fetchSettings json:', data);
-          const obj = toObj(data.settings);
-          setSettingsState(obj);
+      };
+      http()
+        .get('settings', options)
+        .then(({ data, headers }) => {
+          if (data.status !== 'ok') {
+            enqueueSnackbar(`Failed to fetch settings with error: ${data.error}`, { variant: 'error' });
+            return;
+          }
 
-          localStorage.setItem(StorageKeys.ServerSettings, JSON.stringify(obj));
-          localStorage.setItem(StorageKeys.SettingsETag, response.headers.get('ETag'));
+          const settingsObj = toObj(data.settings);
+          setSettingsState(settingsObj);
+          localStorage.setItem(StorageKeys.ServerSettings, JSON.stringify(settingsObj));
+
+          const etag = headers.etag?.toString();
+          localStorage.setItem(StorageKeys.SettingsETag, etag);
+        })
+        .catch((err: any) => {
+          console.error(err);
         });
-      });
     } catch (err) {
       console.error(err);
     }
+  }, [enqueueSnackbar]);
+
+  useEffect(() => fetchSettings(), [fetchSettings]);
+
+  return {
+    settings: settingsState,
+    setSetting,
+    setSettings,
   };
-
-  useEffect(() => fetchSettings(), []);
-
-  //return { settings: settingsState, setSetting, setSettings };
-  return { settings: settingsState, setSetting };
 };

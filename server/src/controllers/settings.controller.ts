@@ -3,27 +3,31 @@ import { Request, Response } from 'express';
 import { generateETag, SettingsService } from '../services';
 import { SettingModel } from '../types';
 
-let settings: SettingModel[] = [];
+let cachedSettings: SettingModel[] = [];
 
 const getSettings = async (req: Request, res: Response) => {
   const clientETag = req.header('If-None-Match');
-  const currentETag = generateETag(settings);
-  console.log('getSettings:', clientETag, currentETag);
+  const currentETag = generateETag(cachedSettings);
 
   // Compare client's ETag with current ETag
   if (clientETag === currentETag) {
-    console.log('settings have not changed');
-    res.status(304).end(); // No changes, send Not Modified
+    // No changes, send Not Modified
+    //res.status(304).end();
+    res.setHeader('ETag', currentETag);
+    res.json({
+      status: 'ok',
+      settings: cachedSettings,
+    });
     return;
   }
 
-  console.log('new settings to reload');
-  res.setHeader('ETag', currentETag); // Send new ETag
-  // Send updated resource
-  settings = await SettingsService.getSettings();
+  cachedSettings = await SettingsService.getSettings();
+
+  const etag = generateETag(cachedSettings);
+  res.setHeader('ETag', etag);
   res.json({
     status: 'ok',
-    settings,
+    settings: cachedSettings,
   });
 };
 
@@ -38,7 +42,14 @@ const setSettings = async (req: Request, res: Response) => {
   }
 
   const newSettings = await SettingsService.getSettings();
-  res.json({ status: 'ok', settings: newSettings });
+  cachedSettings = newSettings;
+
+  const etag = generateETag(cachedSettings);
+  res.setHeader('ETag', etag);
+  res.json({
+    status: 'ok',
+    settings: cachedSettings,
+  });
 };
 
 export const SettingsController = {

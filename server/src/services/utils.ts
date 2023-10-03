@@ -114,7 +114,7 @@ export const ColorCodes = {
   BgGray: '\x1b[100m',
 };
 
-export const generateETag = (content: any, algo: string = 'sha256') =>
+export const generateETag = (content: any, algo: string = 'md5') =>
   createHash(algo)
     .update(JSON.stringify(content))
     .digest('hex');
