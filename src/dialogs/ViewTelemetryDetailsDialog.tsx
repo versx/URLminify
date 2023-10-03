@@ -20,7 +20,7 @@ export const ViewTelemetryDetailsDialog = (props: any) => {
         Details for '{selectedRow?.slug}'
       </DialogTitle>
       <DialogContent>
-        <Container component={Paper} elevation={3}>
+        <Container component={Paper} elevation={3} sx={{p: 3}}>
           {selectedRowKeys.map((key: string) => (
             <Grid container key={key} spacing={0}>
               <Grid item xs={6}>

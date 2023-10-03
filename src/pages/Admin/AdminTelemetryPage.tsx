@@ -7,9 +7,10 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  Visibility as ViewIcon,
   Delete as DeleteIcon,
+  Info as ViewIcon,
   Print as PrintIcon,
+  //Visibility as ViewIcon,
 } from '@mui/icons-material';
 import {
   DataGrid,
@@ -34,151 +35,6 @@ import { aggregateData, parseUserAgent, toObject } from '../../modules';
 import { TelemetryService } from '../../services';
 import { Telemetry } from '../../types';
 
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID', width: 50, hideable: false },
-  {
-    field: 'slug',
-    headerName: 'Slug',
-    width: 70,
-    hideable: false,
-  },
-  {
-    field: 'ipAddr',
-    headerName: 'IP Address',
-    width: 110,
-  },
-  {
-    field: 'isp',
-    headerName: 'ISP',
-    width: 150,
-  },
-  {
-    field: 'browser',
-    headerName: 'Browser',
-    width: 130,
-    valueGetter: (params: GridValueGetterParams) => parseUserAgent(params.row.browser).browser.name,
-  },
-  //{
-  //  field: 'referrer',
-  //  headerName: 'Referrer',
-  //  width: 120,
-  //},
-  //{
-  //  field: 'forwardedFor',
-  //  headerName: 'Forwarded For',
-  //  width: 100,
-  //},
-  {
-    field: 'language',
-    headerName: 'Language',
-    width: 120,
-  },
-  {
-    field: 'continent',
-    headerName: 'Continent',
-    width: 120,
-  },
-  {
-    field: 'country',
-    headerName: 'Country',
-    width: 120,
-  },
-  {
-    field: 'regionName',
-    headerName: 'Region',
-    width: 100,
-  },
-  {
-    field: 'city',
-    headerName: 'City',
-    width: 100,
-  },
-  {
-    field: 'zip',
-    headerName: 'Zip Code',
-    width: 75,
-  },
-  {
-    field: 'timezone',
-    headerName: 'Time Zone',
-    width: 150,
-  },
-  {
-    field: 'offset',
-    headerName: 'Offset',
-    width: 50,
-    type: 'number',
-  },
-  {
-    field: 'currency',
-    headerName: 'Currency',
-    width: 70,
-  },
-  {
-    field: 'org',
-    headerName: 'Organization',
-    width: 120,
-  },
-  {
-    field: 'as',
-    headerName: 'AS',
-    width: 150,
-  },
-  {
-    field: 'reverse',
-    headerName: 'Reverse DNS',
-    width: 130,
-  },
-  {
-    field: 'mobile',
-    headerName: 'Mobile',
-    width: 65,
-    type: 'boolean',
-  },
-  {
-    field: 'proxy',
-    headerName: 'Proxy',
-    width: 65,
-    type: 'boolean',
-  },
-  {
-    field: 'hosting',
-    headerName: 'Hosting',
-    width: 65,
-    type: 'boolean',
-  },
-  {
-    field: 'createdAt',
-    headerName: 'Created',
-    width: 175,
-    type: 'dateTime',
-    valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt),
-  },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    width: 120,
-    type: 'actions',
-    getActions: ({ row}: GridRowParams) => [
-      <GridActionsCellItem
-        icon={<ViewIcon color="info" />}
-        label="View"
-        onClick={() => console.log('view:', row)}
-      />,
-      <GridActionsCellItem
-        icon={<DeleteIcon color="error" />}
-        label="Delete"
-        onClick={() => console.log('delete:', row)}
-      />,
-      <GridActionsCellItem icon={<PrintIcon />}
-        showInMenu
-        label="Print"
-        onClick={() => console.log('print:', row)}
-      />,
-    ],
-  },
-];
-
 const crumbs: BreadcrumbItem[] = [{
   text: 'Dashboard',
   href: '/',
@@ -201,11 +57,164 @@ export const AdminTelemetryPage = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 50, hideable: false },
+    {
+      field: 'slug',
+      headerName: 'Slug',
+      width: 70,
+      hideable: false,
+    },
+    {
+      field: 'ipAddr',
+      headerName: 'IP Address',
+      width: 110,
+    },
+    {
+      field: 'isp',
+      headerName: 'ISP',
+      width: 150,
+    },
+    {
+      field: 'browser',
+      headerName: 'Browser',
+      width: 130,
+      valueGetter: (params: GridValueGetterParams) => parseUserAgent(params.row.browser).browser.name,
+    },
+    //{
+    //  field: 'referrer',
+    //  headerName: 'Referrer',
+    //  width: 120,
+    //},
+    //{
+    //  field: 'forwardedFor',
+    //  headerName: 'Forwarded For',
+    //  width: 100,
+    //},
+    {
+      field: 'language',
+      headerName: 'Language',
+      width: 120,
+    },
+    {
+      field: 'continent',
+      headerName: 'Continent',
+      width: 120,
+    },
+    {
+      field: 'country',
+      headerName: 'Country',
+      width: 120,
+    },
+    {
+      field: 'regionName',
+      headerName: 'Region',
+      width: 100,
+    },
+    {
+      field: 'city',
+      headerName: 'City',
+      width: 100,
+    },
+    {
+      field: 'zip',
+      headerName: 'Zip Code',
+      width: 75,
+    },
+    {
+      field: 'timezone',
+      headerName: 'Time Zone',
+      width: 150,
+    },
+    {
+      field: 'offset',
+      headerName: 'Offset',
+      width: 50,
+      type: 'number',
+    },
+    {
+      field: 'currency',
+      headerName: 'Currency',
+      width: 70,
+    },
+    {
+      field: 'org',
+      headerName: 'Organization',
+      width: 120,
+    },
+    {
+      field: 'as',
+      headerName: 'AS',
+      width: 150,
+    },
+    {
+      field: 'reverse',
+      headerName: 'Reverse DNS',
+      width: 130,
+    },
+    {
+      field: 'mobile',
+      headerName: 'Mobile',
+      width: 65,
+      type: 'boolean',
+    },
+    {
+      field: 'proxy',
+      headerName: 'Proxy',
+      width: 65,
+      type: 'boolean',
+    },
+    {
+      field: 'hosting',
+      headerName: 'Hosting',
+      width: 65,
+      type: 'boolean',
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Created',
+      width: 175,
+      type: 'dateTime',
+      valueGetter: (params: GridValueGetterParams) => new Date(params.row.createdAt),
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 120,
+      type: 'actions',
+      getActions: ({ row }: GridRowParams) => [
+        <GridActionsCellItem
+          icon={<ViewIcon color="info" />}
+          label="View"
+          onClick={() => {
+            setSelectedRow(row);
+            setOpen(true);
+          }}
+        />,
+        <GridActionsCellItem
+          icon={<DeleteIcon color="error" />}
+          label="Delete"
+          onClick={() => handleDelete(row.id)}
+        />,
+        <GridActionsCellItem icon={<PrintIcon />}
+          showInMenu
+          label="Print"
+          onClick={() => console.log('print:', row)}
+        />,
+      ],
+    },
+  ];
+
   ChartJS.register(ArcElement, Legend, Title, Tooltip);
 
   const handleRowClick = (param: GridRowParams) => {
     setSelectedRow(param.row);
     setOpen(true);
+  };
+
+  const handleDelete = (id: number) => {
+    console.log('handleDelete:', id);
+    // TODO: TelemetryService.deleteTelemetry(id);
   };
 
   useEffect(() => {
@@ -309,7 +318,6 @@ export const AdminTelemetryPage = () => {
             //disableRowSelectionOnClick
             slots={{
               toolbar: GridToolbar,
-              //row: renderRowTooltip,
             }}
             slotProps={{
               toolbar: {
@@ -329,12 +337,3 @@ export const AdminTelemetryPage = () => {
     </Container>
   );
 };
-
-//const renderRowTooltip = (row: any) => {
-//  console.log('row:', row);
-//  return (
-//    <MuiTooltip title={`Details for ${row.col1}: More Info Here`} enterDelay={500}>
-//      {row.row.slug}
-//    </MuiTooltip>
-//  );
-//};
