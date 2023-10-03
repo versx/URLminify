@@ -53,6 +53,7 @@ const setSettings = async (req: Request, res: Response) => {
 };
 
 export const SettingsController = {
+  settings: cachedSettings,
   getSettings,
   setSettings,
 };

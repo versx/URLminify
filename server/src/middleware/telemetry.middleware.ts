@@ -1,21 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 
 import { SettingKeys } from '../consts';
+import { SettingsController } from '../controllers';
 import {
   getExternalIpAddress,
   getGeolocationDetails,
   logDebug,
   logError,
-  SettingsService,
   ShortUrlService,
   TelemetryService,
 } from '../services';
 
 export const TelemetryMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  // TODO: Cache settings
-  const enableTelemetry = await SettingsService.getSetting(SettingKeys.EnableTelemetry);
-  const enabled = parseInt(enableTelemetry?.value) !== 0 ?? false;
-  if (!enabled) {
+  if (!SettingsController.settings.find(s => s.name === SettingKeys.EnableTelemetry)?.value || false) {
     return next();
   }
 
